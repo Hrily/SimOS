@@ -1,5 +1,7 @@
 ## Process Scheduling
 
+### Process structure
+
 ### Input format
 
 ### Output format
