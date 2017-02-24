@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>SimOS - Terminal</title>
+	<script type="text/javascript">
+		function shellexec(){
+			var out = document.getElementById('out');
+			var command = document.getElementById('command');
+			if(command.value.length<=0)
+				return;
+			out.innerHTML += "$ "+command.value+"<br>";
+			var xhr = new XMLHttpRequest();
+			xhr.onreadystatechange = function() {
+			    if (xhr.readyState == XMLHttpRequest.DONE) {
+			    	output = xhr.responseText;
+			    	console.log(output);
+			    	output = output.split('\n').join('<br>');
+			        if(output.length>0) out.innerHTML += output+'<br>';
+			    }
+			}
+			xhr.open('GET', '/terminal/shellcommand?command='+command.value, true);
+			xhr.send();
+			command.value = "";
+		}
+		function keypress(event) {
+			if (event.keyCode == 13) {
+				shellexec();
+			}
+		}
+	</script>
+</head>
+<body>
+
+	<div id="out"></div>
+	<div id="shel">
+		$&nbsp;
+		<input type="text" id="command" onkeypress="keypress(event)"/>
+		<button value="exec" onclick="shellexec()">ecex</button>
+	</div>
+
+</body>
+</html>
