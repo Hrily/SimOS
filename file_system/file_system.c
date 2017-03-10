@@ -53,7 +53,7 @@ struct file{
 	struct file* getChild(char n[]){
 		int h = hasChild(n);
 		if(h<0){
-			printf("hrish: %s: No such file or directory\n");
+			printf("hrish: %s: No such file or directory\n", name);
 			fflush(stdout);
 			return NULL;
 		}
@@ -66,10 +66,14 @@ struct file{
 			else
 				printf("%s\t\t", child[i]->name);
 			if(child[i]->isD)
-				printf("DIR");
+				printf("<DIR>");
 			printf("<br>");
 		}
 		printf("\n");
+		fflush(stdout);
+	}
+	void pwd(){
+		printf("%s\n", name);
 		fflush(stdout);
 	}
 };
@@ -96,20 +100,61 @@ int main(){
 	command[0] = '\0';
 	wd = root;
 	while(!eq(command, "quit")){
-		// printf("$ ");
 		scanf("%s",command);
+		if(eq(command, "cd")){
+			scanf("%s", name);
+			fflush(stdin);
+			if(eq(name, "..") && wd->child[0]->isD){
+				wd = wd->child[0];
+				printf("<!%s?>", wd->name);
+				printf("\n");
+				fflush(stdout);
+				char *b;
+				size_t l = 80;
+				getline(&b, &l, stdin);
+				continue;
+			}
+			if(wd->hasChild(name)<0){
+				printf("hrish: %s: No such directory\n", name);
+				fflush(stdout);
+				char *b;
+				size_t l = 80;
+				getline(&b, &l, stdin);
+				continue;
+			}
+			struct file *f = wd->getChild(name);
+			if(f->isD==0){
+				printf("hrish: %s is not a directory\n", name);
+				fflush(stdout);
+				char *b;
+				size_t l = 80;
+				getline(&b, &l, stdin);
+				continue;
+			}
+			wd = f;
+			printf("<!%s?>", wd->name);
+			printf("\n");
+			fflush(stdout);
+			char *b;
+			size_t l = 80;
+			getline(&b, &l, stdin);
+			continue;
+		}
+		printf("<!%s?>", wd->name);
 		if(eq(command, "ls")){
 			fflush(stdin);
 			wd->ls();
 			fflush(stdout);
-		}else if(eq(command, "search")){
+		}
+		else if(eq(command, "search")){
 			scanf("%s", name);
 			fflush(stdin);
 			if(wd->hasChild(name)<0)
 				printf("hrish: %s does not exist\n", name);
 			else
 				printf("hrish: %s exists\n", name);
-		}else if(eq(command, "touch")){
+		}
+		else if(eq(command, "touch")){
 			scanf("%s", name);
 			fflush(stdin);
 			fflush(stdout);
@@ -117,39 +162,23 @@ int main(){
 				printf("\n");
 			else
 				printf("hrish: %s already exists\n", name);
-		}else if(eq(command, "cd")){
-			scanf("%s", name);
-			fflush(stdin);
-			if(eq(name, "..") && wd->child[0]->isD){
-				wd = wd->child[0];
-				printf("\n");
-				fflush(stdout);
-				continue;
-			}
-			if(wd->hasChild(name)<0){
-				printf("hrish: %s: No such directory\n", name);
-				fflush(stdout);
-				continue;
-			}
-			struct file *f = wd->getChild(name);
-			if(f->isD==0){
-				printf("hrish: %s is not a directory\n", name);
-				fflush(stdout);
-				continue;
-			}
-			wd = f;
-			printf("\n");
-		}else if(eq(command, "mkdir")){
+		}
+		else if(eq(command, "mkdir")){
 			scanf("%s", name);
 			fflush(stdin);
 			if(wd->hasChild(name)>=0){
 				printf("hrish: %s already exists\n", name);
 				fflush(stdout);
+				char *b;
+				size_t l = 80;
+				getline(&b, &l, stdin);
 				continue;
 			}else
 				printf("\n");
 			wd->addChild(file(name, 1));
 		}
+		else if(eq(command, "pwd"))
+			wd->pwd();
 		else if(!eq(command, "quit")){
 			fflush(stdin);
 			printf("hrish: bad command\n");

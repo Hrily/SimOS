@@ -15,7 +15,7 @@ def execute(com):
 	time.sleep(0.1)
 	out = p.stdout.readline()
 	p.stdout.flush();
-	if len(out)>0 and out[-1]=='\n':
+	if len(out)>1 and out[-1]=='\n' and out[-2]=='\n':
 		out = out[:-1]
 	if len(out):
 		return out.replace('<br>', '\n')[:-1]

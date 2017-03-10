@@ -31,7 +31,7 @@ def static_file(path):
 	return app.send_static_file(path)
 
 if __name__ == '__main__':
-	# Set server address 127.0.0.1:8001/
+	# Set server address 127.0.0.1:8000/
 	app.run(host="127.0.0.1", port=8000);
 	http_server = WSGIServer(app)
 	http_server.serve_forever()
