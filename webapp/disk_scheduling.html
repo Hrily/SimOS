@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>SimOS - Disk Scheduling</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width; initial-scale=1; maximum-scale=1">
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<script
+	src="https://code.jquery.com/jquery-3.1.1.min.js"
+	integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
+	crossorigin="anonymous"></script>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/css/materialize.min.css">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto Mono">
+	<style>
+
+		body {
+			margin: 0;
+			padding: 0;
+		}
+
+		.head {
+			width: 100%;
+			padding: 2%;
+			padding-bottom: 10%;
+		}
+
+		.bar {
+			display: inline-block;
+			text-align: center;
+			color: white;
+		}
+
+	</style>
+
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/js/materialize.min.js"></script>
+	<script type="text/javascript">
+		
+		var n_req = 1;
+
+		function S(id){
+			return document.getElementById(id)
+		}
+
+		function add_request(){
+			requests = S('requests');
+			var request = '<div class="input-field col s12"><input class="validate" type="text" id="req' + n_req + '"/> <label for="req' + n_req + '">Cylinder Number</label> </div>';
+			requests.innerHTML += request;
+			n_req++;
+		}
+
+		function submit(){
+			var head = S('head_pos').value,
+				prev = S('prev_req').value,
+				ncyl = S('n_cyl').value;
+			var input = head + ' ' + prev + ' ' + ncyl;
+			console.log(input);
+			if(head.lenght==0 || prev.lenght == 0 || ncyl.lenght==0){
+				Materialize.toast("Please fill the input fields!", 1500);
+				return;
+			}
+			if(!head || !prev || !ncyl){
+				Materialize.toast("Please fill the input fields!!", 1500);
+				return;
+			}
+			for(var i=0;i<n_req;i++){
+				var req = S('req'+i).value
+				if(!req || req.lenght==0){
+					Materialize.toast("Please fill the request fields!", 1500);
+					return;	
+				}
+				input += ' ' + S('req'+i).value
+			}
+			input = n_req + ' ' + input;
+			console.log(input);
+			execute(input);
+		}
+
+		function execute(input){
+			var xhr = new XMLHttpRequest();
+			xhr.onreadystatechange = function() {
+			    if (xhr.readyState == XMLHttpRequest.DONE) {
+			    	output = xhr.responseText;
+			    	console.log(output);
+			    	print_output(output.split(' '));
+					window.scrollTo(0,document.body.scrollHeight);
+			    }
+			}
+			xhr.open('GET', '/disk_scheduling/schedule?input='+input, true);
+			xhr.send();
+			var op = '<div class="container"><div class="card"><div class="card-content" id="output"></div></div></div>';
+			document.body.innerHTML += op;
+			var spinner = '<div class="col s12 center-align"> <div class="preloader-wrapper active"><div class="spinner-layer spinner-teal-only center"> <div class="circle-clipper left"> <div class="circle"></div> </div><div class="gap-patch"> <div class="circle"></div> </div><div class="circle-clipper right"> <div class="circle"></div> </div> </div> </div> </div>';
+			S('output').innerHTML += spinner;
+			window.scrollTo(0,document.body.scrollHeight);
+		}
+
+		function to_int(output){
+			for(var i=0;i<output.length;i++)
+				output[i] = parseInt(output[i])
+			return output.slice(0, output.length-1)
+		}
+
+		function get_max(a){
+			var m = 0
+			for(var i=0;i<a.length;i++)
+				if(m<a[i]) m = a[i]
+			return m;
+		}
+
+		function get_bar(width, max, color){
+			var perc = 1.0*width/max*100;
+			var bar = '<div class="col s10"><div class="bar ' + color + '" style="width: ' + perc + '%;">' + width + '</div></div>';
+			return bar
+		}
+
+		function print_output(output){
+			output = to_int(output);
+			var max = get_max(output);
+			S('output').innerHTML = '<h5>Output</h5><br><div class="row"> <div class="col s2 right-align"><b>Algorithm</b></div>&nbsp;&nbsp<b>Seek Time</b></div>';
+			var color = ['pink', 'blue', 'blue-grey'];
+			var algos = ['C Scan', 'FCFS', 'Look'];
+			for(var i=0;i<output.length;i++)
+				S('output').innerHTML += '<div class="row"> <div class="col s2 right-align">' + algos[i] + '</div>' + get_bar(output[i], max, color[i]) +'</div>'
+		}
+
+	</script>
+</head>
+<body>
+	<div class="head teal white-text"><h1> Disk Scheduling </h1></div>
+	<div class="container" style="margin-top: -8%;">
+		<div class="card">
+			<div class="card-content">
+				<form class="row">
+					<h3>Compare Disk Scheduling Algorithms</h3>
+					<h5>Input</h5>
+					<div class="row">
+						<div class="input-field col s4">
+							<input class="validate" type="text" id="head_pos"/>
+							<label for="head_pos">Current Head Position</label>
+						</div>
+
+						<div class="input-field col s4">
+							<input class="validate" type="text" id="prev_req"/>
+							<label for="head_pos">Previous Request</label>
+						</div>
+						<div class="input-field col s4">
+							<input class="validate" type="text" id="n_cyl"/>
+							<label for="head_pos">Total Number of Cylinders</label>
+						</div>
+					</div>
+					<div class="row" id="requests">
+						<div class="col s12"><b>Requests</b></div>
+						<div class="input-field col s12"> <input type="text" id="req0"/> <label for="req0">Cylinder Number</label> </div>
+					</div>
+					<a class="btn waves-effect waves-effect-light teal" onclick="add_request()"><i class="material-icons right">add</i>Add</a><br><br>
+					<a class="btn waves-effect waves-effect-light teal right" onclick="submit()"><i class="material-icons right">send</i>Submit</a>
+				</form>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

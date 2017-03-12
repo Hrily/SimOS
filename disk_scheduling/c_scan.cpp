@@ -60,5 +60,5 @@ int main()
 	}
     
     
-    printf("\nTotal head movement=%d\n",seek_t);
+    printf("Seek time: %d\n",seek_t);
 }
