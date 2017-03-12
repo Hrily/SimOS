@@ -36,7 +36,7 @@ int main()
     		break;
 	}
 	//i is initially set to index of head request
-	printf("%d\t",q[i]);
+	
 	if(prev<head){				// move forward
     	for(j=i;j<n+2;j++){
     		diff=abs(q[j+1]-q[j]);
