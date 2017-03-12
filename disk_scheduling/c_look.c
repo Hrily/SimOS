@@ -63,5 +63,5 @@ int main()
 	}
     
     
-    printf("\nSeek time: %d\n",seek);
+    printf("\nSeek Time: %d\n",seek);
 }
