@@ -3,11 +3,11 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-struct process												//Structure of a process
+struct process											//Structure of a process
 {
-	int name;												//Name of the process
+	int name;										//Name of the process
 	int at,bt,wt,tt,rt,ct;									//Arrival time, Burst Time, Waiting Time, TurnAround Time, Remaining Time, Completion time
-	int completed;											//Completed
+	int completed;										//Completed
 	
 }pro;
 
@@ -16,7 +16,7 @@ int n;
 int q[10];  
 int front=-1,rear=-1;
 
-void enqueue(int i)											//Function to enqueue process in queue
+void enqueue(int i)										//Function to enqueue process in queue
 {
 	if(rear==10)
 	printf("overflow");
@@ -26,7 +26,7 @@ void enqueue(int i)											//Function to enqueue process in queue
 	front=0;
 }
 
-int dequeue()												//Function to dequeue process from queue
+int dequeue()											//Function to dequeue process from queue
 {
 	if(front==-1)
 	printf("underflow");
@@ -50,7 +50,7 @@ int isInQueue(int i)										//Function to check if process is in queue
 
 }
 
-void sortByArrival(struct process *p)						//Sorting by arrival
+void sortByArrival(struct process *p)								//Sorting by arrival
 {
 	struct process temp;
 	int i,j;
@@ -76,7 +76,7 @@ int main()
 	printf("Enter no of processes:");
 	scanf("%d",&n);
 	p = malloc(n*sizeof(pro));
-	for(i=0,c=1;i<n;i++,c++)									//Enter the details of project
+	for(i=0,c=1;i<n;i++,c++)								//Enter the details of project
 	{
 		p[i].name=c;
 		printf("\nEnter the arrival time and burst time of process %d: ",p[i].name);
