@@ -42,7 +42,7 @@ int main()
 	}
 	// i is initially set to index of head request
 	
-			// printing head
+			
 	int cnt=n+1;		 // no. of requests in list including present diskhead position
 	int o,flag=0;
 	while(cnt!=1){
@@ -50,13 +50,13 @@ int main()
 			
 			diff=abs(q[i-1]-q[i]);
 			seek+=diff;
-			
+			printf("%d\t",q[i-1]);
 			del(i);
 		}
 		else if (i==0){ 		//boundary condition 2
 			diff=abs(q[i+1]-q[i]);
 			seek+=diff;
-			
+			printf("%d\t",q[i+1]);
 			del(i);
 		}
 		else{
@@ -76,7 +76,7 @@ int main()
 		//o is the index of selected request
 		seek+=diff;
 		
-	
+		printf("%d\t",q[o]);
 		del(i);				//removes request from list and shifts all requests to its right 1 step to the left
 		if(flag)
 			i=o;		// updating i to selected disk
