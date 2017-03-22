@@ -5,10 +5,10 @@
 int main()
 {
     int* q; //pointer to array that stores requests
-	int tot_req,header,previous,begin,end,seek_t=0,i,j,k,diff; // seek_t stores seek time
+	int tot_req,header,previous,cyl,seek_t=0,i,j,k,diff; // seek_t stores seek time
 		scanf("%d",&tot_req);
 		scanf("%d%d",&header,&previous);
-    	scanf("%d%d",&begin,&end);
+    	scanf("%d",&cyl);
     
 		q=(int*)malloc((tot_req+1)*sizeof(int)); //Allocating memory for request array
 		
@@ -33,7 +33,7 @@ int main()
     		break;
 	}
     if(previous<header){
-    	for(j=i;j<=tot_req;j++)
+    	for(j=i+1;j<=tot_req;j++)
 			printf("%d\t",q[j]);
 			
 		for(j=i-1;j>=0;j--)
@@ -53,7 +53,7 @@ int main()
 		q[i]=header;
 	}
 	else{
-		for(j=i;j>=0;j--)
+		for(j=i-1;j>=0;j--)
 			printf("%d\t",q[j]);
 			
 		for(j=i+1;j<=tot_req;j++)

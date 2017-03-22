@@ -39,10 +39,12 @@ int main()
 	}
 	
 	if(previous<header){
-		for(j=i;j<=tot_req+2;j++)
+		for(j=i+1;j<tot_req+2;j++)
 			printf("%d\t",q[j]);
-		for(j=0;j<i;j++)
+
+		for(j=1;j<i;j++)
 			printf("%d\t",q[j]);
+
     	for(j=i;j<tot_req+2;j++){
     		diff=abs(q[j+1]-q[j]);
     		seek_t+=diff;
@@ -53,10 +55,12 @@ int main()
 		}
 	}
 	else{
-		for(j=i;j>=0;j--)
+		for(j=i-1;j>0;j--)
 			printf("%d\t",q[j]);
-		for(j=tot_req+2;j>i;j--)
+
+		for(j=tot_req+1;j>i;j--)
 				printf("%d\t",q[j]);
+
 		for(j=i;j>0;j--){
 			diff=abs(q[j]-q[j-1]);
 			seek_t+=diff;
