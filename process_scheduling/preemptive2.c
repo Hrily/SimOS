@@ -99,9 +99,9 @@ void sorta(struct process *m,int n)    // Function to sort the processes in asce
                       }
                       
                    m[tq].rt=0;
-                   printf("time %d ",time);
+                 //  printf("time %d ",time);
                    time+=m[tq].bt;
-                   printf("after adding %d it is %d\n",m[tq].bt,time);
+                 //  printf("after adding %d it is %d\n",m[tq].bt,time);
                    if(m[tq].rt==0)
                      {m[tq].ct=time;
                        awt+=m[tq].ct-m[tq].at;
