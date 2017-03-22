@@ -25,15 +25,15 @@ To use the project :
 
 + First clone the project using : 
 
-	git clone https://github.com/Hrily/SimOS
+	`git clone https://github.com/Hrily/SimOS`
 
 + Enter the project directory :
 
-	cd SimOS
+	`cd SimOS`
 
 + The start the server : 
 
-	python server.py
+	`python server.py`
 
 + Visit 127.0.0.1:8000/ on your browser
 
