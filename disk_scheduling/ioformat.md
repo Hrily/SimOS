@@ -16,9 +16,10 @@ C  - Total number of cylinders
 Ni - N requests
 
 ### Output format
+```
 `Order in which requests are served`
 `Seek Time: ST`
-
+```
 ST - Total Seek Time
 
 ### Sample
