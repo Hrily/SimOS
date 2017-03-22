@@ -32,7 +32,7 @@ int dequeue(int n)                      // function t dequeue a process from a q
     }
 struct process                         // the structure of a process
   {
-    int at,bt,pt,rt,ct,inq,p;
+    int at,bt,pt,rt,ct,inq,p,tat,wt;
     };
 void sorta(struct process *m,int n)    // Function to sort the processes in ascending order of arrival time
   {
@@ -72,14 +72,14 @@ void sorta(struct process *m,int n)    // Function to sort the processes in asce
    
       for(i=0;i<n;i++)                                 // To enter the process details
         {
-	  printf("process %d\n",i);
+	  printf("enter process no\n");
+	  scanf("%d",&m[i].pt);    
 	  printf("enter arrival time\n");
 	  scanf("%d",&m[i].at);
 	  printf("enter burst time\n");
 	  scanf("%d",&m[i].bt);
 	  printf("enter priority\n");
 	  scanf("%d",&m[i].p);
-	  m[i].pt=i;
 	  m[i].rt=m[i].bt;
           tot+=m[i].bt;
 	  m[i].inq=0;
@@ -103,17 +103,20 @@ void sorta(struct process *m,int n)    // Function to sort the processes in asce
                    time+=m[tq].bt;
                  //  printf("after adding %d it is %d\n",m[tq].bt,time);
                    if(m[tq].rt==0)
-                     {m[tq].ct=time;
+                     {
+		      m[tq].ct=time;
+		      m[tq].tat=m[tq].ct-m[tq].at;
+                      m[tq].wt=m[tq].tat-m[tq].bt;
                        awt+=m[tq].ct-m[tq].at;
                        atat+=m[tq].ct-m[tq].at-m[tq].bt;
                        }
                     // printf("Ctime %d \n",m[tq].ct);
                   pr=-1;
                   }
-         printf("pno\tat\tbt\tct\n");
+         printf("pno\tct\ttat\twt\n");
          for(i=0;i<n;i++)
            {
-              printf("%d\t%d\t%d\t%d\n",m[i].pt,m[i].at,m[i].bt,m[i].ct);              // To print the completion time
+              printf("%d\t%d\t%d\t%d\n",m[i].pt,m[i].ct,m[i].tat,m[i].wt);              // To print the completion time
               }
-           printf("average waiting time %f and  average tat %f\n",awt/n,atat/n);   
+           printf("average tat %f\n average waiting time %f\n",atat/n,awt/n);   
            }                    
