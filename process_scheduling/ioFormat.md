@@ -10,7 +10,9 @@
 			rt,		// Remaining Time
 			ct,		// Completion time
 			inq,	// Check whether process is in queue
-			p;		// Priority
+			p		// Priority
+			tat,       //turnaround time
+			wt;        // waiting time
     }
  ```
 
