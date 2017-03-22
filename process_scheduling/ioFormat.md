@@ -2,19 +2,18 @@
 
 ### Process structure
 
-struct process                       
-  {
-    int at,bt,pt,rt,ct,inq,p
+```
+	struct process {
+		int at,		// Arrival time
+			bt,		// Burst time
+			pt,		// Process Number
+			rt,		// Remaining Time
+			ct,		// Completion time
+			inq,	// Check whether process is in queue
+			p;		// Priority
     }
+ ```
 
-/* at-: Arrival time
-    bt: burst time
-     pt: process number
-     rt: remaining time
-     ct: completion time
-     inq: variable to check whether the process is inside the queue in round robin and priority scheduling
-     p:priority
-*/
 
 ### Input format
 
@@ -37,6 +36,7 @@ IDi CTi TTi WTi
 Average TT : ATT
 Average WT : AWT
 ```
+
 IDi - Process ID of ith process
 CTi - Completion Time of ith process
 TTi - Turn Around Time of ith process
