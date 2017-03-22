@@ -34,32 +34,32 @@ int main()
 	//i is initially set to index of head request
    
 	if(prev<head){					// moving forward
-    	for(j=i;j<n;j++){
-    		diff=abs(q[j+1]-q[j]);
-    		seek+=diff;
-    		
+    		for(j=i;j<n;j++){
+			diff=abs(q[j+1]-q[j]);
+			seek+=diff;
+			printf("%d\t",q[j+1]);
 		}
 		
 		for(j=0;j<i-1;j++){
 			diff=abs(q[j+1]-q[j]);
 			seek+=diff;
-			
+			printf("%d\t",q[j]);
 		}
-		
+		printf("%d",q[j]);
 	}
 	else{						// moving backward
 		for(j=i;j>0;j--){
 			diff=abs(q[j]-q[j-1]);
 			seek+=diff;
-			
+			printf("%d\t",q[j-1]);
 		}
 	
 		for(j=n;j>i+1;j--){
-    		diff=abs(q[j]-q[j-1]);
-    		seek+=diff;
-    		
+			diff=abs(q[j]-q[j-1]);
+			seek+=diff;
+			printf("%d\t",q[j]);
 		}
-		
+		printf("%d",q[j]);
 	}
     
     
