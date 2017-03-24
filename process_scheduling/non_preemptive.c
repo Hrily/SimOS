@@ -64,6 +64,7 @@ void main()
 {
 scanf("%d",&n);
 int i;
+scanf("%d",&i);
 for(i=0;i<n;i++)
 scanf("%d %d %d %d",&arr[i].no,&arr[i].arrival,&arr[i].burst,&arr[i].pri);
 bubblesort();
