@@ -115,5 +115,5 @@ printf("%d %d %d %d %d",final[i].no,final[i].st,final[i].ct,final[i].tat,final[i
 printf("\n");
 }
 
-printf("Average TT : %f\nAverage WT : %f\n",avgtat,avgwt);
+printf("Average TT: %f\nAverage WT: %f\n",avgtat,avgwt);
 }

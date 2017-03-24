@@ -33,6 +33,7 @@ def page_terminal():
 def disk_schedule():
 	scheduling = ['c_scan', 'fcfs', 'look']
 	inp = request.args['input']
+	print inp
 	out = ""
 	for algo in scheduling:
 		o = executer.execute('disk_scheduling/'+algo, inp)
@@ -45,6 +46,21 @@ def disk_schedule():
 @app.route('/disk_scheduling')
 def page_disk_scheduling():
 	return app.send_static_file('disk_scheduling.html')
+
+
+@app.route('/process_scheduling/schedule', methods=['POST', 'GET'])
+def process_schedule():
+	scheduling = ['fcfs', 'rr', 'sjf']
+	inp = request.args['input']
+	out = ""
+	for algo in scheduling:
+		out += executer.execute('process_scheduling/'+algo, inp);
+		print out
+	return out
+
+@app.route('/process_scheduling')
+def page_process_scheduling():
+	return app.send_static_file('process_scheduling.html')
 
 @app.route('/<path:path>')
 def static_file(path):

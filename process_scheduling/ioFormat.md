@@ -61,6 +61,6 @@ AWT - Average Waiting Time
 ```
 1 3 2 0
 2 4 2 1
-Average TT : 2.000000
-Average WT : 0.500000
+Average TT: 2.000000
+Average WT: 0.500000
 ```
