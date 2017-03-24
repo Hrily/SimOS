@@ -119,5 +119,5 @@ void sorta(struct process *m,int n)    // Function to sort the processes in asce
            {
               printf("%d\t%d\t%d\t%d\n",m[i].pt,m[i].ct,m[i].tat,m[i].wt);              // To print the completion time
               }
-           printf("average tat %f\naverage waiting time %f\n",atat/n,awt/n);   
+           printf("Average TT: %f\nAverage WR: %f\n",atat/n,awt/n);   
            }                    
