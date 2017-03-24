@@ -121,8 +121,8 @@
 		}
 
 		function print_output(output){
-			var color = ['pink', 'blue', 'blue-grey'];
-			var algo  = ['First Come First Serve',  'Round Robin', 'Shortest Job first'];
+			var color = ['pink', 'blue', 'blue-grey', 'green darken-3', 'red'];
+			var algo  = ['First Come First Serve',  'Round Robin', 'Shortest Job first', 'Non Preemptive Priority Scheduling', 'Shortest Remaining Time First'];
 			var op = S('output');
 			var n = 0;
 			var tts = [];
@@ -138,7 +138,7 @@
 					wts.push(o[2])
 					op.innerHTML += '</tbody></table>';
 					$('#calgo'+(n-1)).append('<br>Average Turnaround time : ' + tts[n-1] + '<br>Average Waiting time : ' + wts[n-1]);
-					if(n<3){
+					if(n<algo.length){
 						op.innerHTML += '<div class="card white-text '+color[n]+'"><div class="card-content" id="calgo'+n+'"><div class="row"><h4>' + algo[n] + '</h4></div> <table class="bordered"><thead><tr><th>Process #</th><th>Completion time</th><th>Turn Around Time</th><th>Waiting Time</th></tr></thead><tbody id="algo'+n+'">';
 						n++;
 					}else{
