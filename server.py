@@ -50,7 +50,7 @@ def page_disk_scheduling():
 
 @app.route('/process_scheduling/schedule', methods=['POST', 'GET'])
 def process_schedule():
-	scheduling = ['fcfs', 'rr', 'sjf', 'non_preemptive', 'srtf']
+	scheduling = ['fcfs', 'rr', 'sjf', 'non_preemptive', 'srtf', 'preemptive']
 	inp = request.args['input']
 	out = ""
 	for algo in scheduling:
