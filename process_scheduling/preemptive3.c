@@ -73,13 +73,13 @@ void sorta(struct process *m,int n)    // Function to sort the processes in asce
       scanf("%d",&Q); 
       for(i=0;i<n;i++)                                 // To enter the process details
         {
-	  printf("enter process no \n");
+	//  printf("enter process no \n");
 	  scanf("%d",&m[i].pt);
-	  printf("enter arrival time\n");
+	 // printf("enter arrival time\n");
 	  scanf("%d",&m[i].at);
-	  printf("enter burst time\n");
+	 // printf("enter burst time\n");
 	  scanf("%d",&m[i].bt);
-	  printf("enter priority\n");
+	  //printf("enter priority\n");
 	  scanf("%d",&m[i].p);
 	  m[i].pt=i;
 	  m[i].rt=m[i].bt;
@@ -114,7 +114,7 @@ void sorta(struct process *m,int n)    // Function to sort the processes in asce
                     // printf("Ctime %d \n",m[tq].ct);
                   pr=-1;
                   }
-         printf("pno\tct\ttt\twt\n");
+         //printf("pno\tct\ttt\twt\n");
          for(i=0;i<n;i++)
            {
               printf("%d\t%d\t%d\t%d\n",m[i].pt,m[i].ct,m[i].tat,m[i].wt);              // To print the completion time
