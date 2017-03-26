@@ -45,18 +45,19 @@
 	<script type="text/javascript">
 		
 		var n_req = 1;
-
+      //Function to select HTML Object by ID
+  
 		function S(id){
 			return document.getElementById(id)
 		}
-
+      //To add Row of requests (i.e. Cylinders requested)
 		function add_request(){
 			requests = S('requests');
 			var request = '<div class="input-field col s12"><input class="validate" type="text" id="req' + n_req + '"/> <label for="req' + n_req + '">Cylinder Number</label> </div>';
 			requests.innerHTML += request;
 			n_req++;
 		}
-
+		//To Submit the inputs for scheduling..
 		function submit(){
 			var head = S('head_pos').value,
 				prev = S('prev_req').value,
@@ -81,7 +82,7 @@
 			input = n_req + ' ' + input;
 			execute(input);
 		}
-
+      // It executes 
 		function execute(input){
 			var xhr = new XMLHttpRequest();
 			xhr.onreadystatechange = function() {

@@ -6,30 +6,30 @@
 
 struct process                                                  //Structure of a process
 {
-        int name;
-        int at,bt,wt,tat,ct;
+        int pt;                         //Process Number       
+        int at;                         //Arrival Time
+        int bt;                         //Burst Time
+        int wt;                         //Waiting Time
+        int tat;                        //TurnAround Time
+        int ct;                         //Completion Time
+        int prior;                          //Priority
+        int inq;                        //Is in queue or not
 }pro;
 
 int main()
 {
-        int n;
-        printf("\nEnter the No. of processes :");
-        scanf("%d",&n);
+        int n,tq;
+        scanf("%d%d",&n,&tq);
         
         struct process *p;
         p = malloc(n*sizeof(pro)); 
         
         int i,j,count = 0;
-        
-        for(i=0;i<n;i++)                                       //Name of each process
-                p[i].name = (i+1);
-        
         int min = 0;
         
         for(i=0;i<n;i++)
         {
-                printf("\tEnter the arrival and burst time of %d process :",i+1);              //Arrival and burst timeof each process
-                scanf(" %d%d",&p[i].at,&p[i].bt);
+                scanf("%d%d%d%d",&p[i].pt,&p[i].at,&p[i].bt,&p[i].prior);
               
                 if(min > p[i].at)                                                             //To find process with shortest arrival time
                         min = p[i].at;
@@ -59,9 +59,9 @@ int main()
                 {
                         if(p[b[i]].bt < p[b[j]].bt)
                         {
-                                temp=p[j].name;
-                                p[j].name=p[i].name;
-                                p[i].name=temp;
+                                temp=p[j].pt;
+                                p[j].pt=p[i].pt;
+                                p[i].pt=temp;
 
                                 temp=p[j].at;
                                 p[j].at=p[i].at;
@@ -85,9 +85,9 @@ int main()
                 {
                         if(p[i].bt<p[j].bt)
                         {
-                                temp=p[j].name;
-                                p[j].name=p[i].name;
-                                p[i].name=temp;
+                                temp=p[j].pt;
+                                p[j].pt=p[i].pt;
+                                p[i].pt=temp;
 
                                 temp=p[j].at;
                                 p[j].at=p[i].at;
@@ -109,10 +109,10 @@ int main()
          }
 
                         
-        printf("Process\tArrival Time\tBurst Time\tCompletion Time\tTurnAround Time\tWaiting Time\n");
+       
         for(i=0;i<n;i++)
         {
-                printf("%d\t\t%d\t\t%d\t\t%d\t\t%d\t\t%d\n",p[i].name,p[i].at,p[i].bt,p[i].ct,p[i].tat,p[i].wt);
+                printf("%d %d %d %d\n",p[i].pt,p[i].ct,p[i].tat,p[i].wt);
         }
         float atat=0,awt=0;
         for(i=0;i<n;i++)
@@ -121,8 +121,8 @@ int main()
                 awt+=p[i].wt;
         }
 
-        printf("Average turn around time:%f\n",atat/n);
-        printf("Average waiting time:%f\n",awt/n);
+        printf("Average TT: %f\n",atat/n);
+        printf("Average WT: %f\n",awt/n);
 
 
 return 0;
