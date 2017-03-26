@@ -17,9 +17,12 @@ Ni - N requests
 
 ### Output format
 ```
-`Order in which requests are served`
-`Seek Time: ST`
+A[1..N]
+Seek Time: ST
 ```
+
+A[1..N] - Order in which request are served
+
 ST - Total Seek Time
 
 ### Sample
@@ -35,4 +38,6 @@ ST - Total Seek Time
 
 ### Output (Assuming FCFS Scheduling)
 
-`Seek Time: 8`
+```
+10 15 12
+Seek Time:8
