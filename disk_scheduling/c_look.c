@@ -65,7 +65,8 @@ int main()
 			seek+=diff;
 			printf("%d ",q[j]);
 		}
-		printf("%d",q[j]);
+		if(q[n]!=head)
+			printf("%d",q[j]);
 	}
     
     
