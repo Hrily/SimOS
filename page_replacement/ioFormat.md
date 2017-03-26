@@ -19,10 +19,6 @@ H
 
 H - Hit Ratio (in %)
 
-A[1..N] - Order in which request are served
-
-ST - Total Seek Time
-
 ### Sample
 
 #### Input
@@ -37,4 +33,4 @@ ST - Total Seek Time
 
 ```
 50.000000
-'''
+```
