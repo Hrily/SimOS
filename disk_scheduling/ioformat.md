@@ -10,12 +10,17 @@ Ni
 ```
 
 N  - Number of requests
+
 H  - Current Location of Head
+
 P  - Previous request
+
 C  - Total number of cylinders
+
 Ni - N requests
 
 ### Output format
+
 ```
 A[1..N]
 Seek Time: ST
