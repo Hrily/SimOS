@@ -37,13 +37,13 @@ int main()
     		for(j=i;j<n;j++){
 			diff=abs(q[j+1]-q[j]);
 			seek+=diff;
-			printf("%d\t",q[j+1]);
+			printf("%d ",q[j+1]);
 		}
 		
 		for(j=0;j<i-1;j++){
 			diff=abs(q[j+1]-q[j]);
 			seek+=diff;
-			printf("%d\t",q[j]);
+			printf("%d ",q[j]);
 		}
 		printf("%d",q[j]);
 	}
@@ -51,13 +51,13 @@ int main()
 		for(j=i;j>0;j--){
 			diff=abs(q[j]-q[j-1]);
 			seek+=diff;
-			printf("%d\t",q[j-1]);
+			printf("%d ",q[j-1]);
 		}
 	
 		for(j=n;j>i+1;j--){
 			diff=abs(q[j]-q[j-1]);
 			seek+=diff;
-			printf("%d\t",q[j]);
+			printf("%d ",q[j]);
 		}
 		printf("%d",q[j]);
 	}
