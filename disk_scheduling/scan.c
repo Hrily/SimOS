@@ -1,3 +1,4 @@
+
 //Ritwick Mishra, ritwix
 #include<stdio.h>
 #include<stdlib.h>//SCAN
@@ -36,36 +37,77 @@ int main()
     		break;
 	}
 	//i is initially set to index of head request
-	
-	if(prev<head){				// move forward
-    		for(j=i;j<n+2;j++){
-    			diff=abs(q[j+1]-q[j]);
-    			seek+=diff;
-    			printf("%d ",q[j+1]);
-		}
-		seek+=q[j]-q[i-1];			// move backward 
-		for(j=i-1;j>0;j--){
-			diff=abs(q[j]-q[j-1]);
-			seek+=diff;
-			printf("%d ",q[j]);
-		}
-		printf("%d",q[j]);
-	}
-	else{							//move backward
-		for(j=i;j>0;j--){
-			diff=abs(q[j]-q[j-1]);
-			seek+=diff;
-			printf("%d ",q[j-1]);
-		}
-		seek+=q[i+1]-q[j];				//move forward
-		for(j=i+1;j<n+2;j++){
-    			diff=abs(q[j+1]-q[j]);
-    			seek+=diff;
+	printf("%d ",q[i]);
+	if(prev<head){
+					// move forward
+    	if(q[1]!=head){
+    		for(j=i+1; j<n+2; j++){
     			printf("%d ",q[j]);
+			}
+			
+		
+			for(j=i;j<n+2;j++){
+    			diff=abs(q[j+1]-q[j]);
+    			seek+=diff;
+    			
+    		}
+			seek+=q[j]-q[i-1];	
+					// move backward 
+			for(j=i-1; j>=1; j--){
+				printf("%d ",q[j]);
+			}
+			for(j=i-1; j>=2; j--){
+			
+					diff=abs(q[j]-q[j-1]);
+					
+					seek+=diff;
+				}
+				
+			}
+			
+		
+		else{
+			for(j=i; j<n+2; j++){
+				diff=abs(q[j+1]-q[j]);
+				seek+=diff;
+				if(j!=n+1){
+					printf("%d ",q[j+1]);
+				}
+			}
 		}
-		printf("%d",q[j]);
+}
+	
+	else{
+		if(q[n+1]!=head){
+			for(j=i-1; j>=1; j--){
+				printf("%d ",q[j]);
+			}						
+			for(j=i;j>0;j--){
+				diff=abs(q[j]-q[j-1]);
+				seek+=diff;
+				
+			}
+			seek+=q[i+1]-q[j];	
+			for(j=i+1; j<=n+1; j++){
+				printf("%d ",q[j]);
+			}			
+			for(j=i+1; j<n+1 ; j++){
+    			diff=abs(q[j+1]-q[j]);
+    			seek+=diff;
+    			
+		}
+		
 	}
-    
+	else{
+		for(j=i; j>0; j--){
+			diff=abs(q[j]-q[j-1]);
+			seek+=diff;
+			if(j!=1){
+				printf("%d ",q[j-1]);
+			}
+		}
+	}
+	}
     
     printf("\nSeek Time: %d\n",seek);
 }
