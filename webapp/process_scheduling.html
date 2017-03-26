@@ -4,7 +4,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>SimOS - Disk Scheduling</title>
+	<title>SimOS - Process Scheduling</title>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width; initial-scale=1; maximum-scale=1">
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
@@ -41,6 +41,7 @@
 	</style>
 
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/js/materialize.min.js"></script>
+	<script src="https://code.highcharts.com/highcharts.js"></script>
 	<script type="text/javascript">
 		
 		var n_processes = 1;
@@ -120,6 +121,83 @@
 			return output;
 		}
 
+
+		function draw_graph(algos, tts, wts){
+			tts = to_int(tts)
+			wts = to_int(wts)
+			console.log(algos);
+			console.log(tts);
+			console.log(wts);
+			$('body').append('<div class="container"><div class="card"><div class="card-content"><div id="chart-container"></div></div></div</div>');
+			var chart = {
+			  type: 'bar'
+			};
+			var title = {
+			  text: 'Comparision of Process Scheduling Algorithms'   
+			};
+			var xAxis = {
+			  categories: algos,
+			  title: {
+			     text: null
+			  }
+			};
+			var yAxis = {
+			  min: 0,
+			  title: {
+			     text: 'Time',
+			     align: 'high'
+			  },
+			  labels: {
+			     overflow: 'justify'
+			  }
+			};
+			var tooltip = {
+			  // valueSuffix: ' millions'
+			};
+			var plotOptions = {
+			  bar: {
+			     dataLabels: {
+			        enabled: true
+			     }
+			  }
+			};
+			var legend = {
+			  layout: 'vertical',
+			  align: 'right',
+			  verticalAlign: 'top',
+			  x: -40,
+			  y: 100,
+			  floating: true,
+			  borderWidth: 1,
+			  backgroundColor: ((Highcharts.theme && Highcharts.theme.legendBackgroundColor) || '#FFFFFF'),
+			  shadow: true
+			};
+			var credits = {
+			  enabled: false
+			};
+
+			var series= [{
+			     name: 'Turn Around Time',
+			        data: tts
+			    }, {
+			        name: 'Waiting Time',
+			        data: wts
+			    }
+			];     
+			  
+			var json = {};   
+			json.chart = chart; 
+			json.title = title;   
+			json.tooltip = tooltip;
+			json.xAxis = xAxis;
+			json.yAxis = yAxis;  
+			json.series = series;
+			json.plotOptions = plotOptions;
+			json.legend = legend;
+			json.credits = credits;
+			$('#chart-container').highcharts(json);
+		}
+
 		function print_output(output){
 			var color = ['pink', 'blue', 'blue-grey', 'green darken-3', 'red', 'purple'];
 			var algo  = ['First Come First Serve',  'Round Robin', 'Shortest Job first', 'Non Preemptive Priority Scheduling', 'Shortest Remaining Time First', 'Preemptive Priority Scheduling'];
@@ -142,6 +220,8 @@
 						op.innerHTML += '<div class="card white-text '+color[n]+'"><div class="card-content" id="calgo'+n+'"><div class="row"><h4>' + algo[n] + '</h4></div> <table class="bordered"><thead><tr><th>Process #</th><th>Completion time</th><th>Turn Around Time</th><th>Waiting Time</th></tr></thead><tbody id="algo'+n+'">';
 						n++;
 					}else{
+						console.log("draw graph")
+						draw_graph(algo, tts, wts);
 						return;
 					}
 					i++;
