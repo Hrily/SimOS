@@ -34,10 +34,10 @@ int main()
 	}
     if(previous<header){
     	for(j=i+1;j<=tot_req;j++)
-			printf("%d\t",q[j]);
+			printf("%d ",q[j]);
 			
 		for(j=i-1;j>=0;j--)
-			printf("%d\t",q[j]);
+			printf("%d ",q[j]);
 			
     	for(j=i;j<tot_req;j++){
     		diff=abs(q[j+1]-q[j]);
@@ -54,10 +54,10 @@ int main()
 	}
 	else{
 		for(j=i-1;j>=0;j--)
-			printf("%d\t",q[j]);
+			printf("%d ",q[j]);
 			
 		for(j=i+1;j<=tot_req;j++)
-				printf("%d\t",q[j]);
+				printf("%d ",q[j]);
 				
 		for(j=i;j>0;j--){
 			diff=abs(q[j]-q[j-1]);
@@ -72,5 +72,5 @@ int main()
 	}
     
     
-    printf("\nSeek time=%d\n",seek_t);
+    printf("\nSeek Time:%d\n",seek_t);
 }
