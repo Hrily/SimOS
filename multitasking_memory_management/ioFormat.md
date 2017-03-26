@@ -9,12 +9,14 @@ Ci
 ```
 
 S  - Number of partitions in Memory (for MFT) or Total size of Memory (for MVT)
+
 F  - Fitting Strategy, 1 for First Fit, 2 for Best Fit and 3 for Worst Fit
+
 Ci - ith Command, continously take commands
 
 Command can be 0, 1, 2, or 3
 
-#### Command 1
+#### Command `1`
 
 Add Program to Memory
 
@@ -63,7 +65,9 @@ Bi Si A
 ```
 
 Bi - Beginning of ith partition
+
 Si - Size of the ith partition
+
 Ai - Status: 1 if allocated, 0 otherwise
 
 #### Command `0`
