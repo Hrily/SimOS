@@ -21,6 +21,6 @@
 				
 	}
 	for(i=0;i<tot_req;i++)
-		printf("%d\t",a[i]);
-	printf("\nSeek time: %d\n",seek_t);
+		printf("%d ",a[i]);
+	printf("\nSeek Time: %d\n",seek_t);
 }
