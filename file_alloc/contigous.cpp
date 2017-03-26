@@ -1,3 +1,4 @@
+// Abhilash and Ritwick
 #include<iostream>
 using namespace std;
 
@@ -64,6 +65,7 @@ int searchfile( string s){
 	return -1;	
 }
 void display(){
+	cout<<""
 	for (int j=0;j<index;j++){
 		if(list[j].i==-1)
 			continue;
