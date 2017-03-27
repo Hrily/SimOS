@@ -81,7 +81,7 @@
 			input = n_req + ' ' + input;
 			execute(input);
 		}
-      // It executes 
+      // It executes the scheduling.. 
 		function execute(input){
 			var xhr = new XMLHttpRequest();
 			xhr.onreadystatechange = function() {
@@ -112,13 +112,13 @@
 				if(m<a[i]) m = a[i];
 			return m;
 		}
-
+       //Generates bars....
 		function get_bar(width, max, color){
 			var perc = 1.0*width/max*100;
 			var bar = '<div class="col s10"><div class="bar ' + color + '" style="width: ' + 0 + '%;">' + width + '</div></div>';
 			return bar;
 		}
-
+       //Cascades bars... 
 		function expand_bars(output, max){
 			console.log(max);
 			for(var i=0;i<output.length;i++){
@@ -126,7 +126,7 @@
 				$('#op' + i + ' .bar').css('width', perc+'%')
 			}
 		}
-
+       //To print the Bar graph of algorithms seek time...
 		function print_output(output){
 			output = to_int(output);
 			var max = get_max(output);
@@ -172,9 +172,6 @@
 				</form>
 			</div>
 		</div>
-	</div>
-	<div>
-	<h1>Informationsdfgrs </h1>		
 	</div>
 </body>
 </html>
