@@ -31,7 +31,7 @@ def page_terminal():
 
 @app.route('/disk_scheduling/schedule', methods=['POST', 'GET'])
 def disk_schedule():
-	scheduling = ['fcfs', 'sstf', 'scan', 'c_scan'. 'look', 'c_look']
+	scheduling = ['fcfs', 'sstf', 'scan', 'c_scan', 'look', 'c_look']
 	inp = request.args['input']
 	print inp
 	out = ""
