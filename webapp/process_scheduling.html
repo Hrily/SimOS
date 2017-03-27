@@ -1,0 +1,287 @@
+<!-- Hrishikesh Hiraskar -->
+<!-- 15CO121             -->
+<!-- 12/3/17             -->
+<!DOCTYPE html>
+<html>
+<head>
+	<title>SimOS - Process Scheduling</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width; initial-scale=1; maximum-scale=1">
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<script
+	src="https://code.jquery.com/jquery-3.1.1.min.js"
+	integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
+	crossorigin="anonymous"></script>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/css/materialize.min.css">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto Mono">
+	<style>
+
+		body {
+			margin: 0;
+			padding: 0;
+		}
+
+		.head {
+			width: 100%;
+			padding: 2%;
+			padding-bottom: 10%;
+		}
+
+		.bar {
+			display: inline-block;
+			text-align: center;
+			color: white;
+			width: 0%;
+			-webkit-transition: width .3s ease-out;
+			-o-transition: width .3s ease-out;
+			transition: width .3s ease-out;
+		}
+
+	</style>
+
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/js/materialize.min.js"></script>
+	<script src="https://code.highcharts.com/highcharts.js"></script>
+	<script type="text/javascript">
+		
+		var n_processes = 1;
+
+		//Function to select HTML Object by ID
+		function S(id){
+			return document.getElementById(id)
+		}
+
+		function put_processes(){
+			processes = S('processes');
+			processes.innerHTML = "";
+			for(var i=0;i<n_processes;i++){
+				var p = '<div class="row"> <div class="input-field col s4"> <input class="validate" type="text" id="p_at'+i+'"/> <label for="head_pos">Arrival Time</label> </div> <div class="input-field col s4"> <input class="validate" type="text" id="p_bt'+i+'"/> <label for="head_pos">Burst Time</label> </div> <div class="input-field col s4"> <input class="validate" type="text" id="p_pt'+i+'"/> <label for="head_pos">Priority</label> </div> </div>';
+				processes.innerHTML += p;
+			}
+		}
+
+		//To add Process
+		function add_process(){
+			n_processes = S('n_processes').innerHTML;
+			S('n_processes').innerHTML = ++n_processes;
+			put_processes();
+		}
+
+		function remove_process(){
+			if(n_processes == 1)
+				return;
+			n_processes = S('n_processes').innerHTML;
+			S('n_processes').innerHTML = --n_processes;
+			put_processes();
+		}
+
+		//To Submit the inputs for scheduling..
+		function submit(){
+			var tq = S('time_quantum').value;
+			if(!tq || tq.length == 0){
+				Materialize.toast("Please fill the input fields!!", 1500);
+				return;
+			}
+			var input = n_processes + ' ' + tq + ' ';
+			for(var i=0;i<n_processes;i++){
+				var at = S('p_at'+i).value,
+				    bt = S('p_bt'+i).value,
+				    pt = S('p_pt'+i).value;
+				if((!at || !bt || !pt) || at.length==0 || bt.length==0 || pt.length==0){
+					Materialize.toast("Please fill the input fields!!", 1500);
+					return;
+				}
+				input += (i+1) + ' ' + at + ' ' + bt + ' ' + pt + ' ';
+			}
+			execute(input);
+			console.log(input);
+		}
+		// It executes 
+		function execute(input){
+			var xhr = new XMLHttpRequest();
+			xhr.onreadystatechange = function() {
+			    if (xhr.readyState == XMLHttpRequest.DONE) {
+			    	output = xhr.responseText;
+			    	print_output(output.split('\n'));
+					window.scrollTo(0,document.body.scrollHeight);
+			    }
+			}
+			xhr.open('GET', '/process_scheduling/schedule?input='+input, true);
+			xhr.send();
+			var op = '<div class="container"><div class="card"><div class="card-content" id="output"></div></div></div>';
+			document.body.innerHTML += op;
+			var spinner = '<div class="col s12 center-align"> <div class="preloader-wrapper active"><div class="spinner-layer spinner-teal-only center"> <div class="circle-clipper left"> <div class="circle"></div> </div><div class="gap-patch"> <div class="circle"></div> </div><div class="circle-clipper right"> <div class="circle"></div> </div> </div> </div> </div>';
+			S('output').innerHTML += spinner;
+			window.scrollTo(0,document.body.scrollHeight);
+		}
+
+		function to_float(output){
+			for(var i=0;i<output.length;i++)
+				output[i] = parseFloat(output[i]);
+			return output;
+		}
+
+
+		function draw_graph(algos, tts, wts){
+			tts = to_float(tts);
+			wts = to_float(wts);
+			console.log(algos);
+			console.log(tts);
+			console.log(wts);
+			$('body').append('<div class="container"><div class="card"><div class="card-content"><div id="chart-container"></div></div></div</div>');
+			var chart = {
+			  type: 'bar'
+			};
+			var title = {
+			  text: 'Comparision of Process Scheduling Algorithms'   
+			};
+			var xAxis = {
+			  categories: algos,
+			  title: {
+			     text: null
+			  }
+			};
+			var yAxis = {
+			  min: 0,
+			  title: {
+			     text: 'Time',
+			     align: 'high'
+			  },
+			  labels: {
+			     overflow: 'justify'
+			  }
+			};
+			var tooltip = {
+			  // valueSuffix: ' millions'
+			};
+			var plotOptions = {
+			  bar: {
+			     dataLabels: {
+			        enabled: true
+			     }
+			  }
+			};
+			var legend = {
+			  layout: 'vertical',
+			  align: 'right',
+			  verticalAlign: 'top',
+			  x: -40,
+			  y: 100,
+			  floating: true,
+			  borderWidth: 1,
+			  backgroundColor: ((Highcharts.theme && Highcharts.theme.legendBackgroundColor) || '#FFFFFF'),
+			  shadow: true
+			};
+			var credits = {
+			  enabled: false
+			};
+
+			var series= [{
+			     name: 'Turn Around Time',
+			        data: tts
+			    }, {
+			        name: 'Waiting Time',
+			        data: wts
+			    }
+			];     
+			  
+			var json = {};   
+			json.chart = chart; 
+			json.title = title;   
+			json.tooltip = tooltip;
+			json.xAxis = xAxis;
+			json.yAxis = yAxis;  
+			json.series = series;
+			json.plotOptions = plotOptions;
+			json.legend = legend;
+			json.credits = credits;
+			$('#chart-container').highcharts(json);
+		}
+
+		function print_output(output){
+			var color = ['pink', 'blue', 'blue-grey', 'green darken-3', 'red', 'purple'];
+			var algo  = ['First Come First Serve',  'Round Robin', 'Shortest Job first', 'Non Preemptive Priority Scheduling', 'Shortest Remaining Time First', 'Preemptive Priority Scheduling'];
+			var op = S('output');
+			var n = 0;
+			var tts = [];
+			var wts = [];
+			op.innerHTML = '<div class="card white-text '+color[n]+'"><div class="card-content" id="calgo0"><div class="row"><h4>' + algo[n] + '</h4></div><table class="bordered"><thead><tr><th>Process #</th><th>Completion time</th><th>Turn Around Time</th><th>Waiting Time</th></tr></thead><tbody id="algo0">';
+			n++;
+			for(var i=0;i<output.length-1;i++){
+				var o = output[i].split(' ');
+				console.log(o);
+				if(o[0]=='Average'){
+					tts.push(o[2]);
+					o = output[i+1].split(' ');
+					wts.push(o[2])
+					op.innerHTML += '</tbody></table>';
+					$('#calgo'+(n-1)).append('<br>Average Turnaround time : ' + tts[n-1] + '<br>Average Waiting time : ' + wts[n-1]);
+					if(n<algo.length){
+						op.innerHTML += '<div class="card white-text '+color[n]+'"><div class="card-content" id="calgo'+n+'"><div class="row"><h4>' + algo[n] + '</h4></div> <table class="bordered"><thead><tr><th>Process #</th><th>Completion time</th><th>Turn Around Time</th><th>Waiting Time</th></tr></thead><tbody id="algo'+n+'">';
+						n++;
+					}else{
+						console.log("draw graph")
+						draw_graph(algo, tts, wts);
+						return;
+					}
+					i++;
+					continue;
+				}
+				$('#algo'+(n-1)).append("<tr>" + 
+						                "<td>" + o[0] + "</td>" + 
+						                "<td>" + o[1] + "</td>" + 
+						                "<td>" + o[2] + "</td>" + 
+						                "<td>" + o[3] + "</td>" + 
+						                "</tr>");
+			}
+		}
+
+	</script>
+</head>
+<body>
+	<div class="head teal white-text"><h1>Process Scheduling </h1></div>
+	<div class="container" style="margin-top: -8%;">
+		<div class="card">
+			<div class="card-content">
+				<form class="row">
+					<h3>Compare Process Scheduling Algorithms</h3>
+					<h5>Input</h5>
+					<div class="row">
+						<div class="input-field col s4">
+							<input class="validate" type="text" id="time_quantum"/>
+							<label for="head_pos">Time Quantum</label>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col s12">
+							<div class="col"><b>Processes</b></div>
+							<div class="row">
+								<a class="col btn btn-small" href="javascript:remove_process()">-</a></a>
+								<div class="col" id="n_processes">1</div>
+								<a class="col btn btn-small" href="javascript:add_process()">+</a></a>
+							</div>
+						</div>
+					</div>
+					<div id="processes">
+						<div class="row">
+							<div class="input-field col s4">
+								<input class="validate" type="text" id="p_at0"/>
+								<label for="head_pos">Arrival Time</label>
+							</div>
+							<div class="input-field col s4">
+								<input class="validate" type="text" id="p_bt0"/>
+								<label for="head_pos">Burst Time</label>
+							</div>
+							<div class="input-field col s4">
+								<input class="validate" type="text" id="p_pt0"/>
+								<label for="head_pos">Priority</label>
+							</div>
+						</div>
+					</div>
+					<a class="btn waves-effect waves-effect-light teal right" onclick="submit()"><i class="material-icons right">send</i>Submit</a>
+				</form>
+			</div>
+		</div>
+	</div>
+</body>
+</html>
