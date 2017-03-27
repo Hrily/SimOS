@@ -26,40 +26,47 @@ int main()
        }
     }
     
+    
    
     for(i=0;i<n+1;i++){
     	if(q[i]==head)
     		break;
 	}
 	//i is initially set to index of head request
-   
+   printf("%d ",q[i]);
 	if(prev<head){					// moving forward
     		for(j=i;j<n;j++){
 			diff=abs(q[j+1]-q[j]);
 			seek+=diff;
-			printf("%d\t",q[j+1]);
+			printf("%d ",q[j+1]);
 		}
+		
+			
 		
 		for(j=0;j<i-1;j++){
 			diff=abs(q[j+1]-q[j]);
 			seek+=diff;
-			printf("%d\t",q[j]);
+			printf("%d ",q[j]);
 		}
+		if(q[0]!=head){
+		
 		printf("%d",q[j]);
+	}
 	}
 	else{						// moving backward
 		for(j=i;j>0;j--){
 			diff=abs(q[j]-q[j-1]);
 			seek+=diff;
-			printf("%d\t",q[j-1]);
+			printf("%d ",q[j-1]);
 		}
 	
 		for(j=n;j>i+1;j--){
 			diff=abs(q[j]-q[j-1]);
 			seek+=diff;
-			printf("%d\t",q[j]);
+			printf("%d ",q[j]);
 		}
-		printf("%d",q[j]);
+		if(q[n]!=head)
+			printf("%d",q[j]);
 	}
     
     

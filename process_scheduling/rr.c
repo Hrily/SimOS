@@ -1,35 +1,38 @@
-//AALAMDEEP KASHYAP
-//15CO101
 #include <stdio.h>
 #include <stdlib.h>
 
-struct process											//Structure of a process
+struct process								//Structure of a process
 {
-	int name;										//Name of the process
-	int at,bt,wt,tt,rt,ct;									//Arrival time, Burst Time, Waiting Time, TurnAround Time, Remaining Time, Completion time
-	int completed;										//Completed
-	
+	int pt;									//Process Number
+	int at;									//Arrival Time
+	int bt;									//Burst Time
+	int wt;									//Waiting Time
+	int tt;									//Turn Around Time
+	int rt;									//Remaining Time
+	int ct;									//Completion Time
+	int completed;							//Completed or not
+	int prior;								//Priority of process
 }pro;
 
 
-int n;
-int q[10];  
-int front=-1,rear=-1;
+int n;										//Number of processes
+int q[100];									//Queue  
+int front=-1,rear=-1;						//Front and rear of queue
 
-void enqueue(int i)										//Function to enqueue process in queue
+void enqueue(int i)							//Function to enqueue process in queue
 {
-	if(rear==10)
-	printf("overflow");
+	//if(rear==100)
+	//printf("overflow");
 	rear++;
 	q[rear]=i;
 	if(front==-1)
 	front=0;
 }
 
-int dequeue()											//Function to dequeue process from queue
+int dequeue()								//Function to dequeue process from queue
 {
-	if(front==-1)
-	printf("underflow");
+	//if(front==-1)
+	//printf("underflow");
 	int temp=q[front];
 	if(front==rear)
 		front=rear=-1;
@@ -38,7 +41,7 @@ int dequeue()											//Function to dequeue process from queue
 	return temp;
 }
 
-int isInQueue(int i)										//Function to check if process is in queue
+int isInQueue(int i)						//Function to check if process is in queue
 {
 	int k;
 	for(k=front;k<=rear;k++)
@@ -50,7 +53,7 @@ int isInQueue(int i)										//Function to check if process is in queue
 
 }
 
-void sortByArrival(struct process *p)								//Sorting by arrival
+void sortByArrival(struct process *p)		//Sorting by arrival time
 {
 	struct process temp;
 	int i,j;
@@ -68,31 +71,28 @@ void sortByArrival(struct process *p)								//Sorting by arrival
 
 int main()
 {
-	int i,j,time=0,sum_bt=0,tq;
-	int c;
+	int i,j,time=0;
+	int sum_bt=0;				//Total burst time
+	int tq;						//Time Quantun
 	struct process *p;
 	
-        float avgwt=0;
-	printf("Enter no of processes:");
-	scanf("%d",&n);
+    float avgwt=0;				//Average Waiting Time
+    float atat = 0;				//Average TurnAround Time
+	
+	scanf("%d%d",&n,&tq);		//Enter total Number of processes
 	p = malloc(n*sizeof(pro));
-	for(i=0,c=1;i<n;i++,c++)								//Enter the details of project
+	for(i=0;i<n;i++)			//Enter the details of project
 	{
-		p[i].name=c;
-		printf("\nEnter the arrival time and burst time of process %d: ",p[i].name);
-		scanf("%d%d",&p[i].at,&p[i].bt);
-		p[i].rt=p[i].bt;
+		scanf("%d%d%d%d",&p[i].pt,&p[i].at,&p[i].bt,&p[i].prior);
+		p[i].rt=p[i].bt;		//Remaining Time of process
 		p[i].completed=0;
 		sum_bt+=p[i].bt;
- 
-	}
 
-	printf("\nEnter the time quantum:");					
-	scanf("%d",&tq);
+	}
 
 	sortByArrival(p);
 	enqueue(0);        
-	printf("Process execution order: ");						
+							
 	for(time=p[0].at;time<sum_bt;)      
 	{   i=dequeue();
 		if(p[i].rt<=tq)
@@ -100,7 +100,7 @@ int main()
               time+=p[i].rt;          
 			p[i].rt=0;
 			p[i].completed=1;          
-			printf(" %d ",p[i].name);
+			
 			time+=p[i].rt;
 			p[i].wt=time-p[i].at-p[i].bt;
 			p[i].tt=time-p[i].at;  
@@ -118,7 +118,7 @@ int main()
 		{
 			time+=tq;
 			p[i].rt-=tq;
-			printf(" %d ",p[i].name);
+			
 			for(j=0;j<n;j++)
 			{
 		            if(p[j].at<=time && p[j].completed!=1&&i!=j&& isInQueue(j)!=1)
@@ -133,16 +133,16 @@ int main()
     
     
 	}
-	float atat = 0;
-	printf("\nProcess\tArrival Time\tBurst Time\tCompletion Time\t Waiting Time\tTurnAround Time\n");
+	
+
 	for(i=0;i<n;i++)
 	{
 		atat+=p[i].tt;
 		avgwt+=p[i].wt;
-		printf("%d\t\t%d\t\t%d\t\t%d\t\t%d\t\t%d\n",p[i].name,p[i].at,p[i].bt,p[i].ct,p[i].wt,p[i].tt);
+		printf("%d %d %d %d\n",p[i].pt,p[i].ct,p[i].tt,p[i].wt);		//Process name,Completion Time,TurnAround Time,Waiting Time
 	}
-	printf("\nAverage waiting time:%f\n",avgwt/n);
-	printf("Average turn around time:%f\n",atat/n);
+	printf("Average TT: %f\n",atat/n);				//Average Turn Around Time
+	printf("Average WT: %f\n",avgwt/n);				//Average Waiting time
 	
 	return 0;
 }

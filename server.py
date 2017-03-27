@@ -31,20 +31,31 @@ def page_terminal():
 
 @app.route('/disk_scheduling/schedule', methods=['POST', 'GET'])
 def disk_schedule():
-	scheduling = ['c_scan', 'fcfs', 'look']
+	scheduling = ['fcfs', 'sstf', 'scan', 'c_scan', 'look', 'c_look']
 	inp = request.args['input']
+	print inp
 	out = ""
 	for algo in scheduling:
-		o = executer.execute('disk_scheduling/'+algo, inp)
-		print o
-		o = o.replace('Seek time: ', '')
-		print o
-		out += str(int(o)) + ' '
+		out += executer.execute('disk_scheduling/'+algo, inp)
 	return out
 
 @app.route('/disk_scheduling')
 def page_disk_scheduling():
 	return app.send_static_file('disk_scheduling.html')
+
+
+@app.route('/process_scheduling/schedule', methods=['POST', 'GET'])
+def process_schedule():
+	scheduling = ['fcfs', 'rr', 'sjf', 'non_preemptive', 'srtf', 'preemptive']
+	inp = request.args['input']
+	out = ""
+	for algo in scheduling:
+		out += executer.execute('process_scheduling/'+algo, inp);
+	return out
+
+@app.route('/process_scheduling')
+def page_process_scheduling():
+	return app.send_static_file('process_scheduling.html')
 
 @app.route('/<path:path>')
 def static_file(path):

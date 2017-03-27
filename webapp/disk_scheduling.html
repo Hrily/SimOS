@@ -106,6 +106,54 @@
 			return output.slice(0, output.length-1);
 		}
 
+       function draw_graph(Algos, output,head,previous){
+			previous = to_int(previous);
+			head = to_int(head);
+			console.log(algos);
+			console.log(previous);
+			console.log(head);
+			$('body').append('<div class="container"><div class="card"><div class="card-content"><div id="chart-container"></div></div></div</div>');
+			var chart = {
+			  type: 'line'
+			};
+			var title = {
+			  text: Algos   
+			};
+			var yAxis = {
+			  categories: requests,
+			  title: {
+			     text: 'disks requested'
+			  }
+			};
+			var xAxis = {
+			  min: 0,
+			  title: {
+			     text: 'Time',
+			     align: 'right'
+			  },
+			  labels: {
+			     overflow: 'justify'
+			  }
+			};
+			var tooltip = {
+			  // valueSuffix: ' '
+			};
+			
+			};
+			var legend = {
+			  layout: 'vertical',
+			  align: 'right',
+			  verticalAlign: 'top',
+			 // x: -40,
+			//  y: 100,
+			  floating: true,
+			  borderWidth: 1,
+			  backgroundColor: ((Highcharts.theme && Highcharts.theme.legendBackgroundColor) || '#FFFFFF'),
+			 // shadow: true
+			};
+			var credits = {
+			  enabled: false
+			};
 		function get_max(a){
 			var m = 0
 			for(var i=0;i<a.length;i++)
