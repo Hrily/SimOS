@@ -42,6 +42,7 @@ int main()
 	}
 	// i is initially set to index of head request
 	
+	printf("%d ", head);
 			
 	int cnt=n+1;		 // no. of requests in list including present diskhead position
 	int o,flag=0;
