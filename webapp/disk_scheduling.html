@@ -133,8 +133,8 @@
 			output = to_int(output);
 			var max = get_max(output);	
 			S('output').innerHTML = '<h5>Output</h5><br><div class="row"> <div class="col s2 right-align"><b>Algorithm</b></div>&nbsp;&nbsp<b>Seek Time</b></div>';
-			var color = ['pink', 'blue', 'blue-grey'];
-			var algos = ['C Scan', 'FCFS', 'Look'];
+			var color = ['pink', 'blue', 'blue-grey', 'green darken-3', 'red', 'purple'];
+			var algos = ['FCFS', 'Shortest Seek Time First', 'SCAN', 'Circular SCAN', 'LOOK', 'Circular LOOK'];
 			for(var i=0;i<output.length;i++)
 				S('output').innerHTML += '<div class="row" id="op' + i + '"> <div class="col s2 right-align">' + algos[i] + '</div>' + get_bar(output[i], max, color[i]) + '</div>';
 			setTimeout(function(){expand_bars(output, max);}, 100);
