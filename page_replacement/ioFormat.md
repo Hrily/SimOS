@@ -9,7 +9,9 @@ Pi
 ```
 
 S  - Size of Main Memory (in frames)
+
 N  - Number of Pages
+
 Pi - ith Page number
 
 ### Output format
