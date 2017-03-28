@@ -65,11 +65,11 @@ void sorta(struct process *m,int n)    // Function to sort the processes in asce
 	    int n,time=0,tot=0,i,tq,t,pr=-1,Q;
 	    float awt=0,atat=0;
       struct process *m,*ba;
-      printf("enter no of processes\n");
+      // printf("enter no of processes\n");
       scanf("%d",&n);
       m=(struct process *)malloc(n*sizeof(struct process));
       q=(int *)malloc(n*sizeof(int));
-      printf("enter time quantum\n");
+      // printf("enter time quantum\n");
       scanf("%d",&Q); 
       for(i=0;i<n;i++)                                 // To enter the process details
         {
@@ -117,7 +117,7 @@ void sorta(struct process *m,int n)    // Function to sort the processes in asce
         // printf("pno\tct\ttt\twt\n");
          for(i=0;i<n;i++)
            {
-              printf("%d\t%d\t%d\t%d\n",m[i].pt,m[i].ct,m[i].tat,m[i].wt);              // To print the completion time
+              printf("%d %d %d %d\n",m[i].pt+1,m[i].ct,m[i].tat,m[i].wt);              // To print the completion time
               }
-           printf("Average TT: %f\nAverage WT:  %f\n",atat/n,awt/n);   
+           printf("Average TT: %f\nAverage WT: %f\n",atat/n,awt/n);   
            }                    

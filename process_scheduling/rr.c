@@ -21,8 +21,8 @@ int front=-1,rear=-1;						//Front and rear of queue
 
 void enqueue(int i)							//Function to enqueue process in queue
 {
-	if(rear==100)
-	printf("overflow");
+	//if(rear==100)
+	//printf("overflow");
 	rear++;
 	q[rear]=i;
 	if(front==-1)
@@ -31,8 +31,8 @@ void enqueue(int i)							//Function to enqueue process in queue
 
 int dequeue()								//Function to dequeue process from queue
 {
-	if(front==-1)
-	printf("underflow");
+	//if(front==-1)
+	//printf("underflow");
 	int temp=q[front];
 	if(front==rear)
 		front=rear=-1;
@@ -139,11 +139,10 @@ int main()
 	{
 		atat+=p[i].tt;
 		avgwt+=p[i].wt;
-		printf("\n\n");
-		printf("%d\t%d\t%d\t%d\n",p[i].pt,p[i].ct,p[i].tt,p[i].wt);		//Process name,Completion Time,TurnAround Time,Waiting Time
+		printf("%d %d %d %d\n",p[i].pt,p[i].ct,p[i].tt,p[i].wt);		//Process name,Completion Time,TurnAround Time,Waiting Time
 	}
-	printf("\nAverage TT:%f\n",atat/n);				//Average Turn Around Time
-	printf("Average WT:%f\n",avgwt/n);				//Average Waiting time
+	printf("Average TT: %f\n",atat/n);				//Average Turn Around Time
+	printf("Average WT: %f\n",avgwt/n);				//Average Waiting time
 	
 	return 0;
 }
