@@ -20,6 +20,7 @@
 				previous=a[i];
 				
 	}
+	 printf("%d ",header);
 	for(i=0;i<tot_req;i++)
 		printf("%d ",a[i]);
 	printf("\nSeek Time: %d\n",seek_t);
