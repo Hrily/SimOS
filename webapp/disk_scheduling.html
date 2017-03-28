@@ -18,9 +18,8 @@
 	<style>
 
 		body {
-			width: 100%;
-			padding: 2%;
-			padding-bottom: 10%;
+			margin: 0;
+			padding: 0;
 		}
 
 		.head {
@@ -82,7 +81,7 @@
 			input = n_req + ' ' + input;
 			execute(input);
 		}
-      // It executes 
+      // It executes the scheduling.. 
 		function execute(input){
 			var xhr = new XMLHttpRequest();
 			xhr.onreadystatechange = function() {
@@ -107,19 +106,67 @@
 			return output.slice(0, output.length-1);
 		}
 
+       function draw_graph(Algos, output,head,previous){
+			previous = to_int(previous);
+			head = to_int(head);
+			console.log(algos);
+			console.log(previous);
+			console.log(head);
+			$('body').append('<div class="container"><div class="card"><div class="card-content"><div id="chart-container"></div></div></div</div>');
+			var chart = {
+			  type: 'line'
+			};
+			var title = {
+			  text: Algos   
+			};
+			var yAxis = {
+			  categories: requests,
+			  title: {
+			     text: 'disks requested'
+			  }
+			};
+			var xAxis = {
+			  min: 0,
+			  title: {
+			     text: 'Time',
+			     align: 'right'
+			  },
+			  labels: {
+			     overflow: 'justify'
+			  }
+			};
+			var tooltip = {
+			  // valueSuffix: ' '
+			};
+			
+			};
+			var legend = {
+			  layout: 'vertical',
+			  align: 'right',
+			  verticalAlign: 'top',
+			 // x: -40,
+			//  y: 100,
+			  floating: true,
+			  borderWidth: 1,
+			  backgroundColor: ((Highcharts.theme && Highcharts.theme.legendBackgroundColor) || '#FFFFFF'),
+			 // shadow: true
+			};
+			var credits = {
+			  enabled: false
+			};
 		function get_max(a){
 			var m = 0
 			for(var i=0;i<a.length;i++)
 				if(m<a[i]) m = a[i];
 			return m;
 		}
-
+       //Generates bars....
 		function get_bar(width, max, color){
 			var perc = 1.0*width/max*100;
 			var bar = '<div class="col s10"><div class="bar ' + color + '" style="width: ' + 0 + '%;">' + width + '</div></div>';
 			return bar;
 		}
-
+       //Cascades bars... 
 		function expand_bars(output, max){
 			console.log(max);
 			for(var i=0;i<output.length;i++){
@@ -127,10 +174,10 @@
 				$('#op' + i + ' .bar').css('width', perc+'%')
 			}
 		}
-
+       //To print the Bar graph of algorithms seek time...
 		function print_output(output){
 			output = to_int(output);
-			var max = get_max(output);	
+			var max = get_max(output);
 			S('output').innerHTML = '<h5>Output</h5><br><div class="row"> <div class="col s2 right-align"><b>Algorithm</b></div>&nbsp;&nbsp<b>Seek Time</b></div>';
 			var color = ['pink', 'blue', 'blue-grey'];
 			var algos = ['C Scan', 'FCFS', 'Look'];
@@ -172,6 +219,7 @@
 					<a class="btn waves-effect waves-effect-light teal right" onclick="submit()"><i class="material-icons right">send</i>Submit</a>
 				</form>
 			</div>
+<<<<<<< HEAD
 		</div>
 	</div>			
 	<div class="container">
@@ -249,5 +297,9 @@
 		</div>
 	</div>		
 	
+=======
+		</div>
+	</div>
+>>>>>>> 367dc0404cb38e03268c18fb07c922c524ebfb6f
 </body>
 </html>

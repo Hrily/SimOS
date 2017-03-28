@@ -115,16 +115,16 @@
 			window.scrollTo(0,document.body.scrollHeight);
 		}
 
-		function to_int(output){
+		function to_float(output){
 			for(var i=0;i<output.length;i++)
-				output[i] = parseInt(output[i]);
+				output[i] = parseFloat(output[i]);
 			return output;
 		}
 
 
 		function draw_graph(algos, tts, wts){
-			tts = to_int(tts)
-			wts = to_int(wts)
+			tts = to_float(tts);
+			wts = to_float(wts);
 			console.log(algos);
 			console.log(tts);
 			console.log(wts);
