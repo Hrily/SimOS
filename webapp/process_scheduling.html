@@ -125,7 +125,7 @@
 		function draw_graph(algos, tts, wts){
 			tts = to_float(tts);
 			wts = to_float(wts);
-			console.log(algos);
+			console.log(algos);		
 			console.log(tts);
 			console.log(wts);
 			$('body').append('<div class="container"><div class="card"><div class="card-content"><div id="chart-container"></div></div></div</div>');
@@ -198,6 +198,12 @@
 			$('#chart-container').highcharts(json);
 		}
 
+
+
+
+
+
+
 		function print_output(output){
 			var color = ['pink', 'blue', 'blue-grey', 'green darken-3', 'red', 'purple'];
 			var algo  = ['First Come First Serve',  'Round Robin', 'Shortest Job first', 'Non Preemptive Priority Scheduling', 'Shortest Remaining Time First', 'Preemptive Priority Scheduling'];
@@ -236,7 +242,10 @@
 			}
 		}
 
-	</script>
+	
+
+</script>
+
 </head>
 <body>
 	<div class="head teal white-text"><h1>Process Scheduling </h1></div>
