@@ -29,7 +29,7 @@ int main()
         
         for(i=0;i<n;i++)
         {
-                scanf(" %d%d%d%d",&p[i].pt,&p[i].at,&p[i].bt,&p[i].prior);
+                scanf("%d%d%d%d",&p[i].pt,&p[i].at,&p[i].bt,&p[i].prior);
               
                 if(min > p[i].at)                                                             //To find process with shortest arrival time
                         min = p[i].at;
@@ -112,7 +112,7 @@ int main()
        
         for(i=0;i<n;i++)
         {
-                printf("%d\t\t%d\t\t%d\t\t%d\n",p[i].pt,p[i].ct,p[i].tat,p[i].wt);
+                printf("%d %d %d %d\n",p[i].pt,p[i].ct,p[i].tat,p[i].wt);
         }
         float atat=0,awt=0;
         for(i=0;i<n;i++)
@@ -121,8 +121,8 @@ int main()
                 awt+=p[i].wt;
         }
 
-        printf("Average TT:%f\n",atat/n);
-        printf("Average WT:%f\n",awt/n);
+        printf("Average TT: %f\n",atat/n);
+        printf("Average WT: %f\n",awt/n);
 
 
 return 0;

@@ -54,15 +54,14 @@ int main()
 			pro[smallest].tt = endTime-pro[smallest].at;				//TurnAround Time of each process
 			pro[smallest].wt = endTime-pro[smallest].bt-pro[smallest].at; //Waiting time of each process
 			pro[smallest].ct = endTime;									//Completion time of each process
-			printf("\n%d\t\t%d\t\t%d\t\t%d",smallest+1,endTime,pro[smallest].wt,pro[smallest].tt);
+			printf("%d %d %d %d\n",smallest+1,endTime,pro[smallest].tt,pro[smallest].wt);
 			sum_wait+=pro[smallest].wt;
 			sum_turnaround+=pro[smallest].tt;
 		}
 	}
 
-	printf("\n\nAverage TT = %f\n",sum_turnaround*1.0/n);			//Total waiting time
-	printf("Average WT = %f\n\n",sum_wait*1.0/n);	//Total turnaround time
+	printf("Average TT: %f\n",sum_turnaround*1.0/n);			//Total waiting time
+	printf("Average WT: %f\n",sum_wait*1.0/n);	//Total turnaround time
 	
-printf("\n");
 }
 

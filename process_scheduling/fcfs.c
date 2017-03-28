@@ -3,7 +3,7 @@
 
 #include<stdio.h>
 #include<stdlib.h>
-void main()
+int main()
 {
 struct process{
 	
@@ -16,9 +16,10 @@ struct process{
 };
 int n,i,j;
 float avgtt=0,avgwt=0;
-printf("\nEnter no of processes N:");
 scanf("%d",&n);
 struct process p[n]; 
+int t;
+scanf("%d", &t);
 
 for(i=0;i<n;++i)
 {
@@ -27,6 +28,7 @@ p[i].p=i+1;
 scanf("%d",&p[i].p);
 scanf("%d",&p[i].at);
 scanf("%d",&p[i].bt);
+scanf("%d",&t);
 }
 
 struct process temp;
@@ -65,12 +67,12 @@ for(i=0;i<n;++i)
 //printf("\nID\tCT\tTAT\tWT\n");
 for(i=0;i<n;++i)
 {
-printf("%d\t%d\t%d\t%d",p[i].p,p[i].ct,p[i].tat,p[i].wt);
+printf("%d %d %d %d",p[i].p,p[i].ct,p[i].tat,p[i].wt);
 printf("\n");
 }
 avgtt=avgtt/n;
 avgwt=avgwt/n;
-printf("\nAverage TT: %f",avgtt);
+printf("Average TT: %f",avgtt);
 printf("\nAverage WT: %f",avgwt);
 printf("\n");
 
