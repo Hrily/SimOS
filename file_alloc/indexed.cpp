@@ -46,6 +46,7 @@ struct file
 				block[list[f].a[i]]=0; 
 				}
 		list[f].size=-1;
+		
 		}
 	}
 	int * checkfile(int s){
@@ -54,6 +55,9 @@ struct file
 		for(int i=10;i<64;i++){
 			if(block[i]==0){
 				n[cnt++]=i;
+				if(cnt>10){
+					break;
+				}
 			}
 
 			if(cnt==s)
@@ -65,7 +69,7 @@ struct file
 	}
 	int searchfile(string s){
 		for(int i=0; i<index; i++)
-		if(list[i].nm==s){
+		if(list[i].nm==s && list[i].size!=-1){
 			return i;
 		}
 	return -1;	
