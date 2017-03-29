@@ -87,7 +87,7 @@
 			xhr.onreadystatechange = function() {
 			    if (xhr.readyState == XMLHttpRequest.DONE) {
 			    	output = xhr.responseText;
-			    	print_output(output.split(' '));
+			    	print_output(output.split('\n'));
 					window.scrollTo(0,document.body.scrollHeight);
 			    }
 			}
@@ -106,54 +106,63 @@
 			return output.slice(0, output.length-1);
 		}
 
-       function draw_graph(Algos, output,head,previous){
-			previous = to_int(previous);
-			head = to_int(head);
-			console.log(algos);
-			console.log(previous);
-			console.log(head);
-			$('body').append('<div class="container"><div class="card"><div class="card-content"><div id="chart-container"></div></div></div</div>');
-			var chart = {
-			  type: 'line'
-			};
-			var title = {
-			  text: Algos   
-			};
-			var yAxis = {
-			  categories: requests,
-			  title: {
-			     text: 'disks requested'
-			  }
-			};
-			var xAxis = {
-			  min: 0,
-			  title: {
-			     text: 'Time',
-			     align: 'right'
-			  },
-			  labels: {
-			     overflow: 'justify'
-			  }
-			};
-			var tooltip = {
-			  // valueSuffix: ' '
-			};
-			
-			};
-			var legend = {
-			  layout: 'vertical',
-			  align: 'right',
-			  verticalAlign: 'top',
-			 // x: -40,
-			//  y: 100,
-			  floating: true,
-			  borderWidth: 1,
-			  backgroundColor: ((Highcharts.theme && Highcharts.theme.legendBackgroundColor) || '#FFFFFF'),
-			 // shadow: true
-			};
-			var credits = {
-			  enabled: false
-			};
+		function draw_graphs(algos, output){
+
+			for(var i=0; order.length; i++){
+				var alorithm_name = algos[i];
+				var order = output[i];
+				$('body').append('<div class="container"><div class="card"><div class="card-content"><div id="chart-container-'+i+'"></div></div></div</div>');
+
+				// TODO: JP: Create graph using parameters and draw
+				// @params 
+				// algorithm_name  Name of the Algorithm
+				// order           Order in which requests are servred
+				var chart = {
+				  type: 'line'
+				};
+				var title = {
+				  text: algorithm_name  
+				};
+				var yAxis = {
+				  categories: requests,
+				  title: {
+				     text: 'disks requested'
+				  }
+				};
+				var xAxis = {
+				  min: 0,
+				  title: {
+				     text: 'Time',
+				     align: 'right'
+				  },
+				  labels: {
+				     overflow: 'justify'
+				  }
+				};
+				var tooltip = {
+				  // valueSuffix: ' '
+				};
+				
+				var legend = {
+				  layout: 'vertical',
+				  align: 'right',
+				  verticalAlign: 'top',
+				 // x: -40,
+				//  y: 100,
+				  floating: true,
+				  borderWidth: 1,
+				  backgroundColor: ((Highcharts.theme && Highcharts.theme.legendBackgroundColor) || '#FFFFFF'),
+				 // shadow: true
+				};
+				var credits = {
+				  enabled: false
+				};
+
+				var json= {};
+				$('#chart-container-'+i).highcharts(json);
+			}
+		}
+
 		function get_max(a){
 			var m = 0
 			for(var i=0;i<a.length;i++)
@@ -174,16 +183,31 @@
 				$('#op' + i + ' .bar').css('width', perc+'%')
 			}
 		}
-       //To print the Bar graph of algorithms seek time...
-		function print_output(output){
+
+		var color = ['pink', 'blue', 'blue-grey', 'green darken-3', 'red', 'purple'];
+		var algos = ['FCFS', 'Shortest Seek Time First', 'SCAN', 'Circular SCAN', 'LOOK', 'Circular LOOK'];
+		function show_bars(output){
 			output = to_int(output);
-			var max = get_max(output);
+			var max = get_max(output);	
 			S('output').innerHTML = '<h5>Output</h5><br><div class="row"> <div class="col s2 right-align"><b>Algorithm</b></div>&nbsp;&nbsp<b>Seek Time</b></div>';
-			var color = ['pink', 'blue', 'blue-grey'];
-			var algos = ['C Scan', 'FCFS', 'Look'];
 			for(var i=0;i<output.length;i++)
 				S('output').innerHTML += '<div class="row" id="op' + i + '"> <div class="col s2 right-align">' + algos[i] + '</div>' + get_bar(output[i], max, color[i]) + '</div>';
 			setTimeout(function(){expand_bars(output, max);}, 100);
+		}
+
+		function print_output(output){
+			var sts = [];
+			var order = [];
+			for(var i=0;i<output.length;i++){
+				o = output[i].split(' ');
+				if(o[0]=='Seek')
+					sts.push(o[2]);
+				else if(o.length>1)
+					order.push(to_int(o));
+			}
+			console.log(order)
+			show_bars(sts);
+			// draw_graphs(algos, order);
 		}
 
 	</script>
