@@ -65,12 +65,12 @@ int searchfile( string s){
 	return -1;	
 }
 void display(){
-	cout<<""
+	
 	for (int j=0;j<index;j++){
 		if(list[j].i==-1)
 			continue;
 		else
-		cout<<list[j].nm<<"\t"<<list[j].size<<"\t"<<list[j].i<<endl;
+		cout<<list[j].nm<<" "<<list[j].size<<" "<<list[j].i<<endl;
 	}
 }
 int main(){
