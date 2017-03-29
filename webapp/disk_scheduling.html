@@ -81,13 +81,13 @@
 			input = n_req + ' ' + input;
 			execute(input);
 		}
-      // It executes 
+      // It executes the scheduling.. 
 		function execute(input){
 			var xhr = new XMLHttpRequest();
 			xhr.onreadystatechange = function() {
 			    if (xhr.readyState == XMLHttpRequest.DONE) {
 			    	output = xhr.responseText;
-			    	print_output(output.split(' '));
+			    	print_output(output.split('\n'));
 					window.scrollTo(0,document.body.scrollHeight);
 			    }
 			}
@@ -106,19 +106,76 @@
 			return output.slice(0, output.length-1);
 		}
 
+		function draw_graphs(algos, output){
+
+			for(var i=0; order.length; i++){
+				var alorithm_name = algos[i];
+				var order = output[i];
+				$('body').append('<div class="container"><div class="card"><div class="card-content"><div id="chart-container-'+i+'"></div></div></div</div>');
+
+				// TODO: JP and Gunjan: Create line graph using parameters and draw
+				// @params 
+				// algorithm_name  Name of the Algorithm
+				// order           Order in which requests are servred
+				var chart = {
+				  type: 'line'
+				};
+				var title = {
+				  text: algorithm_name  
+				};
+				var yAxis = {
+				  categories: requests,
+				  title: {
+				     text: 'disks requested'
+				  }
+				};
+				var xAxis = {
+				  min: 0,
+				  title: {
+				     text: 'Time',
+				     align: 'right'
+				  },
+				  labels: {
+				     overflow: 'justify'
+				  }
+				};
+				var tooltip = {
+				  // valueSuffix: ' '
+				};
+				
+				var legend = {
+				  layout: 'vertical',
+				  align: 'right',
+				  verticalAlign: 'top',
+				 // x: -40,
+				//  y: 100,
+				  floating: true,
+				  borderWidth: 1,
+				  backgroundColor: ((Highcharts.theme && Highcharts.theme.legendBackgroundColor) || '#FFFFFF'),
+				 // shadow: true
+				};
+				var credits = {
+				  enabled: false
+				};
+
+				var json= {};
+				$('#chart-container-'+i).highcharts(json);
+			}
+		}
+
 		function get_max(a){
 			var m = 0
 			for(var i=0;i<a.length;i++)
 				if(m<a[i]) m = a[i];
 			return m;
 		}
-
+       //Generates bars....
 		function get_bar(width, max, color){
 			var perc = 1.0*width/max*100;
 			var bar = '<div class="col s10"><div class="bar ' + color + '" style="width: ' + 0 + '%;">' + width + '</div></div>';
 			return bar;
 		}
-
+       //Cascades bars... 
 		function expand_bars(output, max){
 			console.log(max);
 			for(var i=0;i<output.length;i++){
@@ -127,22 +184,113 @@
 			}
 		}
 
-		function print_output(output){
+		var color = ['pink', 'blue', 'blue-grey', 'green darken-3', 'red', 'purple'];
+		var algos = ['FCFS', 'Shortest Seek Time First', 'SCAN', 'Circular SCAN', 'LOOK', 'Circular LOOK'];
+		function show_bars(output){
 			output = to_int(output);
-			var max = get_max(output);
+			var max = get_max(output);	
 			S('output').innerHTML = '<h5>Output</h5><br><div class="row"> <div class="col s2 right-align"><b>Algorithm</b></div>&nbsp;&nbsp<b>Seek Time</b></div>';
-			var color = ['pink', 'blue', 'blue-grey'];
-			var algos = ['C Scan', 'FCFS', 'Look'];
 			for(var i=0;i<output.length;i++)
 				S('output').innerHTML += '<div class="row" id="op' + i + '"> <div class="col s2 right-align">' + algos[i] + '</div>' + get_bar(output[i], max, color[i]) + '</div>';
 			setTimeout(function(){expand_bars(output, max);}, 100);
 		}
 
+		function print_output(output){
+			var sts = [];
+			var order = [];
+			for(var i=0;i<output.length;i++){
+				o = output[i].split(' ');
+				if(o[0]=='Seek')
+					sts.push(o[2]);
+				else if(o.length>1)
+					order.push(to_int(o));
+			}
+			console.log(order)
+			show_bars(sts);
+			// draw_graphs(algos, order);
+		}
+
 	</script>
 </head>
 <body>
-	<div class="head teal white-text"><h1> Disk Scheduling </h1></div>
-	<div class="container" style="margin-top: -8%;">
+	<div class="head teal white-text" ><h1> Disk Scheduling </h1></div>
+	<div class="container" style="margin-top : -8%;">
+		<div class="card" >
+			<div class="card-content">
+				<form class="row">
+					<h2 style="color: rgb(128,0,0);">Disk Scheduling :</h2>
+					<p style="font-size: 20px;">Disk scheduling is is done by operating systems to schedule I/O requests arriving for disk. For sharing the time or for dividing the Total Time of the CPU, the CPU uses the following the Scheduling Techniques. </p>
+					<br><p style="font-size: 25px;"><strong><u>Disk Scheduling Algorithms</u></strong></p>
+					
+					<div style="font-size: 18px;">
+					<ol start="1">	<li><strong><u>	FCFS: </u></strong>FCFS is the simplest of all the Disk Scheduling Algorithms. In FCFS, the requests are addressed in the order they arrive in the disk queue.</li>
+
+						<p><strong><u>Advantages:</u></strong></p>
+						<ul>
+							<li>Every request gets a fair chance</li>
+							<li>No indefinite postponement</li>
+						</ul>
+						<p><strong><u>Disadvantages:</u></strong></p>
+						<ul>
+							<li>Does not try to optimize seek time</li>
+							<li>May not provide the best possible service</li>
+						</ul>
+					</ol>	
+					<ol start="2">
+						<li><strong><u>SSTF:</u></strong> In SSTF (Shortest Seek Time First), requests having shortest seek time are executed first. So, the seek time of every request is calculated in advance in queue and then they are scheduled according to their calculated seek time. As a result, the request near the disk arm will get executed first. SSTF is certainly an improvement over FCFS as it decreases the average response time and increases the throughput of system.</li>
+					
+					<p><strong><u>Advantages:</u></strong></p>
+					<ul>
+						<li>Average Response Time decreases</li>
+						<li>Throughput increases</li>
+					</ul>
+					<p><strong><u>Disadvantages:</u></strong></p>
+					<ul>
+						<li>Overhead to calculate seek time in advance</li>
+						<li>Can cause Starvation for a request if it has higher seek time as compared to incoming requests</li>
+						<li>High variance of response time as SSTF favours only some requests</li>
+					</ul>
+					</ol>
+					<ol start="3">
+						<li><strong><u>SCAN: </u></strong>In SCAN algorithm the disk arm moves into a particular direction and services the requests coming in its path and after reaching the end of disk, it reverses its direction and again services the request arriving in its path. So, this algorithm works like an elevator and hence also known as <strong>elevator algorithm. </strong>As a result, the requests at the midrange are serviced more and those arriving behind the disk arm will have to wait.</li>
+					
+					<p><strong><u>Advantages:</u></strong></p>
+					<ul>
+						<li>High throughput</li>
+						<li>Low variance of response time</li>
+						<li>Average response time</li>
+					</ul>
+						<p><strong><u>Disadvantages:</u></strong></p>
+					<ul>
+						<li>Long waiting time for requests for locations just visited by disk arm</li>
+					</ul>
+					</ol>
+					<ol start="4">
+						<li><strong><u>CSCAN</u></strong>: In SCAN algorithm, the disk arm again scans the path that has been scanned, after reversing its direction. So, it may be possible that too many requests are waiting at the other end or there may be zero or few requests pending at the scanned area.</li>
+					
+					<p>These situations are avoided in <em>CSAN </em>algorithm in which the disk arm instead of reversing its direction goes to the other end of the disk and starts servicing the requests from there. So, the disk arm moves in a circular fashion and this algorithm is also similar to SCAN algorithm and hence it is known as C-SCAN (Circular SCAN).</p>
+					<p><strong><u>Advantages:</u></strong></p>
+					<ul>
+						<li>Provides more uniform wait time compared to SCAN</li>
+					</ul>	
+					</ol>
+					<ol start="5">
+						<li><strong><u>LOOK:</u></strong> It is similar to the SCAN disk scheduling algorithm except the difference that the disk arm in spite of going to the end of the disk goes only to the last request to be serviced in front of the head and then reverses its direction from there only. Thus it prevents the extra delay which occurred due to unnecessary traversal to the end of the disk.</li>
+					</ol>
+					<ol start="6">
+						<li><strong><u>CLOOK:</u></strong> As LOOK is similar to SCAN algorithm, in similar way, CLOOK is similar to CSCAN disk scheduling algorithm. In CLOOK, the disk arm inspite of going to the end goes only to the last request to be serviced in front of the head and then from there goes to the other end’s last request. Thus, it also prevents the extra delay which occurred due to unnecessary traversal to the end of the disk.</li>
+					</ol>
+					<p>Each algorithm is unique in its own way.Overall Performance depends on number and type of requests.</p>
+					
+					</div>
+
+				</form>	
+			</div>
+		</div>
+	</div>		
+	
+	
+	<div class="container">
 		<div class="card">
 			<div class="card-content">
 				<form class="row">
@@ -172,9 +320,6 @@
 				</form>
 			</div>
 		</div>
-	</div>
-	<div>
-	<h1>Informationsdfgrs </h1>		
 	</div>
 </body>
 </html>

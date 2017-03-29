@@ -115,16 +115,16 @@
 			window.scrollTo(0,document.body.scrollHeight);
 		}
 
-		function to_int(output){
+		function to_float(output){
 			for(var i=0;i<output.length;i++)
-				output[i] = parseInt(output[i]);
+				output[i] = parseFloat(output[i]);
 			return output;
 		}
 
 
 		function draw_graph(algos, tts, wts){
-			tts = to_int(tts)
-			wts = to_int(wts)
+			tts = to_float(tts);
+			wts = to_float(wts);
 			console.log(algos);
 			console.log(tts);
 			console.log(wts);
@@ -241,6 +241,65 @@
 <body>
 	<div class="head teal white-text"><h1>Process Scheduling </h1></div>
 	<div class="container" style="margin-top: -8%;">
+		<div class="card">
+			<div class="card-content">
+				<div class="row">
+					<h2 style="color: rgb(128,0,0);">Definition</h2>
+					<p style="font-size: 18px;">The process scheduling is the activity of the process manager that handles the removal of the running process from the CPU and the selection of another process on the basis of a particular strategy. Process scheduling is an essential part of a Multiprogramming operating systems. Such operating systems allow more than one process to be loaded into the executable memory at a time and the loaded process shares the CPU using time multiplexing.</p>
+					<h4 ><strong>Scheduling Algorithms</strong></h4>
+						<div style="font-size: 16px;">
+						<p>We&apos;ll discuss four major scheduling algorithms here which are following :</p>
+						<ol class="content">
+						<li>First Come First Serve(FCFS) Scheduling</li>
+						<li>Shortest-Job-First(SJF) Scheduling</li>
+						<li>Priority Scheduling</li>
+						<li>Round Robin(RR) Scheduling</li>
+						<li>Multilevel Queue Scheduling</li>
+						</ol>
+					</div>
+					<hr/>
+					<h4>First Come First Serve(FCFS) Scheduling</h4>
+					<ul class="content">
+					<li>Jobs are executed on first come, first serve basis.</li>
+					<li>Easy to understand and implement.</li>
+					<li>Poor in performance as average wait time is high. </li>
+					</ul>
+					<hr/>
+					<h4>Shortest-Job-First(SJF) Scheduling</h4>
+					<ul class="content">
+					<li>Best approach to minimize waiting time.</li>
+					<li>Actual time taken by the process is already known to processor.</li>
+					<li>Impossible to implement.</li>
+					</ul>
+					<p>In Preemptive Shortest Job First Scheduling, jobs are put into ready queue as they arrive, but as a process with short burst time arrives, the existing process is preemptied.</p>
+					<hr/>
+					<h4>Priority Scheduling</h4>
+					<ul class="content">
+					<li>Priority is assigned for each process. </li>
+					<li>Process with highest priority is executed first and so on.</li>
+					<li>Processes with same priority are executed in FCFS manner.</li>
+					<li>Priority can be decided based on memory requirements, time requirements or any other resource requirement.</li>
+					</ul>
+					<hr/>
+					<h4>Round Robin(RR) Scheduling</h4>
+					<ul class="content">
+					<li>A fixed time is allotted to each process, called <b>quantum</b>, for execution.</li>
+					<li>Once a process is executed for given time period that process is preemptied and other process executes for given time period.</li>
+					<li>Context switching is used to save states of preemptied processes.</li>
+					</ul>
+					<hr/>
+					<h4>Multilevel Queue Scheduling</h4>
+					<ul class="content">
+					<li>Multiple queues are maintained for processes.</li>
+					<li>Each queue can have its own scheduling algorithms.</li>
+					<li>Priorities are assigned to each queue.</li>
+					</ul>
+				</div>
+			</div>
+		</div>	
+	</div>
+
+	<div class="container" >
 		<div class="card">
 			<div class="card-content">
 				<form class="row">

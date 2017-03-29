@@ -33,7 +33,7 @@ int main()
     		break;
 	}
     if(previous<header){
-    	for(j=i+1;j<=tot_req;j++)
+    	for(j=i;j<=tot_req;j++)
 			printf("%d ",q[j]);
 			
 		for(j=i-1;j>=0;j--)
@@ -53,7 +53,7 @@ int main()
 		q[i]=header;
 	}
 	else{
-		for(j=i-1;j>=0;j--)
+		for(j=i;j>=0;j--)
 			printf("%d ",q[j]);
 			
 		for(j=i+1;j<=tot_req;j++)
@@ -72,5 +72,5 @@ int main()
 	}
     
     
-    printf("\nSeek Time:%d\n",seek_t);
+    printf("\nSeek Time: %d\n",seek_t);
 }
