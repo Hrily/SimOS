@@ -10,5 +10,7 @@ filename
 ```
 
 ### Output format(for Contigous)
-Display file allocation
+```
+Display file allocation:(space separated one on each line)
 filename first_block size
+```
