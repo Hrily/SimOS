@@ -83,6 +83,10 @@ int main(){
 		scanf("%d",&avail[j]);
 
 		//Calculating need	
+	for(i=0;i<n;i++){
+		for(j=0;j<r;j++){
+			need[i][j]=maxi[i][j]-allo[i][j];
+						}
 	
 
 	safety();
@@ -103,7 +107,10 @@ int main(){
 			for(j=0;j<r;j++)
 		scanf("%d",&avail[j]);
 		//Calculating need	
-	
+		for(i=0;i<n;i++){
+		for(j=0;j<r;j++){
+			need[i][j]=maxi[i][j]-allo[i][j];
+						}
 	
 	
 		scanf("%d",&i);
