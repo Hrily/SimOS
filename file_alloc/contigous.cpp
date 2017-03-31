@@ -39,6 +39,7 @@ void deletefile(string s){
 	for(int j=in;j<in+si;j++)
 		block[j]=0;
 	list[f].i=-1;
+	list[f].nm="";
 }
 int checkfile(int size){
 	int j=0,k;
@@ -59,7 +60,7 @@ int checkfile(int size){
 
 int searchfile( string s){
 	for(int i=0 ; i<20; i++)
-		if(list[i].nm==s){
+		if(list[i].nm==s && list[i].size!=-1){
 			return i;
 		}
 	return -1;	
@@ -70,7 +71,7 @@ void display(){
 		if(list[j].i==-1)
 			continue;
 		else
-		cout<<list[j].nm<<" "<<list[j].size<<" "<<list[j].i<<endl;
+		cout<<list[j].nm<<" "<<list[j].i<<" "<<list[j].size<<endl;
 	}
 }
 int main(){
