@@ -41,6 +41,7 @@
 	</style>
 
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/js/materialize.min.js"></script>
+	<script src="https://code.highcharts.com/highcharts.js"></script>
 	<script type="text/javascript">
 		
 		var n_req = 1;
@@ -108,20 +109,18 @@
 
 		function draw_graphs(algos, output){
 
-			for(var i=0; order.length; i++){
-				var alorithm_name = algos[i];
+			for(var i=0; i<output.length; i++){
+				var algorithm_name = algos[i];
 				var order = output[i];
 				$('body').append('<div class="container"><div class="card"><div class="card-content"><div id="chart-container-'+i+'"></div></div></div</div>');
 
-				// TODO: JP and Gunjan: Create line graph using parameters and draw
-				// @params 
 				// algorithm_name  Name of the Algorithm
 				// order           Order in which requests are servred
 				var chart = {
 				  type: 'line'
 				};
 				var title = {
-				  text: algorithm_name  
+					text: algorithm_name
 				};
 				var yAxis = {
 				  categories: requests,
@@ -130,7 +129,7 @@
 				  }
 				};
 				var xAxis = {
-				  min: 0,
+					  min: 0,
 				  title: {
 				     text: 'Time',
 				     align: 'right'
@@ -140,29 +139,49 @@
 				  }
 				};
 				var tooltip = {
-				  // valueSuffix: ' '
+				  valueSuffix: '\xB0C '
 				};
-				
-				var legend = {
+
+				var legend = {	
 				  layout: 'vertical',
-				  align: 'right',
-				  verticalAlign: 'top',
+				  align: 'right',							
+				  verticalAlign: 'middle',
+				  borderWidth: 1, 
 				 // x: -40,
 				//  y: 100,
 				  floating: true,
-				  borderWidth: 1,
+				  
 				  backgroundColor: ((Highcharts.theme && Highcharts.theme.legendBackgroundColor) || '#FFFFFF'),
 				 // shadow: true
 				};
+
+				var series = [
+				{
+					color: colorl[i],				//Colours for line charts		
+					name : algorithm_name,			//Name of Algorithm		
+					data : order 					//gets data from array order
+				}
+				];	
+
+				
 				var credits = {
 				  enabled: false
 				};
 
 				var json= {};
+
+			   json.title = title;
+			   json.xAxis = xAxis;
+			   json.yAxis = yAxis;
+			   json.tooltip = tooltip;
+			   json.legend = legend;
+			   json.series = series;
+
+   	
 				$('#chart-container-'+i).highcharts(json);
 			}
 		}
-
+		var colorl = ['blue', 'red', 'purple', 'green', 'black']	//colour array for line chart
 		function get_max(a){
 			var m = 0
 			for(var i=0;i<a.length;i++)
@@ -207,7 +226,7 @@
 			}
 			console.log(order)
 			show_bars(sts);
-			// draw_graphs(algos, order);
+			draw_graphs(algos, order);		//draw line charts 
 		}
 
 	</script>
