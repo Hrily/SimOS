@@ -5,7 +5,7 @@ import gevent
 import time
 import os
 import threading
-import shell, executer
+import shell, executer, file_allocator
 from gevent import monkey
 from gevent.pywsgi import WSGIServer
 from flask import Flask, request, Response, render_template, send_from_directory
@@ -16,6 +16,7 @@ import subprocess
 
 app = Flask(__name__, static_folder='webapp/')
 
+# Terminal
 @app.route('/terminal/shellcommand', methods=['POST', 'GET'])
 def shell_command():
 	com = request.args['command']
@@ -29,6 +30,7 @@ def page_terminal():
 	shell.init()
 	return app.send_static_file('terminal.html')
 
+# Disk Scheduling
 @app.route('/disk_scheduling/schedule', methods=['POST', 'GET'])
 def disk_schedule():
 	scheduling = ['fcfs', 'sstf', 'scan', 'c_scan', 'look', 'c_look']
@@ -43,19 +45,41 @@ def disk_schedule():
 def page_disk_scheduling():
 	return app.send_static_file('disk_scheduling.html')
 
-
+# Process Scheduling
 @app.route('/process_scheduling/schedule', methods=['POST', 'GET'])
 def process_schedule():
 	scheduling = ['fcfs', 'rr', 'sjf', 'non_preemptive', 'srtf', 'preemptive']
 	inp = request.args['input']
 	out = ""
 	for algo in scheduling:
-		out += executer.execute('process_scheduling/'+algo, inp);
+		out += executer.execute('process_scheduling/'+algo, inp)
 	return out
 
 @app.route('/process_scheduling')
 def page_process_scheduling():
 	return app.send_static_file('process_scheduling.html')
+
+# File Alloction
+@app.route('/file_allocation/execute', methods=['POST', 'GET'])
+def file_allocation():
+	inp = request.args['input']
+	out = file_allocator.execute(inp)
+	return out
+
+@app.route('/contigous_file_allocation')
+def page_contigous_file_allocation():
+	file_allocator.init(1)
+	return app.send_static_file('file_allocation.html')
+
+@app.route('/file_allocation', methods=['POST', 'GET'])
+def page_file_allocation():
+	inp = request.args['input']
+	if inp == 'contigous':
+		inp = 1
+	else:
+		inp = 0
+	file_allocator.init(inp)
+	return app.send_static_file('file_allocation.html')
 
 @app.route('/<path:path>')
 def static_file(path):
