@@ -14,7 +14,7 @@ int checkp(int p){
 	return 1;
 }
 
-void safety(){
+int safety(){
 	int i,j;
 	int f[10]={0};
 	vector<int> v;
@@ -43,11 +43,12 @@ void safety(){
 		for(it=v.begin();it!=v.end();it++)
 			cout<<*it<<" ";
 		cout<<"\n";
+		return 1;
 	}
-	else
+	else{
 		cout<<"Deadlock\n";
-
-		return;
+		return 0;
+	}
 }
 int main(){
 	int i,j,a1,a2,a3;
@@ -77,15 +78,14 @@ int main(){
 					}
 	
 					
-				safety();
-
+			int safe=safety();
+			if(safe){
 		scanf("%d",&i);
 		 f=1;
 
 		 for(j=0;j<r;j++){   	//copying the original available matrix
 			avail1[j]=avail[j];
 		}
-		cout<<"\n";
 
 		for(int k=0;k<r;k++)
 			cin>>req[k];
@@ -101,12 +101,9 @@ int main(){
 			need[i][k]-=req[k];
 			allo[i][k]+=req[k];
 		}
-		cout<<"\n";
-
-			
-
 			if(f==1)
-			safety();
+			safe=safety();
+	}
 
 	return 0;
 
