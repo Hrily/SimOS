@@ -3,12 +3,14 @@
 ### Input
 
 ```
-S
+N S
 F
 Ci
 ```
 
-S  - Number of partitions in Memory (for MFT) or Total size of Memory (for MVT)
+N  - Number of partitions (0 for MVT)
+
+S  - Total size of Memory
 
 F  - Fitting Strategy, 1 for First Fit, 2 for Best Fit and 3 for Worst Fit
 
