@@ -108,8 +108,8 @@ void sorta(struct process *m,int n)    // Function to sort the processes in asce
                      {m[tq].ct=time;
                       m[tq].tat=m[tq].ct-m[tq].at;
                       m[tq].wt=m[tq].tat-m[tq].bt;
-                       awt+=m[tq].ct-m[tq].at;
-                       atat+=m[tq].ct-m[tq].at-m[tq].bt;
+                       atat+=m[tq].ct-m[tq].at;
+                       awt+=m[tq].ct-m[tq].at-m[tq].bt;
                        }
                     // printf("Ctime %d \n",m[tq].ct);
                   pr=-1;
