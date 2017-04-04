@@ -57,6 +57,8 @@ struct memloc * checkfile(int s){
 	}
 	
 	void addfile(string name, int s){
+		if(searchfile(name)==-1){
+		
 		 struct memloc *arr =checkfile(s);
 		 if(arr==NULL){
 		 	cout<<"File can't be allocated\n";
@@ -75,6 +77,8 @@ struct memloc * checkfile(int s){
 			 }
 		 }
 		 index++;
+	}
+	else printf("File name already taken\n");
 	}
 	int searchfile(string s){
 		for(int i=0; i<index; i++)
@@ -128,7 +132,7 @@ int main(){
 	string name;
 		
 	while(1){
-		cin>>ch;// 1.add 2. delete 3. display
+		cin>>ch;// 1.add 2. delete 3. display 0.exit
 		switch(ch){
 		case 1:
 			//Enter file name and size
@@ -142,7 +146,7 @@ int main(){
 		case 3:
 			display();
 			break;
-		case 4:
+		case 0:
 			exit(0);
 
 

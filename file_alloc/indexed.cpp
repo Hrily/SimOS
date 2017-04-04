@@ -22,6 +22,8 @@ struct file
 	
 
 	void addfile(string name, int s){
+		if(searchfile(name)==-1){
+		
 		int * arr=checkfile(s);
 		if(!arr){
 			cout<<"Not possible\n";
@@ -37,6 +39,8 @@ struct file
 		}
 		index++;
 	}
+	else printf("File name already taken\n");
+}
 	void deletefile(string s){
 		int f=searchfile(s);
 		if(f==-1){
@@ -100,7 +104,7 @@ struct file
 	string name;
 		
 	while(1){
-		cin>>ch;// 1.add 2. delete 3. display
+		cin>>ch;// 1.add 2. delete 3. display 0.exit
 		switch(ch){
 		case 1:
 			//Enter file name and size
@@ -113,6 +117,10 @@ struct file
 			break;
 		case 3:
 			display();
+			break;
+		case 0: 
+			exit(0);
+			
 
 
 	}
