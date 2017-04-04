@@ -51,7 +51,8 @@ int main()
     			seek+=diff;
     			
     		}
-			seek+=q[j]-q[i-1];	
+			seek+=q[j]-q[i-1];
+			printf("%d ",cyl); 	
 					// move backward 
 			for(j=i-1; j>=1; j--){
 				printf("%d ",q[j]);
@@ -87,7 +88,8 @@ int main()
 				seek+=diff;
 				
 			}
-			seek+=q[i+1]-q[j];	
+			seek+=q[i+1]-q[j];
+			printf("0 ");	
 			for(j=i+1; j<=n+1; j++){
 				printf("%d ",q[j]);
 			}			
