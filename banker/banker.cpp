@@ -1,5 +1,6 @@
 //need avail allo max
 #include<iostream>
+#include<cstdlib>
 #include<vector>
 #include<stdio.h>
 using namespace std;
@@ -39,14 +40,16 @@ int safety(){
 	}
 	if(v.size()==n){
 		vector<int>::iterator it;
-		cout<<"Safe Sequence:";
+		cout<<"Safe Sequence: ";
 		for(it=v.begin();it!=v.end();it++)
-			cout<<*it<<" ";
+			cout<<*it+1<<" ";
 		cout<<"\n";
+		fflush(stdout);
 		return 1;
 	}
 	else{
 		cout<<"Deadlock\n";
+		fflush(stdout);
 		return 0;
 	}
 }
@@ -57,17 +60,24 @@ int main(){
 	
 			
 		cin>>n>>r;
-		for(i=0;i<n;i++)
-			for(j=0;j<r;j++)
-			scanf("%d",&allo[i][j]); //allocation matrix
+		for(i=0;i<n;i++){
+			for(j=0;j<r;j++){
+				scanf("%d",&allo[i][j]); //allocation matrix
+				fflush(stdin);
+			}
+		}
 
-		for(i=0;i<n;i++)
-			for(j=0;j<r;j++)
-			cin>>maxi[i][j];		// maximum matrix
+		for(i=0;i<n;i++){
+			for(j=0;j<r;j++){
+				cin>>maxi[i][j];		// maximum matrix
+				fflush(stdin);
+			}
+		}
 
 		for(j=0;j<r;j++){
-		scanf("%d",&avail[j]);
-		avail1[j]=avail[j];
+			scanf("%d",&avail[j]);
+			fflush(stdin);
+			avail1[j]=avail[j];
 		}
 
 		//Calculating need	
@@ -80,20 +90,24 @@ int main(){
 					
 			int safe=safety();
 			if(safe){
-		scanf("%d",&i);
-		 f=1;
+				scanf("%d",&i);
+				fflush(stdin);
+				 f=1;
 
-		 for(j=0;j<r;j++){   	//copying the original available matrix
-			avail1[j]=avail[j];
+				 for(j=0;j<r;j++){   	//copying the original available matrix
+					avail1[j]=avail[j];
 		}
 
-		for(int k=0;k<r;k++)
+		for(int k=0;k<r;k++){
 			cin>>req[k];
+			fflush(stdin);
+		}
 
 		
 		for(int k=0;k<r;k++){
 			if(req[k]>avail1[k] || req[i]>need[i][k]){
 				cout<<"Request can't be granted\n";
+				fflush(stdout);
 				f=0;
 				break;
 			}

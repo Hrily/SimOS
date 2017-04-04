@@ -5,7 +5,7 @@ import gevent
 import time
 import os
 import threading
-import shell, executer, file_allocator
+import shell, executer, file_allocator, banker
 from gevent import monkey
 from gevent.pywsgi import WSGIServer
 from flask import Flask, request, Response, render_template, send_from_directory
@@ -80,6 +80,18 @@ def page_file_allocation():
 		inp = 0
 	file_allocator.init(inp)
 	return app.send_static_file('file_allocation.html')
+
+# Bankers
+@app.route('/banker/execute', methods=['POST', 'GET'])
+def deadlock():
+	inp = request.args['input']
+	out = banker.execute(inp)
+	return out
+
+@app.route('/banker')
+def page_deadlock():
+	banker.init()
+	return app.send_static_file('deadlock.html')
 
 @app.route('/<path:path>')
 def static_file(path):
