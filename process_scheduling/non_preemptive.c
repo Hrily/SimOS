@@ -16,7 +16,7 @@ int ct;
 int wt;
 }arr[20],heap[20],final[20];
 int n,heapsize=0,findex=0,hindex=0;
-
+int count;
 void bubblesort() 			//sorting acc to arrival time
 {
 int i,j;
@@ -40,6 +40,7 @@ void insert(struct task a)		//Adding in queue based on priority order
 {
 heap[heapsize]=a;
 heapsize++;
+count++;
 int j;
 for(j=hindex+1;j<=(heapsize-1);j++)
 {
@@ -55,7 +56,6 @@ int k;
 for(k=j;k>=p+2;k--)
 heap[k]=heap[k-1];
 heap[p+1]=num;
-
 }
 }
 
@@ -74,13 +74,16 @@ int k=0;//Shows from where the array is valid
 
 
 
+
 while(findex<n)
 {
 while(k<n&&arr[k].arrival<=time)
-insert(arr[k]),k++;
+{insert(arr[k]),k++;}
 //Now k shows the rest part of the array
-if(heapsize==0)
-{time++;
+
+if(count==0)
+{
+  time++;
 continue;
 }
 else
@@ -92,9 +95,8 @@ time=time+final[findex-1].burst;
 final[findex-1].ct=time;
 final[findex-1].tat=final[findex-1].ct-final[findex-1].arrival;
 final[findex-1].wt=final[findex-1].tat-final[findex-1].burst;
-
+count--;
 }
-
 }
 
 
@@ -112,7 +114,7 @@ avgwt=totalwt/n;
 //printf("NO\tST\tCT\tTAT\tWT\n");
 for(i=0;i<n;i++)
 {
-printf("%d %d %d %d %d",final[i].no,final[i].st,final[i].ct,final[i].tat,final[i].wt);
+printf("%d %d %d %d",final[i].no,final[i].ct,final[i].tat,final[i].wt);
 printf("\n");
 }
 
