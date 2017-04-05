@@ -16,10 +16,13 @@ Pi - ith Page number
 
 ### Output format
 ```
+Si
 H
 ```
 
-H - Hit Ratio (in %)
+Hi - 1 if Pi is hit, else 0
+
+H  - Hit Ratio (in %)
 
 ### Sample
 
@@ -34,5 +37,6 @@ H - Hit Ratio (in %)
 ### Output (Assuming FCFS Replacement)
 
 ```
+0 0 1 1
 50.000000
 ```
