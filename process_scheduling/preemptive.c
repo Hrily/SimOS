@@ -62,7 +62,7 @@ void sorta(struct process *m,int n)    // Function to sort the processes in asce
 
   void main()
     {
-	    int n,time=0,tot=0,i,tq,t,pr=-1,Q;
+	    int n,time=0,tot=0,i,tq,t,pr=-1,Q,a=0,b=0;
 	    float awt=0,atat=0;
       struct process *m,*ba;
       // printf("enter no of processes\n");
@@ -97,9 +97,13 @@ void sorta(struct process *m,int n)    // Function to sort the processes in asce
                         {
                            pr=m[i].p;
                            tq=i; 
+			   b++;
                           }
+	              else if(m[i].at>time && m[i].rt!=0)
+		            a++;
                       }
-                      
+                 if(b!=0)
+		 {
                    m[tq].rt=0;
                   // printf("time %d ",time);
                    time+=m[tq].bt;
@@ -112,6 +116,14 @@ void sorta(struct process *m,int n)    // Function to sort the processes in asce
                        awt+=m[tq].ct-m[tq].at-m[tq].bt;
                        }
                     // printf("Ctime %d \n",m[tq].ct);
+		    }
+		   if(b==0 && a>0)
+		     {
+		       time++;
+		       tot++;
+		       }
+		   a=0;
+		   b=0;
                   pr=-1;
                   }
         // printf("pno\tct\ttt\twt\n");
