@@ -14,8 +14,11 @@ struct file
 int searchfile( string s);
 int checkfile(int size);
 void addfile(string s,int k){
+	if(searchfile(s)==-1){
 	
-	 int f=checkfile(k);	
+	 int f=checkfile(k);
+	 
+	 
 
 	if(f==-1)
 			cout<<"Not possible\n";
@@ -26,10 +29,13 @@ void addfile(string s,int k){
 		for(int j=f;j<f+k;j++)
 				block[j]=1;
 	}
+	}
+	else printf("File name already taken\n");
 }
 
 void deletefile(string s){
-	int f=searchfile(s);	
+	int f=searchfile(s);
+		
 	if(f==-1){
 		cout<<"file not found\n";
 		return ;
@@ -79,7 +85,7 @@ int main(){
 	string name;
 		
 	while(1){
-		cin>>ch;// 1.add 2. delete 3. display
+		cin>>ch;// 1.add 2. delete 3. display 0.exit
 		switch(ch){
 		case 1:
 			//Enter file name and size
@@ -92,6 +98,9 @@ int main(){
 			break;
 		case 3:
 			display();
+			break;
+		case 0:
+			exit(0);
 
 
 	}

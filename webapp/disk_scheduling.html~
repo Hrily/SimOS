@@ -247,7 +247,7 @@
 					<p style="font-size: 20px;">Disk scheduling is is done by operating systems to schedule I/O requests arriving for disk. For sharing the time or for dividing the Total Time of the CPU, the CPU uses the following the Scheduling Techniques. </p>
 					<br><p style="font-size: 25px;"><strong><u>Disk Scheduling Algorithms</u></strong></p>
 					
-					<div style="font-size: 18px;" class="card-panel blue">
+					<div style="font-size: 18px;" class="card-panel blue lighten-3">
 					<ol start="1">	<li><strong><u>	FCFS: </u></strong>FCFS is the simplest of all the Disk Scheduling Algorithms. In FCFS, the requests are addressed in the order they arrive in the disk queue.</li>
 
 						<p><strong><u>Advantages:</u></strong></p>
