@@ -9,13 +9,16 @@ struct file
 	int size;
 };
 	int index=0;
-	struct file list[20];
+	struct file list[100];
 	bool block[64]={0};
 int searchfile( string s);
 int checkfile(int size);
 void addfile(string s,int k){
+	if(searchfile(s)==-1){
 	
-	 int f=checkfile(k);	
+	 int f=checkfile(k);
+	 
+	 
 
 	if(f==-1)
 			cout<<"Not possible\n";
@@ -26,10 +29,13 @@ void addfile(string s,int k){
 		for(int j=f;j<f+k;j++)
 				block[j]=1;
 	}
+	}
+	else printf("File name already taken\n");
 }
 
 void deletefile(string s){
-	int f=searchfile(s);	
+	int f=searchfile(s);
+		
 	if(f==-1){
 		cout<<"file not found\n";
 		return ;
@@ -39,6 +45,7 @@ void deletefile(string s){
 	for(int j=in;j<in+si;j++)
 		block[j]=0;
 	list[f].i=-1;
+	list[f].nm="";
 }
 int checkfile(int size){
 	int j=0,k;
@@ -59,18 +66,18 @@ int checkfile(int size){
 
 int searchfile( string s){
 	for(int i=0 ; i<20; i++)
-		if(list[i].nm==s){
+		if(list[i].nm==s && list[i].size!=-1){
 			return i;
 		}
 	return -1;	
 }
 void display(){
-	cout<<""
+	
 	for (int j=0;j<index;j++){
 		if(list[j].i==-1)
 			continue;
 		else
-		cout<<list[j].nm<<"\t"<<list[j].size<<"\t"<<list[j].i<<endl;
+		cout<<list[j].nm<<" "<<list[j].size<<" "<<list[j].i<<endl;
 	}
 }
 int main(){
@@ -78,7 +85,7 @@ int main(){
 	string name;
 		
 	while(1){
-		cin>>ch;// 1.add 2. delete 3. display
+		cin>>ch;// 1.add 2. delete 3. display 0.exit
 		switch(ch){
 		case 1:
 			//Enter file name and size
@@ -91,6 +98,9 @@ int main(){
 			break;
 		case 3:
 			display();
+			break;
+		case 0:
+			exit(0);
 
 
 	}
