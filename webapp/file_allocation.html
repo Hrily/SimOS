@@ -49,6 +49,8 @@
 			margin: 0;
 			padding: 0;
 			font-size: 50%;
+			cursor: pointer; 
+			cursor: hand;
 		}
 
 		.file-block .size {
@@ -70,9 +72,11 @@
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/js/materialize.min.js"></script>
 	<script type="text/javascript">
 
-		var SIZE     = 64;
-		var n_blocks = 0;
-		var color    = ['red', 'deep-purple', 'light-blue', 'green', 'yellow', 'deep-orange', 'blue-grey'];
+		var SIZE       = 64;
+		var n_blocks   = 0;
+		var color      = ['red', 'deep-purple', 'light-blue', 'green', 'yellow', 'deep-orange', 'blue-grey', 'pink', 'indigo', 'cyan', 'light-green', 'amber', 'brown', 'purple', 'blue', 'lime', 'orange', 'grey'];
+		var file_n     = 0;
+		var file_names = [];
 
 		function S(id){
 			return document.getElementById(id)
@@ -81,7 +85,7 @@
 		function add_file_block(start, size){
 			left  = start / 64 * 100;
 			width = size / SIZE * 100;
-			$('#storage').append('<div class="card '+color[n_blocks]+' file-block"><div class="card-content"></div></div>');
+			$('#storage').append('<div class="card '+color[n_blocks]+' file-block" onclick="delete_block(' + n_blocks + ')"><div class="card-content"></div></div>');
 			$('.'+color[n_blocks]).css({'left': left+'%', 'width': width+'%'});
 			$('.'+color[n_blocks]).append('<div class="start">'+start+'</div><div class="size">'+size+'</div>');
 			n_blocks++;
@@ -94,12 +98,15 @@
 		}
 
 		function handle_output(output){
-			output  = to_int(output);
-			starts  = []
-			sizes   = []
-			for(var i=0;i<output.length;i++)
-				if(i%2) starts.push(output[i]);
-				else    sizes.push(output[i]);
+			console.log(output);
+			starts     = []
+			sizes      = []
+			file_names = []
+			for(var i=0;i<output.length;i++){
+				if(i%3==0)      file_names.push(output[i]);
+				else if(i%3==1) sizes.push(parseInt(output[i]));
+				else            starts.push(parseInt(output[i]));
+			}
 			S('storage').innerHTML = "";
 			n_blocks = 0;
 			console.log(starts);
@@ -108,13 +115,29 @@
 				add_file_block(starts[i], sizes[i]);
 		}
 
+		function delete_block(i){
+			input = '2 '+ file_names[i];
+			send_request(input);
+		}
+
 		function add_file(){
 			size  = S('file-size').value;
-			input = '1 file '+size;
+			input = '1 file' + file_n + ' ' + parseInt(size);
+			file_n++;
+			send_request(input);
+		}
+
+		function send_request(input){
+			console.log(input);
 			var xhr = new XMLHttpRequest();
 			xhr.onreadystatechange = function() {
 			    if (xhr.readyState == XMLHttpRequest.DONE) {
 			    	output = xhr.responseText;
+			    	if(output[0]!='f'){
+			    		Materialize.toast(output, 1500);
+						return;
+			    	}
+			    	output = output.split('\n').join(' ');
 			    	console.log(output)
 			    	handle_output(output.split(' '));
 					window.scrollTo(0,document.body.scrollHeight);
