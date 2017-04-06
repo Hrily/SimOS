@@ -1,30 +1,38 @@
 //Ritwick and Abhilash
 #include<iostream>
+#include<algorithm>
 using namespace std;
+typedef struct rit{
+ 	int ind;
+ 	int val;
+ }rit;
 struct file
 {
 	string nm;
 	int size;
-	int a[10];
+	rit a[10];
 	int* ptr=NULL;
 };
 	int index=0;
 	struct file list[100];
-	int block[64];
-	int i;
-
-
-
-	void addfile(string name, int s);
+	
+	typedef struct memloc{
+		int i;
+		bool occ;
+	}memloc;
+	memloc block[64];
+ 
+  
+  void addfile(string name, int s);
 	void deletefile(string s);
-	int * checkfile(int s);
+	rit *checkfile(int s);
 	int searchfile(string s);
 	
 
 	void addfile(string name, int s){
 		if(searchfile(name)==-1){
 		
-		int * arr=checkfile(s);
+		rit * arr=checkfile(s);
 		if(!arr){
 			cout<<"Not possible\n";
 			return ;
@@ -32,10 +40,11 @@ struct file
 		list[index].nm=name;
 		list[index].size=s;
 		for(int l=0 ; l<s ; l++ ){
-		list[index].a[l]=arr[l];
+		list[index].a[l].ind=arr[l].ind;
+		list[index].a[l].val=arr[l].val;
 		}
 		for(int i=0; i<s ; i++){
-			block[list[index].a[i]]=1; 
+			block[list[index].a[i].ind].occ=1; 
 		}
 		index++;
 	}
@@ -48,18 +57,19 @@ struct file
 		}
 		else{
 			for(int i=0; i<list[f].size; i++){
-				block[list[f].a[i]]=0; 
+				block[list[f].a[i].ind].occ=0; 
 				}
 		list[f].size=-1;
 		
 		}
 	}
-	int * checkfile(int s){
+	rit * checkfile(int s){
 		int cnt=0;
-		int* n=new int[10];
+		rit *n=new rit[10];
 		for(int i=10;i<64;i++){
-			if(block[i]==0){
-				n[cnt++]=i;
+			if(block[i].occ==0){
+				n[cnt].ind=i;
+				n[cnt++].val=block[i].i;
 				if(cnt>10){
 					break;
 				}
@@ -88,7 +98,7 @@ struct file
 		else{
 		cout<<list[j].nm<<" "<<list[j].size<<" ";
 			for(int i=0;i<list[j].size;i++)
-				cout<<list[j].a[i]<<" ";
+				cout<<list[j].a[i].val<<" ";
 		}
 		cout<<"\n";
 	}
@@ -97,9 +107,16 @@ struct file
 		int i;
 	
 	for(i=0; i<10; i++){
-		block[i]=-1;
+		block[i].i=-1;
+		block[i].occ=1;
 		
 	}
+	for(i=10; i<64; i++){
+		block[i].i=i;
+		block[i].occ=0;
+	}
+	random_shuffle(block+10,block + 64);
+	
 	int ch,size,f;
 	string name;
 		
