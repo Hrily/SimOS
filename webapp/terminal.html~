@@ -1,0 +1,141 @@
+<!-- Hrishikesh Hiraskar -->
+<!-- 15CO121             -->
+<!-- 24/2/17             -->
+<!DOCTYPE html>
+<html>
+<head>
+	<title>SimOS - Terminal</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width; initial-scale=1; maximum-scale=1">
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<script
+	src="https://code.jquery.com/jquery-3.1.1.min.js"
+	integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
+	crossorigin="anonymous"></script>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/css/materialize.min.css">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto Mono">
+	<style>
+
+		body {
+			padding: 1%;
+			font-family: 'Roboto Mono' !important;
+			font-size: 1em;
+		}
+
+		#shell input {
+			display: inline;
+			width: 90%;
+			border-bottom: 0px !important;
+			box-shadow: none !important;
+			color: white;
+			height: 1em;
+			margin: 0 !important;
+		}
+
+		#out {
+			width: 70%;
+		}
+
+		.wd {
+			display: inline-block;
+			color: #2196f3;
+		}
+
+		.dir, .file {
+			display: inline-block;
+			width: 20%;
+		}
+
+		.dir {
+			color: #2196f3;
+		}
+
+		.file {
+			color: #8bc34a;
+		}
+
+	</style>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/js/materialize.min.js"></script>
+	<script type="text/javascript">
+
+		function getPWD(output){
+			var pwd = output.match(/<!.*?>/);
+			if(!pwd)
+				return ['', output];
+			pwd = pwd[0];
+			output = output.replace(pwd, '');
+			pwd = pwd.replace('<!', '');
+			pwd = pwd.replace('?>', '');
+			return [pwd, output];
+		}
+
+		function getOutputFormated(output){
+			if(output[0].includes('hrish:')){
+				return output[0];
+			}
+			for(var i=0;i<output.length;i++){
+				if(output[i].length>0){
+					if(output[i].includes('<DIR>'))
+						output[i] = '<div class="dir">' + output[i].replace('<DIR>', '') + '</div>';
+					else
+						output[i] = '<div class="file">' + output[i] + '</div>'
+				}
+			}
+			return output.join('');
+		}
+
+		var wd = [''];
+
+		function shellexec(){
+			var out = document.getElementById('out');
+			var wdt = document.getElementById('wd');
+			var command = document.getElementById('command');
+			if(command.value.length<=0)
+				return;
+			var xhr = new XMLHttpRequest();
+			xhr.onreadystatechange = function() {
+			    if (xhr.readyState == XMLHttpRequest.DONE) {
+			    	output = xhr.responseText;
+			    	console.log(output);
+			    	var pwd;
+			    	[pwd, output] = getPWD(output);
+			    	output = output.split('\n');
+			    	output = getOutputFormated(output);
+					out.innerHTML += '<div class="wd">' + wdt.innerHTML + "</div>" + " $ "+command.value+"<br>";
+			    	out.innerHTML += output;
+			    	if(output.length>0) out.innerHTML += '<br>';
+					if(command.value.includes('cd')){
+						if(command.value.includes('..'))
+							wd.pop();
+						else
+							wd.push(pwd)
+					}
+					command.value = "";
+					if(pwd.length) wdt.innerHTML = wd.join('/');
+					if(wd.length==1) wdt.innerHTML = '/'
+					window.scrollTo(0,document.body.scrollHeight);
+			    }
+			}
+			xhr.open('GET', '/terminal/shellcommand?command='+command.value, true);
+			xhr.send();
+		}
+
+		function keypress(event) {
+			if (event.keyCode == 13) {
+				shellexec();
+			}
+		}
+
+	</script>
+</head>
+<body class="blue-grey darken-3 white-text">
+
+	<div id="out"></div>
+	<div id="shell">
+		<div class="wd" id="wd">/</div> $
+		<input type="text" id="command" onkeypress="keypress(event)" value="" autofocus/>
+	</div>
+
+</body>
+</html>
