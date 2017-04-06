@@ -10,9 +10,9 @@ def init(i):
 	global p
 	print "Initializing file allocation program"
 	if i == 1:
-		p = Popen(['./file_alloc/contigous'], stdin=PIPE, stdout=PIPE)
+		p = Popen(['./file_alloc/contiguous'], stdin=PIPE, stdout=PIPE)
 	else:
-		p = Popen(['./file_alloc/contigous'], stdin=PIPE, stdout=PIPE)
+		p = Popen(['./file_alloc/contiguous'], stdin=PIPE, stdout=PIPE)
 
 def execute(com):
 	global p

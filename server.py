@@ -93,6 +93,19 @@ def page_deadlock():
 	banker.init()
 	return app.send_static_file('deadlock.html')
 
+# Dining Philosopher
+@app.route('/dining/execute', methods=['POST', 'GET'])
+def dining():
+	inp = request.args['input']
+	out = executer.execute('process_sync/dining', inp)
+	return out
+
+@app.route('/dining')
+def page_dining():
+	shell.init()
+	return app.send_static_file('dining.html')
+
+
 @app.route('/<path:path>')
 def static_file(path):
 	return app.send_static_file(path)

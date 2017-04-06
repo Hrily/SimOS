@@ -60,7 +60,7 @@ void sorta(struct process *m,int n)    // Function to sort the processes in asce
   }
   }
 
-  void main()
+  int main()
     {
 	    int n,time=0,tot=0,i,tq,t,pr=-1,Q,a=0,b=0;
 	    float awt=0,atat=0;

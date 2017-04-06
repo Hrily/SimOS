@@ -243,15 +243,13 @@
 	
 	<div class="container" style="margin-top : -8%;">
 		<div class="card" >
-		
-			<div class="card-content">
 			<div class="card-content">
 				<form class="row">
 					<h2 style="color: rgb(128,0,0);">Disk Scheduling :</h2>
 					<p style="font-size: 20px;">Disk scheduling is is done by operating systems to schedule I/O requests arriving for disk. For sharing the time or for dividing the Total Time of the CPU, the CPU uses the following the Scheduling Techniques. </p>
 					<br><p style="font-size: 25px;"><strong><u>Disk Scheduling Algorithms</u></strong></p>
 					
-					<div style="font-size: 18px;" class="card-panel blue lighten-3">
+					<div style="font-size: 18px;">
 					<ol start="1">	<li><strong><u>	FCFS: </u></strong>FCFS is the simplest of all the Disk Scheduling Algorithms. In FCFS, the requests are addressed in the order they arrive in the disk queue.</li>
 
 						<p><strong><u>Advantages:</u></strong></p>
@@ -323,6 +321,7 @@
 		</div>
 	</div>		
 	
+	
 	<div class="container">
 		<div class="card">
 			<div class="card-content">
@@ -354,82 +353,5 @@
 			</div>
 		</div>
 	</div>			
-<!--	<div class="container">
-		<div class="card" >
-			<div class="card-content">
-				<form class="row">
-					<h4 style="color: rgb(128,0,0);">Disk Scheduling :</h4>
-					<p style="font-size: 20px;">Disk scheduling is is done by operating systems to schedule I/O requests arriving for disk. For sharing the time or for dividing the Total Time of the CPU, the CPU uses the following the Scheduling Techniques. </p>
-					<br><p style="font-size: 25px;"><strong><u>Disk Scheduling Algorithms</u></strong></p>
-					
-					<div style="font-size: 18px;">
-					<ol start="1">	<li><strong><u>	FCFS: </u></strong>FCFS is the simplest of all the Disk Scheduling Algorithms. In FCFS, the requests are addressed in the order they arrive in the disk queue.</li>
-
-						<p><strong><u>Advantages:</u></strong></p>
-						<ul>
-							<li>Every request gets a fair chance</li>
-							<li>No indefinite postponement</li>
-						</ul>
-						<p><strong><u>Disadvantages:</u></strong></p>
-						<ul>
-							<li>Does not try to optimize seek time</li>
-							<li>May not provide the best possible service</li>
-						</ul>
-					</ol>	
-					<ol start="2">
-						<li><strong><u>SSTF:</u></strong> In SSTF (Shortest Seek Time First), requests having shortest seek time are executed first. So, the seek time of every request is calculated in advance in queue and then they are scheduled according to their calculated seek time. As a result, the request near the disk arm will get executed first. SSTF is certainly an improvement over FCFS as it decreases the average response time and increases the throughput of system.</li>
-					
-					<p><strong><u>Advantages:</u></strong></p>
-					<ul>
-						<li>Average Response Time decreases</li>
-						<li>Throughput increases</li>
-					</ul>
-					<p><strong><u>Disadvantages:</u></strong></p>
-					<ul>
-						<li>Overhead to calculate seek time in advance</li>
-						<li>Can cause Starvation for a request if it has higher seek time as compared to incoming requests</li>
-						<li>High variance of response time as SSTF favours only some requests</li>
-					</ul>
-					</ol>
-					<ol start="3">
-						<li><strong><u>SCAN: </u></strong>In SCAN algorithm the disk arm moves into a particular direction and services the requests coming in its path and after reaching the end of disk, it reverses its direction and again services the request arriving in its path. So, this algorithm works like an elevator and hence also known as <strong>elevator algorithm. </strong>As a result, the requests at the midrange are serviced more and those arriving behind the disk arm will have to wait.</li>
-					
-					<p><strong><u>Advantages:</u></strong></p>
-					<ul>
-						<li>High throughput</li>
-						<li>Low variance of response time</li>
-						<li>Average response time</li>
-					</ul>
-						<p><strong><u>Disadvantages:</u></strong></p>
-					<ul>
-						<li>Long waiting time for requests for locations just visited by disk arm</li>
-					</ul>
-					</ol>
-					<ol start="4">
-						<li><strong><u>CSCAN</u></strong>: In SCAN algorithm, the disk arm again scans the path that has been scanned, after reversing its direction. So, it may be possible that too many requests are waiting at the other end or there may be zero or few requests pending at the scanned area.</li>
-					
-					<p>These situations are avoided in <em>CSAN </em>algorithm in which the disk arm instead of reversing its direction goes to the other end of the disk and starts servicing the requests from there. So, the disk arm moves in a circular fashion and this algorithm is also similar to SCAN algorithm and hence it is known as C-SCAN (Circular SCAN).</p>
-					<p><strong><u>Advantages:</u></strong></p>
-					<ul>
-						<li>Provides more uniform wait time compared to SCAN</li>
-					</ul>	
-					</ol>
-					<ol start="5">
-						<li><strong><u>LOOK:</u></strong> It is similar to the SCAN disk scheduling algorithm except the difference that the disk arm in spite of going to the end of the disk goes only to the last request to be serviced in front of the head and then reverses its direction from there only. Thus it prevents the extra delay which occurred due to unnecessary traversal to the end of the disk.</li>
-					</ol>
-					<ol start="6">
-						<li><strong><u>CLOOK:</u></strong> As LOOK is similar to SCAN algorithm, in similar way, CLOOK is similar to CSCAN disk scheduling algorithm. In CLOOK, the disk arm inspite of going to the end goes only to the last request to be serviced in front of the head and then from there goes to the other end’s last request. Thus, it also prevents the extra delay which occurred due to unnecessary traversal to the end of the disk.</li>
-					</ol>
-					<p>Each algorithm is unique in its own way.Overall Performance depends on number and type of requests.</p>
-					
-					</div>
-
-				</form>	
-			</div>
-		</div>
-	</div>		
-	-->
-		</div>
-	</div>
 </body>
 </html>
