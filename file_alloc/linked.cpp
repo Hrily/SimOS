@@ -2,6 +2,7 @@
 #include<iostream>
 #include<stdlib.h>
 using namespace std;
+
 struct file
 {
 	string nm;

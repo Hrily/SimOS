@@ -1,37 +1,38 @@
-DINING PHILOSOPHER 
+## DINING PHILOSOPHER 
 
-INPUT FORMAT
+### Input Format
 
-N  //no of philosophers
+```
+N
+R
+```
+
+N - Number of philosophers
+
+R - Number of Rounds
+
+### Output Format
+
+```
+s0 s1 s2 s3 ... sn-1
+```
+
+si - State of philosopher, 0 for thinking, 1 for eating
+
+### Sample:
 
 
-R  //no of rounds
+#### Input
 
-OUTPUT FORMAT
-
-s0 s1 s2 s3 ... sn-1                     
- 
-                                 //si= state of philosopher
-                              
-                                 
-                                 //0 for thinking 
-
-
-                                  // 1 for eating
-
-SAMPLE:
-
-
-INPUT
-
+```
 5
-
 3
+```
 
-OUTPUT
- 
+#### Output
+
+```
 0 0 0 1 0
-
 0 0 0 0 1
-
 1 0 0 1 0
+```

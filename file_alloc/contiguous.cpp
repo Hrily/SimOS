@@ -1,5 +1,7 @@
 // Abhilash and Ritwick
 #include<iostream>
+#include<cstdlib>
+#include<cstdio>
 using namespace std;
 
 struct file
@@ -13,32 +15,41 @@ struct file
 	bool block[64]={0};
 int searchfile( string s);
 int checkfile(int size);
-void addfile(string s,int k){
+int addfile(string s,int k){
 	if(searchfile(s)==-1){
 	
 	 int f=checkfile(k);
 	 
 	 
 
-	if(f==-1)
+	if(f==-1){
 			cout<<"Not possible\n";
-	else{
+			fflush(stdout);
+			return 0;
+	}else{
 		list[index].nm=s;
 		list[index].size=k;	
 		list[index++].i=f;
 		for(int j=f;j<f+k;j++)
 				block[j]=1;
+		return 1;
 	}
 	}
-	else printf("File name already taken\n");
+	else{
+		printf("File name already taken\n");
+		fflush(stdout);
+		return 0;
+	}
+	return 0;
 }
 
-void deletefile(string s){
+int deletefile(string s){
 	int f=searchfile(s);
 		
 	if(f==-1){
 		cout<<"file not found\n";
-		return ;
+		fflush(stdout);
+		return 0;
 	}
 	int in=list[f].i;
 	int si=list[f].size;
@@ -46,6 +57,7 @@ void deletefile(string s){
 		block[j]=0;
 	list[f].i=-1;
 	list[f].nm="";
+	return 1;
 }
 int checkfile(int size){
 	int j=0,k;
@@ -77,8 +89,10 @@ void display(){
 		if(list[j].i==-1)
 			continue;
 		else
-		cout<<list[j].nm<<" "<<list[j].size<<" "<<list[j].i<<endl;
+		cout<<list[j].nm<<" "<<list[j].size<<" "<<list[j].i<<"<br>";
 	}
+	cout<<endl;
+	fflush(stdout);
 }
 int main(){
 	int ch,size,f;
@@ -90,11 +104,13 @@ int main(){
 		case 1:
 			//Enter file name and size
 			cin>>name>>size;
-			addfile(name,size);
+			if(addfile(name,size))
+				display();
 			break;
 		case 2:
 			cin>>name;
-			deletefile(name);
+			if(deletefile(name))
+				display();
 			break;
 		case 3:
 			display();
@@ -102,6 +118,7 @@ int main(){
 		case 0:
 			exit(0);
 
+		fflush(stdin);
 
 	}
 }
