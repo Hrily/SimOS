@@ -1,6 +1,7 @@
 //Ritwick and Abhilash
 #include<iostream>
 #include<stdlib.h>
+#include<algorithm>
 using namespace std;
 
 struct file
@@ -97,8 +98,7 @@ struct memloc * checkfile(int s){
 		}
 		memloc * arr=list[f].ptr;
 		while(arr!=NULL){
-			block[arr->i].occ=0;
-			
+			arr->occ=0;
 			arr=arr->next;
 		}
 		list[f].size=-1;
@@ -128,6 +128,8 @@ int main(){
 		block[j].i=j;
 		block[j].occ=0;
 	}
+	random_shuffle(block,block + 64);
+
 	
 	int ch,size,f;
 	string name;
