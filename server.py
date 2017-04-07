@@ -102,9 +102,12 @@ def dining():
 
 @app.route('/dining')
 def page_dining():
-	shell.init()
 	return app.send_static_file('dining.html')
 
+@app.route('/')
+def page_home():
+	shell.init()
+	return app.send_static_file('index.html')
 
 @app.route('/<path:path>')
 def static_file(path):

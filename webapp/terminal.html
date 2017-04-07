@@ -105,7 +105,7 @@
 					out.innerHTML += '<div class="wd">' + wdt.innerHTML + "</div>" + " $ "+command.value+"<br>";
 			    	out.innerHTML += output;
 			    	if(output.length>0) out.innerHTML += '<br>';
-					if(command.value.includes('cd')){
+					if(command.value.includes('cd') && output.includes('No') == -1){
 						if(command.value.includes('..'))
 							wd.pop();
 						else
