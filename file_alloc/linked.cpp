@@ -1,6 +1,6 @@
 //Ritwick and Abhilash
 #include<iostream>
-#include<stdlib.h>
+#include<cstdlib>
 #include<algorithm>
 using namespace std;
 
@@ -22,11 +22,10 @@ struct memloc{
 	struct memloc *block=new struct memloc[64];
 	
 		
-	void addfile(string name, int s);
-	void deletefile(string s);
+	int addfile(string name, int s);
+	int deletefile(string s);
 	struct memloc * checkfile(int s);
 	int searchfile(string s);
-	void addfile(string name, int s);
 	
 struct memloc * checkfile(int s){
 		int cnt=0;
@@ -58,13 +57,14 @@ struct memloc * checkfile(int s){
 		
 	}
 	
-	void addfile(string name, int s){
+	int addfile(string name, int s){
 		if(searchfile(name)==-1){
 		
 		 struct memloc *arr =checkfile(s);
 		 if(arr==NULL){
 		 	cout<<"File can't be allocated\n";
-		 	return;
+			fflush(stdout);
+		 	return 0;
 		 }
 		 list[index].nm=name;
 		 list[index].size=s;
@@ -79,8 +79,13 @@ struct memloc * checkfile(int s){
 			 }
 		 }
 		 index++;
+		 return 1;
 	}
-	else printf("File name already taken\n");
+	else{
+		printf("File name already taken\n");
+		fflush(stdout);
+		return 0;
+	}
 	}
 	int searchfile(string s){
 		for(int i=0; i<index; i++)
@@ -90,11 +95,12 @@ struct memloc * checkfile(int s){
 		
 	return -1;	
 }
-	void deletefile(string s){
+	int deletefile(string s){
 		int f=searchfile(s);
 		if(f==-1){
 			cout<<"File not found\n";
-			return;
+			fflush(stdout);
+			return 0;
 		}
 		memloc * arr=list[f].ptr;
 		while(arr!=NULL){
@@ -103,6 +109,7 @@ struct memloc * checkfile(int s){
 		}
 		list[f].size=-1;
 		
+		return 1;
 		
 	}
 	
@@ -117,10 +124,11 @@ void display(){
 			cout<<temp->i<<" ";
 			temp=temp->next;
 		}
-		cout<<"\n";
+		cout<<"<br>";
 	}
-
 }
+	cout<<endl;
+	fflush(stdout);
 }
 int main(){
 		int j;
@@ -140,11 +148,15 @@ int main(){
 		case 1:
 			//Enter file name and size
 			cin>>name>>size;
-			addfile(name,size);
+			fflush(stdin);
+			if(addfile(name,size))
+				display();
 			break;
 		case 2:
 			cin>>name;
-			deletefile(name);
+			fflush(stdin);
+			if(deletefile(name))
+				display();
 			break;
 		case 3:
 			display();
