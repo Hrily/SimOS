@@ -59,17 +59,29 @@ def process_schedule():
 def page_process_scheduling():
 	return app.send_static_file('process_scheduling.html')
 
-# File Alloction
-@app.route('/file_allocation/execute', methods=['POST', 'GET'])
-def file_allocation():
+# Contigous File Alloction
+@app.route('/contigous_file_allocation/execute', methods=['POST', 'GET'])
+def contigous_file_allocation():
 	inp = request.args['input']
-	out = file_allocator.execute(inp)
+	out = file_allocator.execute(1, inp)
 	return out
 
 @app.route('/contigous_file_allocation')
 def page_contigous_file_allocation():
 	file_allocator.init(1)
-	return app.send_static_file('file_allocation.html')
+	return app.send_static_file('contigous_file_allocation.html')
+
+# Linked File Alloction
+@app.route('/linked_file_allocation/execute', methods=['POST', 'GET'])
+def linked_file_allocation():
+	inp = request.args['input']
+	out = file_allocator.execute(2, inp)
+	return out
+
+@app.route('/linked_file_allocation')
+def page_linked_file_allocation():
+	file_allocator.init(2)
+	return app.send_static_file('linked_file_allocation.html')
 
 @app.route('/file_allocation', methods=['POST', 'GET'])
 def page_file_allocation():

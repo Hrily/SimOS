@@ -4,18 +4,26 @@
 from subprocess import Popen, PIPE
 import time, sys
 
-p = None
+con = None
+lin = None
+ind = None
 
 def init(i):
-	global p
+	global con, lin, ind
 	print "Initializing file allocation program"
 	if i == 1:
-		p = Popen(['./file_alloc/contiguous'], stdin=PIPE, stdout=PIPE)
-	else:
-		p = Popen(['./file_alloc/contiguous'], stdin=PIPE, stdout=PIPE)
+		con = Popen(['./file_alloc/contiguous'], stdin=PIPE, stdout=PIPE)
+	elif i==2:
+		ind = Popen(['./file_alloc/linked'], stdin=PIPE, stdout=PIPE)
 
-def execute(com):
-	global p
+def execute(i, com):
+	global con, lin, ind
+	if i == 1:
+		return execute_com(con, com)
+	elif i == 2:
+		return execute_com(ind, com)
+
+def execute_com(p, com):
 	p.stdin.write(com+'\n'.encode())
 	p.stdin.flush()
 	time.sleep(0.1)
