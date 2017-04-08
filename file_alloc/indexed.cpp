@@ -1,6 +1,7 @@
 //Ritwick and Abhilash
 #include<iostream>
 #include<algorithm>
+#include<cstdlib>
 using namespace std;
 typedef struct rit{
  	int ind;
@@ -23,19 +24,20 @@ struct file
 	memloc block[64];
  
   
-  void addfile(string name, int s);
-	void deletefile(string s);
+  int addfile(string name, int s);
+	int deletefile(string s);
 	rit *checkfile(int s);
 	int searchfile(string s);
 	
 
-	void addfile(string name, int s){
+	int addfile(string name, int s){
 		if(searchfile(name)==-1){
 		
 		rit * arr=checkfile(s);
 		if(!arr){
 			cout<<"Not possible\n";
-			return ;
+			fflush(stdout);
+			return 0;
 		}
 		list[index].nm=name;
 		list[index].size=s;
@@ -47,19 +49,27 @@ struct file
 			block[list[index].a[i].ind].occ=1; 
 		}
 		index++;
+		return 1;
 	}
-	else printf("File name already taken\n");
+	else{
+		printf("File name already taken\n");
+		fflush(stdout);
+		return 0;
+	}
 }
-	void deletefile(string s){
+	int deletefile(string s){
 		int f=searchfile(s);
 		if(f==-1){
 			cout<<"File not found\n";
+			fflush(stdout);
+			return 0;
 		}
 		else{
 			for(int i=0; i<list[f].size; i++){
 				block[list[f].a[i].ind].occ=0; 
 				}
 		list[f].size=-1;
+			return 1;
 		
 		}
 	}
@@ -100,8 +110,10 @@ struct file
 			for(int i=0;i<list[j].size;i++)
 				cout<<list[j].a[i].val<<" ";
 		}
-		cout<<"\n";
+		cout<<"<br>";
 	}
+	cout<<endl;
+	fflush(stdout);
 }
 	int main(){
 		int i;
@@ -126,11 +138,15 @@ struct file
 		case 1:
 			//Enter file name and size
 			cin>>name>>size;
-			addfile(name,size);
+			fflush(stdin);
+			if(addfile(name,size))
+				display();
 			break;
 		case 2:
 			cin>>name;
-			deletefile(name);
+			fflush(stdin);
+			if(deletefile(name))
+				display();
 			break;
 		case 3:
 			display();

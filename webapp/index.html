@@ -81,12 +81,13 @@
 			text-align: center;
 			font-size: 20pt;
 			padding-top: 4px;
+			z-index: 100;
 		}
 
 		.navbar a {
 			padding-left: 7%;
 			padding-right: 7%;
-			color: no-repeat;
+			color: white;
 		}
 
 		.apps .head {
@@ -120,17 +121,65 @@
 			transform: translateX(-50%);
 		}
 
+		.app, .app-bar, .app-body {
+			position: absolute;
+			top: 0;
+			left: 0;
+			margin-bottom: 50px;
+			z-index: 10;
+		}
+
+		.app {
+			-webkit-transition: top .3s ease-in-out, opacity .3s ease-out;
+			-o-transition: top .3s ease-in-out, opacity .3s ease-out;
+			transition: top .3s ease-in-out, opacity .3s ease-out;
+		}
+
+		.app-body {
+			margin-top: 50px;
+			overflow-y: scroll;
+			background: rgb(233, 234, 237);
+			border-width: 0;
+		}
+
+		.app-bar {
+			padding-left: 15px;
+			width: 100%;
+			height: 0;
+			box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.3);
+			color: white;
+			z-index: 50;
+		}
+
+		.app-bar h5 {
+			font-size: 130%;
+		}
+
+		.expandable {
+			display: inline-block;
+			position: absolute;
+			width: 50px;
+			height: 50px;
+			border-radius: 100%;
+			z-index: 75;
+			-webkit-transition: transform .3s ease-in-out, opacity .3s ease-out;
+			-o-transition: transform .3s ease-in-out, opacity .3s ease-out;
+			transition: transform .3s ease-in-out, opacity .3s ease-out;
+		}
+
 	</style>
 
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/js/materialize.min.js"></script>
-	<script src="https://code.highcharts.com/highcharts.js"></script>
 	<script type="text/javascript">
+
+		var navbar_color;
 
 		function open_app_drawer(){
 			$('.dock').css({'height': '100%', 'background': 'rgb(255, 255, 255)'});
 			$('.apps').css({'opacity': '1', 'display': 'block'});
 			$('#dock').css({'opacity': '0'});
-			$('.navbar').css({'background': 'rgba(0, 0, 0, 0.5)'});
+			navbar_color = 'rgba(0, 0, 0, 0.5)';
+			$('.navbar').css({'background': navbar_color});
 			$('.navbar .back').attr('href', 'javascript: close_app_drawer()');
 		}
 
@@ -138,7 +187,8 @@
 			$('.dock').css({'height': '160px', 'background': 'rgba(255, 255, 255, 0.3)'});
 			$('.apps').css({'opacity': '0', 'display': 'none'});
 			$('#dock').css({'opacity': '1'});
-			$('.navbar').css({'background': 'rgba(0, 0, 0, 0)'});
+			navbar_color = 'rgba(0, 0, 0, 0)';
+			$('.navbar').css({'background': navbar_color});
 		}
 
 		function startTime() {
@@ -155,7 +205,7 @@
 		}
 
 		function checkTime(i) {
-			if (i < 10) {i = "0" + i};  // add zero in front of numbers < 10
+			if (i < 10) {i = "0" + i};
 			return i;
 		}
 
@@ -165,6 +215,52 @@
 			document.getElementById('date').innerHTML = d.toDateString();
 		}
 
+		function open_app(event, name, link, color){
+			$('body').append('<div class="expandable ' + color + '"></div>');
+			event = event || window.event;
+			expandable = (document.getElementsByClassName('expandable'))[0];
+			var x = event.clientX;
+			var y = event.clientY;
+			expandable.style.top = y-25+'px';
+			expandable.style.left = x-25+'px';
+			$(function(){
+				expandable.style.transform = 'scale(50)';
+			});
+			setTimeout(function(){
+				var app = '<div class="app-bar valign-wrapper ' + color + '"><div class="valign"></div></div>';
+				app += '<iframe class="app-body" id="app-body"></iframe>';
+				$('.app').html(app);
+				$('.app').css({'width': '100%', 'height': '100%'});
+				var frame = document.getElementById('app-body');
+				frame.src = link;
+				$('.app-body').css('height', (parseInt($(window).height()) - 100) + 'px');
+				navbar_color = $('.app-bar').css('background-color')
+				$('.navbar').css('background-color', navbar_color);
+				frame.onload = function(){
+					$('.app-bar').css('height', '50px');
+					$('.app-body').css({'width': '100%'});
+					$('.app-bar .valign').html('<h5>' + name + '</h5>');
+					$('.expandable').css('opacity', '0');
+					$('.navbar .back').attr('href', 'javascript: close_app()');
+					setTimeout(function(){
+						$('.expandable').remove();
+					}, 300);
+				};
+			}, 300);
+		}
+
+		function close_app(){
+			$('.app-body').css({'background-color': navbar_color});
+			navbar_color = 'rgba(0, 0, 0, 0.5)';
+			$('.navbar').css({'background': navbar_color});
+			$('.navbar .back').attr('href', 'javascript: close_app_drawer()');
+			$(function(){
+				$('.app').css({'top': '100%', 'opacity': '0'});
+				setTimeout(function(){
+					$('.app').html('').attr('style', '');
+				}, 300);
+			});
+		}
 
 	</script>
 
@@ -182,7 +278,9 @@
 
 	<a class="arrow" href="javascript: open_app_drawer()">
 		<i class="material-icons">keyboard_arrow_up</i>
-	 </a>
+	</a>
+
+	<div class="app"></div>
 
 	<div class="dock">
 		<div class="row" id="dock">
@@ -205,32 +303,30 @@
 			<div class="col s1"></div>
 		</div>
 		<div class="apps" style="opacity: 0; display: none;">
-			<div class="head deep-orange-text" style="font-family:serif">Apps</div>
-			<div class="green-text text-darken-2">
+			<div class="head blue-grey-text">Apps</div>
 			<div class="row">
 				<div class="col s1"></div>
-			<div class="col s2">
-				<a href=""><img src="images/disk.svg"/></a><br>
-				Disk Scheduling
-			</div>
-			<div class="col s2">
-				<a href=""><img src="images/process.svg"/></a><br>
-				Process Scheduling
-			</div>
-			<div class="col s2">
-				<a href=""><img src="images/terminal.svg"/></a><br>
-				Terminal
-			</div>
-			<div class="col s2">
-				<a href=""><img src="images/file.svg"/></a><br>
-				File Allocation
-			</div>
-			<div class="col s2" >
-				<a href=""><img src="images/lock.svg"/></a><br>
-				Dead Lock
-			</div>
-			<div class="col s1"></div>
-			</div>
+				<div class="col s2">
+					<a href="#!" onclick="open_app(event, 'Disk Scheduling', '/disk_scheduling', 'teal')"><img src="images/disk.svg"/></a><br>
+					Disk Scheduling
+				</div>
+				<div class="col s2">
+					<a href="#!" onclick="open_app(event, 'Process Scheduling', '/process_scheduling', 'teal')"><img src="images/process.svg"/></a><br>
+					Process Scheduling
+				</div>
+				<div class="col s2">
+					<a href="#!" onclick="open_app(event, 'Terminal', '/terminal', 'blue-grey')"><img src="images/terminal.svg"/></a><br>
+					Terminal
+				</div>
+				<div class="col s2">
+					<a href=""><img src="images/file.svg"/></a><br>
+					File Allocation
+				</div>
+				<div class="col s2" >
+					<a href="#!" onclick="open_app(event, 'Dead Lock', '/banker', 'teal')"><img src="images/lock.svg"/></a><br>
+					Dead Lock
+				</div>
+				<div class="col s1"></div>
 			</div>
 		</div>
 	</div>
