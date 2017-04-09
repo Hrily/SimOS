@@ -24,7 +24,7 @@ struct file
 	}memloc;
 	memloc block[64];
  	rit * indexblock[10];
- 	int ind=0;
+ 	
   
   int addfile(string name, int s);
 	int deletefile(string s);
