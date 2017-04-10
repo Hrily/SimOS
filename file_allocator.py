@@ -13,14 +13,18 @@ def init(i):
 	print "Initializing file allocation program"
 	if i == 1:
 		con = Popen(['./file_alloc/contiguous'], stdin=PIPE, stdout=PIPE)
-	elif i==2:
-		ind = Popen(['./file_alloc/linked'], stdin=PIPE, stdout=PIPE)
+	elif i == 2:
+		lin = Popen(['./file_alloc/linked'], stdin=PIPE, stdout=PIPE)
+	elif i == 3:
+		ind = Popen(['./file_alloc/indexed'], stdin=PIPE, stdout=PIPE)
 
 def execute(i, com):
 	global con, lin, ind
 	if i == 1:
 		return execute_com(con, com)
 	elif i == 2:
+		return execute_com(lin, com)
+	elif i == 3:
 		return execute_com(ind, com)
 
 def execute_com(p, com):

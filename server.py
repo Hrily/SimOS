@@ -83,6 +83,18 @@ def page_linked_file_allocation():
 	file_allocator.init(2)
 	return app.send_static_file('linked_file_allocation.html')
 
+# Indexed File Alloction
+@app.route('/indexed_file_allocation/execute', methods=['POST', 'GET'])
+def indexed_file_allocation():
+	inp = request.args['input']
+	out = file_allocator.execute(3, inp)
+	return out
+
+@app.route('/indexed_file_allocation')
+def page_indexed_file_allocation():
+	file_allocator.init(3)
+	return app.send_static_file('indexed_file_allocation.html')
+
 @app.route('/file_allocation', methods=['POST', 'GET'])
 def page_file_allocation():
 	inp = request.args['input']

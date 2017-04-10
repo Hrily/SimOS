@@ -51,6 +51,7 @@ struct file
 		}
 		if(p==10){
 			cout<<"All index blocks filled\n";
+			fflush(stdout);
 			return 0;
 		}
 		indexblock[p]=arr;
