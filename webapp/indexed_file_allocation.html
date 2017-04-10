@@ -1,6 +1,6 @@
 <!-- Hrishikesh Hiraskar -->
 <!-- 15CO121             -->
-<!-- 29/3/17             -->
+<!-- 10/4/17             -->
 <!DOCTYPE html>
 <html>
 <head>
@@ -79,7 +79,8 @@
 			$('.file-chips').append(file_chip);
 			for(var i=0; i<fbs.length; i++){
 				$('#block-'+fbs[i]).attr('class', 'block '+color[n]);
-				$('#file-'+name).append('<div class="col chip block-number">' + fbs[i] + '</div>');
+				if(i==0) $('#file-'+name).append('<div class="col chip block-number ' + color[n] + '">' + fbs[i] + '</div>');
+				else     $('#file-'+name).append('<div class="col chip block-number">' + fbs[i] + '</div>');
 			}
 		}
 
@@ -96,7 +97,7 @@
 			for(var i=0; i<output.length; i++){
 				o = output[i].split(' ');
 				name = o[0];
-				size = parseInt(o[1]);
+				size = parseInt(o[1]) + 1;
 				fbs  = []
 				for(var j=0; j<size; j++)
 					fbs.push(parseInt(o[j+2]));
@@ -124,7 +125,7 @@
 			    if (xhr.readyState == XMLHttpRequest.DONE) {
 			    	output = xhr.responseText;
 			    	output = output.split('\n');
-			    	if(output[0].includes('File ') && output.length == 1){
+			    	if((output[0].includes('File ') || output[0].includes('All') || output[0].includes('Not')) && output.length == 1){
 			    		Materialize.toast(output, 1500);
 						return;
 			    	}
@@ -134,7 +135,7 @@
 					window.scrollTo(0,document.body.scrollHeight);
 			    }
 			}
-			xhr.open('GET', '/linked_file_allocation/execute?input='+input, true);
+			xhr.open('GET', '/indexed_file_allocation/execute?input='+input, true);
 			xhr.send();
 		}
 
@@ -156,7 +157,7 @@
 	<div class="container" style="margin-top : -8%;">
 		<div class="card" >
 			<div class="card-content"><div class="row">
-					<div class="col s6"><h4>Linked File Allocation</h4></div>
+					<div class="col s6"><h4>Indexed File Allocation</h4></div>
 				</div>
 				<div class="row">
 					<div class="col s4">
