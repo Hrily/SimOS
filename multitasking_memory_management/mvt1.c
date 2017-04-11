@@ -1,3 +1,6 @@
+//AALAMDEEP KASHYAP
+//15CO101
+
 #include <stdio.h>
 #include <stdlib.h>
 
