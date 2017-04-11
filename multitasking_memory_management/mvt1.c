@@ -31,7 +31,7 @@ int main()
 	int min,minblock,max,maxblock;
 	scanf("%d%d",&part,&memsize);
 	int fit;
-	
+	scanf("%d",&fit);
 	p[0].size=memsize;
 	p[0].flag=-1;
 	int freespace=memsize;
@@ -42,7 +42,7 @@ int main()
 		switch(c)
 		{
 			case 1: 
-				scanf("%d",&fit);
+				
 				scanf("%d", &psize);
 
 				if(freespace<psize)
