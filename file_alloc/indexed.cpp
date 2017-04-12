@@ -1,65 +1,104 @@
 //Ritwick and Abhilash
 #include<iostream>
+#include<algorithm>
+#include<cstdlib>
 using namespace std;
+typedef struct rit{
+ 	int ind;
+ 	int val;
+ }rit;
 struct file
 {
 	string nm;
 	int size;
-	int a[10];
+	rit a[10];
+	int p;
 	int* ptr=NULL;
 };
 	int index=0;
 	struct file list[100];
-	int block[64];
-	int i;
-
-
-
-	void addfile(string name, int s);
-	void deletefile(string s);
-	int * checkfile(int s);
+	
+	typedef struct memloc{
+		int i;
+		bool occ;
+	}memloc;
+	memloc block[64];
+ 	rit * indexblock[10];
+ 	
+  
+  int addfile(string name, int s);
+	int deletefile(string s);
+	rit *checkfile(int s);
 	int searchfile(string s);
 	
 
-	void addfile(string name, int s){
+	int addfile(string name, int s){
+		
+		
 		if(searchfile(name)==-1){
 		
-		int * arr=checkfile(s);
+		rit * arr=checkfile(s);
 		if(!arr){
 			cout<<"Not possible\n";
-			return ;
+			fflush(stdout);
+			return 0;
 		}
+		int p;
+		for( p=0; p<10; p++){
+			if(indexblock[p]==NULL){
+				break;
+			}
+		}
+		if(p==10){
+			cout<<"All index blocks filled\n";
+			fflush(stdout);
+			return 0;
+		}
+		indexblock[p]=arr;
 		list[index].nm=name;
 		list[index].size=s;
+		list[index].p=p;
 		for(int l=0 ; l<s ; l++ ){
-		list[index].a[l]=arr[l];
+		list[index].a[l].ind=arr[l].ind;
+		list[index].a[l].val=arr[l].val;
 		}
 		for(int i=0; i<s ; i++){
-			block[list[index].a[i]]=1; 
+			block[list[index].a[i].ind].occ=1; 
 		}
 		index++;
+		return 1;
 	}
-	else printf("File name already taken\n");
+	else{
+		printf("File name already taken\n");
+		fflush(stdout);
+		return 0;
+	}
 }
-	void deletefile(string s){
+	int deletefile(string s){
+		
 		int f=searchfile(s);
 		if(f==-1){
 			cout<<"File not found\n";
+			fflush(stdout);
+			return 0;
 		}
 		else{
+			indexblock[list[f].p]=NULL;
 			for(int i=0; i<list[f].size; i++){
-				block[list[f].a[i]]=0; 
+				block[list[f].a[i].ind].occ=0; 
 				}
 		list[f].size=-1;
+			return 1;
 		
 		}
 	}
-	int * checkfile(int s){
+	rit * checkfile(int s){
 		int cnt=0;
-		int* n=new int[10];
+		rit *n=new rit[10];
 		for(int i=10;i<64;i++){
-			if(block[i]==0){
-				n[cnt++]=i;
+			if(block[i].occ==0){
+				n[cnt].ind=i;
+				n[cnt++].val=block[i].i;
 				if(cnt>10){
 					break;
 				}
@@ -86,20 +125,29 @@ struct file
 		if(list[j].size==-1)
 			continue;
 		else{
-		cout<<list[j].nm<<" "<<list[j].size<<" ";
+		cout<<list[j].nm<<" "<<list[j].size<<" "<<list[j].p<<" ";
 			for(int i=0;i<list[j].size;i++)
-				cout<<list[j].a[i]<<" ";
+				cout<<list[j].a[i].val<<" ";
 		}
-		cout<<"\n";
+		cout<<"<br>";
 	}
+	cout<<endl;
+	fflush(stdout);
 }
 	int main(){
 		int i;
 	
 	for(i=0; i<10; i++){
-		block[i]=-1;
+		block[i].i=-1;
+		block[i].occ=1;
 		
 	}
+	for(i=10; i<64; i++){
+		block[i].i=i;
+		block[i].occ=0;
+	}
+	random_shuffle(block+10,block + 64);
+	
 	int ch,size,f;
 	string name;
 		
@@ -109,11 +157,15 @@ struct file
 		case 1:
 			//Enter file name and size
 			cin>>name>>size;
-			addfile(name,size);
+			fflush(stdin);
+			if(addfile(name,size))
+				display();
 			break;
 		case 2:
 			cin>>name;
-			deletefile(name);
+			fflush(stdin);
+			if(deletefile(name))
+				display();
 			break;
 		case 3:
 			display();

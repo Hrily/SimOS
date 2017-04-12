@@ -59,17 +59,41 @@ def process_schedule():
 def page_process_scheduling():
 	return app.send_static_file('process_scheduling.html')
 
-# File Alloction
-@app.route('/file_allocation/execute', methods=['POST', 'GET'])
-def file_allocation():
+# Contigous File Alloction
+@app.route('/contigous_file_allocation/execute', methods=['POST', 'GET'])
+def contigous_file_allocation():
 	inp = request.args['input']
-	out = file_allocator.execute(inp)
+	out = file_allocator.execute(1, inp)
 	return out
 
 @app.route('/contigous_file_allocation')
 def page_contigous_file_allocation():
 	file_allocator.init(1)
-	return app.send_static_file('file_allocation.html')
+	return app.send_static_file('contigous_file_allocation.html')
+
+# Linked File Alloction
+@app.route('/linked_file_allocation/execute', methods=['POST', 'GET'])
+def linked_file_allocation():
+	inp = request.args['input']
+	out = file_allocator.execute(2, inp)
+	return out
+
+@app.route('/linked_file_allocation')
+def page_linked_file_allocation():
+	file_allocator.init(2)
+	return app.send_static_file('linked_file_allocation.html')
+
+# Indexed File Alloction
+@app.route('/indexed_file_allocation/execute', methods=['POST', 'GET'])
+def indexed_file_allocation():
+	inp = request.args['input']
+	out = file_allocator.execute(3, inp)
+	return out
+
+@app.route('/indexed_file_allocation')
+def page_indexed_file_allocation():
+	file_allocator.init(3)
+	return app.send_static_file('indexed_file_allocation.html')
 
 @app.route('/file_allocation', methods=['POST', 'GET'])
 def page_file_allocation():
@@ -92,6 +116,22 @@ def deadlock():
 def page_deadlock():
 	banker.init()
 	return app.send_static_file('deadlock.html')
+
+# Dining Philosopher
+@app.route('/dining/execute', methods=['POST', 'GET'])
+def dining():
+	inp = request.args['input']
+	out = executer.execute('process_sync/dining', inp)
+	return out
+
+@app.route('/dining')
+def page_dining():
+	return app.send_static_file('dining.html')
+
+@app.route('/')
+def page_home():
+	shell.init()
+	return app.send_static_file('index.html')
 
 @app.route('/<path:path>')
 def static_file(path):
