@@ -128,6 +128,38 @@ def dining():
 def page_dining():
 	return app.send_static_file('dining.html')
 
+# Producer Consumer
+@app.route('/producer/execute', methods=['POST', 'GET'])
+def producer():
+	inp = request.args['input']
+	out = executer.execute('process_sync/producer_consumer', inp)
+	return out
+
+@app.route('/producer')
+def page_producer():
+	return app.send_static_file('producer_consumer.html')
+
+# MVT
+@app.route('/mvt/execute', methods=['POST', 'GET'])
+def mvt():
+	inp = request.args['input']
+	out = file_allocator.execute(4, inp)
+	return out
+
+@app.route('/mvt/change_fit', methods=['POST', 'GET'])
+def mvt_change_fit():
+	fit = request.args['fit']
+	print fit
+	if file_allocator.mvt is not None:
+		file_allocator.execute(4, '0')
+	file_allocator.init(4)
+	print file_allocator.execute(4, '0 100 ' + fit)
+	return "Success"
+
+@app.route('/mvt')
+def page_mvt():
+	return app.send_static_file('mvt.html')
+
 @app.route('/')
 def page_home():
 	shell.init()
