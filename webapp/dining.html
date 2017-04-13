@@ -32,6 +32,11 @@
 		.dining-table {
 			text-align: center;
 		}
+		p{
+		text-align: left;
+		font-size: medium;
+		font-family: serif;
+		}
 
 	</style>
 
@@ -104,6 +109,18 @@
 			<div class="card-content">
 				<div class="row">
 					<h3>Dining philosopher problem</h3>
+					<br>
+					<p>Here we are considering five philosophers who spend their lives thinking and eating.
+					The philosophers share a circular table surrounded by five chairs, each belonging to one philosopher.
+					In the center of the table is a bowl of food, and the table is laid with five single chopsticks.
+					When a philosopher thinks, he/she does not interact with his/her colleagues.
+					From time to time ,a philosopher gets hungry and tries to pick up the two chopsticks
+					that are nearest to him/her (the chopsticks that are between he/her and his/her left and right neighbours).
+					A philosopher may pick up only one chopstick at a time.Obviously he/she cannot pick chopstick that is already in his/her neighbour's hand.
+					When a hungry philosopher has both his/her chopsticks at the same time, he/she eats without releasing his/her chopsticks.
+					When he/she is finished eating, he/she puts down both of her chopsticks and starts thinking again.
+					</p>
+					<hr>
 					<a class="pink btn waves-effect waves-light disabled simulate right" href="javascript: start_simulation()">
 						<i class="material-icons right">play_arrow</i>Simulate
 					</a>
