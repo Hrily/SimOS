@@ -21,7 +21,7 @@ int main()
     int i,j;
     int n;
     int pr,co;
-    printf("Enter the number of producers and consumers : ");
+    // printf("Enter the number of producers and consumers : ");
     scanf("%d %d",&pr,&co);
     
     int prod[50]={0};
@@ -76,7 +76,7 @@ void *Producer()
         else
         {                       
         BUFFER[BufferIndex++]='@';
-        printf("Produced (producer %d) : %d items\n",p+1,BufferIndex);
+        printf("+%d\n",p+1,BufferIndex);
         pthread_mutex_unlock(&mVar);
         pthread_cond_signal(&Buffer_Not_Empty);        
       }
@@ -97,7 +97,7 @@ void *Consumer()
         {          
          if(BufferIndex!=0)
          {
-        printf("Consumed (consumer %d) : %d items left\n",c+1,--BufferIndex);        
+        printf("-%d\n",c+1,--BufferIndex);        
         pthread_mutex_unlock(&mVar);        
         pthread_cond_signal(&Buffer_Not_Full);                
         }

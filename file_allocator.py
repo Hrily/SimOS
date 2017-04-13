@@ -7,25 +7,30 @@ import time, sys
 con = None
 lin = None
 ind = None
+mvt = None
 
 def init(i):
-	global con, lin, ind
+	global con, lin, ind, mvt
 	print "Initializing file allocation program"
-	if i == 1:
+	if   i == 1:
 		con = Popen(['./file_alloc/contiguous'], stdin=PIPE, stdout=PIPE)
 	elif i == 2:
 		lin = Popen(['./file_alloc/linked'], stdin=PIPE, stdout=PIPE)
 	elif i == 3:
 		ind = Popen(['./file_alloc/indexed'], stdin=PIPE, stdout=PIPE)
+	elif i == 4:
+		mvt = Popen(['./multitasking_memory_management/mvt'], stdin=PIPE, stdout=PIPE)
 
 def execute(i, com):
 	global con, lin, ind
-	if i == 1:
+	if   i == 1:
 		return execute_com(con, com)
 	elif i == 2:
 		return execute_com(lin, com)
 	elif i == 3:
 		return execute_com(ind, com)
+	elif i == 4:
+		return execute_com(mvt, com)
 
 def execute_com(p, com):
 	p.stdin.write(com+'\n'.encode())

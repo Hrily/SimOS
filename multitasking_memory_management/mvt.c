@@ -35,8 +35,11 @@ int main()
 	scanf("%d%d",&part,&memsize);
 	int fit;
 	scanf("%d",&fit);
+	fflush(stdin);
 	p[0].size=memsize;
 	p[0].flag=-1;
+	printf("1\n");
+	fflush(stdout);
 	int freespace=memsize;
 	int extfrag=0;
 	while(1)	
@@ -47,14 +50,15 @@ int main()
 			case 1: 
 				
 				scanf("%d", &psize);
-
-				if(freespace<psize)
-					printf("0\n");
+				fflush(stdin);
+				int f = 0;
+				if(freespace<psize || psize<=0)
+					f = 0;
 				else if(freespace>=psize && externalfrag(psize)==1)
-				printf("0\n");
+					f = 0;
 				else
-				{	printf("1\n");
-			
+				{	
+					f = 1;
 					freespace-=psize;
 					switch(fit)
 					{
@@ -144,13 +148,18 @@ int main()
 					
 					
 				}
+				if(f) goto display;
+				else{
+					printf("~Cannot allocate!\n");
+					fflush(stdout);
+				}
 				break;
 			
 			case 2: 
-				if(np==1)	break;
-				else
+				if(np!=1)
 				{	int db;
 					scanf("%d", &db);
+					fflush(stdin);
 					freespace=freespace+p[db].size;
 					p[db].flag=-1;
 					for(i=0;i<np-1;i++)
@@ -168,19 +177,23 @@ int main()
 						
 					}
 				}	
+				goto display;
 				break;
 
 			case 3: 
+				display:
 				for(i=0;i<np;i++)
 				{	
 					if(p[i].flag==-1)
-						printf("%d %d 0\n",i,p[i].size);
+						printf("%d %d 0<br>",i,p[i].size);
 					else
-						printf("%d %d 1\n",i,p[i].size);
+						printf("%d %d 1<br>",i,p[i].size);
 				}		
+				printf("\n");
+				fflush(stdout);
 				break;
 			
-			case 4:exit(0);
+			case 0:exit(0);
 				
 		} 
 	}
