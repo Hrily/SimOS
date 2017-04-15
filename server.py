@@ -160,6 +160,28 @@ def mvt_change_fit():
 def page_mvt():
 	return app.send_static_file('mvt.html')
 
+# MFT
+@app.route('/mft/execute', methods=['POST', 'GET'])
+def mft():
+	inp = request.args['input']
+	out = file_allocator.execute(5, inp)
+	return out
+
+@app.route('/mft/init', methods=['POST', 'GET'])
+def mft_init():
+	inp = request.args['input']
+	if file_allocator.mft is not None:
+		file_allocator.execute(5, '0')
+	file_allocator.init(5)
+	out = file_allocator.execute(5, inp)
+	print out
+	return out
+
+@app.route('/mft')
+def page_mft():
+	return app.send_static_file('mft.html')
+
+
 @app.route('/')
 def page_home():
 	shell.init()
