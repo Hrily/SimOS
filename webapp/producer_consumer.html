@@ -4,7 +4,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>SimOS - Dining philosopher problem</title>
+	<title>SimOS - Producer Consumer problem</title>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width; initial-scale=1; maximum-scale=1">
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
@@ -29,13 +29,31 @@
 			padding-bottom: 10%;
 		}
 
-		.dining-table {
+		.field {
 			text-align: center;
 		}
-		p{
-		text-align: left;
-		font-size: medium;
-		font-family: serif;
+
+		.producers, .consumers, .items {
+			height: 65px;
+			margin-top: 20px;
+			margin-bottom: 20px;
+		}
+
+		.items {
+			text-align: center;
+		}
+
+		.items div {
+			display: inline-block;
+		}
+
+		.items img {
+			opacity: 0;
+			width: 64px;
+			height: 64px;
+			-webkit-transition: all .3s ease-out;
+			-o-transition: all .3s ease-out;
+			transition: all .3s ease-out;
 		}
 
 	</style>
@@ -44,9 +62,10 @@
 	<script src="https://code.highcharts.com/highcharts.js"></script>
 	<script type="text/javascript">
 		
-		var thinking = '<img src="images/thinking.png">';
-		var eating   = '<img src="images/hungry.png"> <img src="images/fork.png">';
-		var input    = '5 20\n';
+		var input = '5 5\n';
+		var items = 0;
+		var green = '#4caf50';
+		var red   = '#f44336';
 		var sequence;
 		var simulation;
 
@@ -58,12 +77,14 @@
 			    	console.log(sequence);
 			    	sequence = sequence.split('\n');
 					sequence = sequence.slice(0, sequence.length-1);
-					for(var i=0; i<sequence.length; i++)
-						sequence[i] = to_int(sequence[i].split(' '));
+					console.log(sequence);
+					for(var i=0; i<sequence.length; i++){
+						sequence[i] = parseInt(sequence[i]);
+					}
 			    	$('.simulate').removeClass('disabled');
 			    }
 			}
-			xhr.open('GET', '/dining/execute?input='+input, true);
+			xhr.open('GET', '/producer/execute?input='+input, true);
 			xhr.send();
 		}
 
@@ -78,7 +99,6 @@
 		function start_simulation(){
 			round = 0;
 			simulation = setInterval(function(){ simulate(); }, 2000);
-			// $('.simulate').addClass('disabled');
 			$('.simulate').attr('href', 'javascript: stop_simulation()');
 			$('.simulate').html('<i class="material-icons right">stop</i>Stop');
 		}
@@ -86,8 +106,32 @@
 		var round = 0;
 
 		function simulate(){
-			for(var i=0; i<5; i++){
-				document.getElementById('philosopher-'+(i+1)).innerHTML = (sequence[round%20][i]==1)? eating: thinking;
+			var person = sequence[round%sequence.length];
+			if(person>0){
+				// Prdducer
+				$('.producer-'+person).css('background', green);
+				$('.items').append('<div class="item-' + items + '"><img src="images/item.png"></div>');
+				$(function(){
+					$('.item-'+items+' img').css('opacity', '1');
+				});
+				setTimeout(function(){
+					$('.producer-'+person).attr('style', '');
+					items++;
+				}, 1000);
+			}else {
+				// Consumer
+				person = -person;
+				items--;
+				$('.consumer-'+person).css('background', red);
+				$(function(){
+					$('.item-'+items+' img').css('opacity', '0');
+				});
+				setTimeout(function(){
+					$('.item-'+items).remove();
+				}, 400);
+				setTimeout(function(){
+					$('.consumer-'+person).attr('style', '');
+				}, 1000);
 			}
 			round++;
 		}
@@ -102,66 +146,62 @@
 </head>
 <body>
 
-	<div class="head pink white-text" ><h1>Dining philosopher problem</h1></div>
+	<div class="head pink white-text" ><h1>Producer Consumer problem</h1></div>
 	
 	<div class="container" style="margin-top : -8%;">
 		<div class="card" >
 			<div class="card-content">
 				<div class="row">
-					<h3>Dining philosopher problem</h3>
-					<br>
-					<p>Here we are considering five philosophers who spend their lives thinking and eating.
-					The philosophers share a circular table surrounded by five chairs, each belonging to one philosopher.
-					In the center of the table is a bowl of food, and the table is laid with five single chopsticks.
-					When a philosopher thinks, he/she does not interact with his/her colleagues.
-					From time to time ,a philosopher gets hungry and tries to pick up the two chopsticks
-					that are nearest to him/her (the chopsticks that are between he/her and his/her left and right neighbours).
-					A philosopher may pick up only one chopstick at a time.Obviously he/she cannot pick chopstick that is already in his/her neighbour's hand.
-					When a hungry philosopher has both his/her chopsticks at the same time, he/she eats without releasing his/her chopsticks.
-					When he/she is finished eating, he/she puts down both of her chopsticks and starts thinking again.
-					</p>
-					<hr>
+					<h3>Producer Consumer problem</h3>
 					<a class="pink btn waves-effect waves-light disabled simulate right" href="javascript: start_simulation()">
 						<i class="material-icons right">play_arrow</i>Simulate
 					</a>
 				</div>
-				<div class="dining-table">
-					<div class="row">
-						<div class="col s4"></div>
-						<div class="col s4" id="philosopher-1">
-							<img src="images/thinking.png">
-						</div>
-						<div class="col s4"></div>
-					</div>
-					<div class="row">
+				<div class="field">
+					<div class="row producers">
 						<div class="col s1"></div>
-						<div class="col s3" id="philosopher-5">
-							<img src="images/thinking.png">
+						<div class="col s2 producer-1">
+							<img src="images/producer.png"/>
 						</div>
-						<div class="col s1"></div>
-						<div class="col s2 card pink">
-							<div class="card-content" style="padding: 0;">
-								<img src="images/food.png">
-							</div>
+						<div class="col s2 producer-2">
+							<img src="images/producer.png"/>
 						</div>
-						<div class="col s1"></div>
-						<div class="col s3" id="philosopher-2">
-							<img src="images/thinking.png">
+						<div class="col s2 producer-3">
+							<img src="images/producer.png"/>
+						</div>
+						<div class="col s2 producer-4">
+							<img src="images/producer.png"/>
+						</div>
+						<div class="col s2 producer-5">
+							<img src="images/producer.png"/>
 						</div>
 						<div class="col s1"></div>
 					</div>
-					<div class="row">
-						<div class="col s2"></div>
-						<div class="col s3" id="philosopher-4">
-							<img src="images/thinking.png">
+
+					<div class="row items center-align">
+						
+					</div>
+
+					<div class="row consumers">
+						<div class="col s1"></div>
+						<div class="col s2 consumer-1">
+							<img src="images/consumer.png"/>
 						</div>
-						<div class="col s2"></div>
-						<div class="col s3" id="philosopher-3">
-							<img src="images/thinking.png">
+						<div class="col s2 consumer-2">
+							<img src="images/consumer.png"/>
 						</div>
-						<div class="col s2"></div>
+						<div class="col s2 consumer-3">
+							<img src="images/consumer.png"/>
+						</div>
+						<div class="col s2 consumer-4">
+							<img src="images/consumer.png"/>
+						</div>
+						<div class="col s2 consumer-5">
+							<img src="images/consumer.png"/>
+						</div>
+						<div class="col s1"></div>
 					</div>
 				</div>
 			</div>
 		</div>
-	</div>
+	</consumer

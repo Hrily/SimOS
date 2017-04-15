@@ -1,0 +1,217 @@
+<!-- Hrishikesh Hiraskar -->
+<!-- 15CO121             -->
+<!-- 29/3/17             -->
+<!DOCTYPE html>
+<html>
+<head>
+	<title>SimOS - Memory Management</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width; initial-scale=1; maximum-scale=1">
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<script
+	src="https://code.jquery.com/jquery-3.1.1.min.js"
+	integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
+	crossorigin="anonymous"></script>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/css/materialize.min.css">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto Mono">
+	<style>
+
+		body {
+			margin: 0;
+			padding: 0;
+			background: rgb(233, 234, 237);
+		}
+
+		.head {
+			width: 100%;
+			padding: 2%;
+			padding-bottom: 10%;
+		}
+
+		#storage {
+			position: relative;
+			width: 100%;
+			height: 50px;
+			background: #dddddd;
+		}
+
+		.size-line {
+			font-size: 50%;
+			margin: 0;
+			padding: 0;
+		}
+
+		.file-block {
+			position: absolute;
+			top: 0;
+			height: 100%;
+			margin: 0;
+			padding: 0;
+			font-size: 50%;
+			cursor: pointer; 
+			cursor: hand;
+		}
+
+		.file-block .size {
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			transform: translate(-50%, -50%);
+		}
+
+		.file-block .start {
+			position: absolute;
+			top: 0;
+			left: 0;
+			padding: 5px;
+		}
+
+	</style>
+
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/js/materialize.min.js"></script>
+	<script type="text/javascript">
+
+		var SIZE       = 100;
+		var n_blocks   = 0;
+		var color      = ['red', 'deep-purple', 'light-blue', 'green', 'yellow', 'deep-orange', 'blue-grey', 'pink', 'indigo', 'cyan', 'light-green', 'amber', 'brown', 'purple', 'blue', 'lime', 'orange'];
+		var file_n     = 0;
+		var file_names = [];
+
+		function S(id){
+			return document.getElementById(id)
+		}
+
+		function add_file_block(start, size, num, used){
+			left  = start;
+			width = size;
+			c = (!used)? 'grey' : color[n_blocks];
+			$('#storage').append('<div class="card '+c+' file-block b-'+num+'" onclick="delete_block(' + num + ')"><div class="card-content"></div></div>');
+			$('.b-'+num).css({'left': left+'%', 'width': width+'%'});
+			$('.b-'+num).append('<div class="start">'+start+'</div><div class="size">'+size+'</div>');
+			if(used) n_blocks++;
+		}
+
+		function to_int(output){
+			for(var i=0;i<output.length;i++)
+				output[i] = parseInt(output[i]);
+			return output.slice(0, output.length-1);
+		}
+
+		function handle_output(output){
+			console.log(output);
+			free       = []
+			sizes      = []
+			block_num  = []
+			for(var i=0;i<output.length;i++){
+				output[i] = output[i].split(' ');
+				block_num.push(parseInt(output[i][0]));
+				sizes.push(parseInt(output[i][1]));
+				free.push(parseInt(output[i][2]));
+			}
+			S('storage').innerHTML = "";
+			n_blocks = 0;
+			console.log(free);
+			console.log(sizes);
+			console.log(block_num);
+			var start = 0;
+			for(var i=0;i<free.length;i++){
+				add_file_block(start, sizes[i], block_num[i], free[i]);
+				start += sizes[i];
+			}
+		}
+
+		function delete_block(i){
+			input = '2 '+ i;
+			send_request(input);
+		}
+
+		function add_file(){
+			size  = S('file-size').value;
+			input = '1 ' + parseInt(size);
+			send_request(input);
+		}
+
+		function send_request(input){
+			console.log(input);
+			var xhr = new XMLHttpRequest();
+			xhr.onreadystatechange = function() {
+			    if (xhr.readyState == XMLHttpRequest.DONE) {
+			    	output = xhr.responseText;
+			    	console.log(output);
+			    	if(output[0]=='~'){
+			    		Materialize.toast(output.slice(1), 1500);
+						return;
+			    	}
+			    	output = output.split('\n');
+			    	console.log(output)
+			    	handle_output(output.slice(0, output.length-1));
+					window.scrollTo(0,document.body.scrollHeight);
+			    }
+			}
+			xhr.open('GET', '/mvt/execute?input='+input, true);
+			xhr.send();
+		}
+
+		function init(fit){
+			var xhr = new XMLHttpRequest();
+			xhr.onreadystatechange = function() {
+			    if (xhr.readyState == XMLHttpRequest.DONE) {
+			    	output = xhr.responseText;
+			    	console.log(output);
+			    	if(output=="Success")
+			    		$("#add-file").removeClass('disabled');
+			    }
+			}
+			xhr.open('GET', '/mvt/change_fit?fit='+fit+'\n', true);
+			xhr.send();
+		}
+
+
+	</script>
+
+</head>
+<body onload="init(1)">
+	<div class="head teal white-text" ><h1> Memory Management </h1></div>
+	<div class="container" style="margin-top : -8%;">
+		<div class="card" >
+			<div class="card-content">
+				<div class="row">
+					<div class="col s12"><h4>Multiprogramming with a Variable number of Tasks</h4></div>
+				</div>
+				<div class="row size-line"> 
+					<div class="col s1">0</div>
+					<div class="col s11 right-align">100</div>
+				</div>
+				<div class="col" id="storage"></div>
+				<div class="row">
+					<div class="col s4">
+						<div class="input-field">
+							<input class="validate" type="text" id="file-size"/>
+							<label for="file-size">File Size</label>
+							<a id="add-file" class="btn disabled waves-effect waves-effect-light teal" onclick="add_file()"><i class="material-icons right">add</i>Add</a>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col s4">
+						<form action="#">
+						<p onclick="init(1)">
+							<input name="fit" class="with-gap" type="radio" id="first" checked="checked"/>
+							<label for="first">First Fit</label>
+						</p>
+						<p onclick="init(2)">
+							<input name="fit" class="with-gap" type="radio" id="best" />
+							<label for="best">Best Fit</label>
+						</p>
+						<p onclick="init(3)">
+							<input name="fit" class="with-gap" type="radio" id="worst" />
+							<label for="worst">Worst Fit</label>
+						</p>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
