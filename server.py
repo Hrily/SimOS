@@ -181,11 +181,16 @@ def mft_init():
 def page_mft():
 	return app.send_static_file('mft.html')
 
-
+# Home
 @app.route('/')
 def page_home():
 	shell.init()
 	return app.send_static_file('index.html')
+
+# Team
+@app.route('/team')
+def page_team():
+	return app.send_static_file('team.html')
 
 @app.route('/<path:path>')
 def static_file(path):
