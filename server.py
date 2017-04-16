@@ -48,7 +48,7 @@ def page_disk_scheduling():
 # Process Scheduling
 @app.route('/process_scheduling/schedule', methods=['POST', 'GET'])
 def process_schedule():
-	scheduling = ['fcfs', 'rr', 'sjf', 'non_preemptive', 'srtf', 'preemptive']
+	scheduling = ['fcfs', 'rr', 'sjf', 'non_preemptive', 'srtf', 'preemptive', 'multilevel_queue']
 	inp = request.args['input']
 	out = ""
 	for algo in scheduling:
@@ -139,6 +139,17 @@ def producer():
 def page_producer():
 	return app.send_static_file('producer_consumer.html')
 
+# Reader Writer
+@app.route('/reader/execute', methods=['POST', 'GET'])
+def reader():
+	inp = request.args['input']
+	out = executer.execute('process_sync/readerwriter', inp)
+	return out
+
+@app.route('/reader')
+def page_reader():
+	return app.send_static_file('reader_writer.html')
+
 # MVT
 @app.route('/mvt/execute', methods=['POST', 'GET'])
 def mvt():
@@ -160,10 +171,62 @@ def mvt_change_fit():
 def page_mvt():
 	return app.send_static_file('mvt.html')
 
+# MFT
+@app.route('/mft/execute', methods=['POST', 'GET'])
+def mft():
+	inp = request.args['input']
+	out = file_allocator.execute(5, inp)
+	return out
+
+@app.route('/mft/init', methods=['POST', 'GET'])
+def mft_init():
+	inp = request.args['input']
+	if file_allocator.mft is not None:
+		file_allocator.execute(5, '0')
+	file_allocator.init(5)
+	out = file_allocator.execute(5, inp)
+	print out
+	return out
+
+@app.route('/mft')
+def page_mft():
+	return app.send_static_file('mft.html')
+
+# Page Replacement
+@app.route('/page_replacement/execute', methods=['POST', 'GET'])
+def pafe_replacement():
+	scheduling = ['fifo', 'lru', 'opt']
+	inp = request.args['input']
+	out = ""
+	for algo in scheduling:
+		out += executer.execute('page_replacement/'+algo, inp)
+	return out
+
+@app.route('/page_replacement')
+def page_page_replacement():
+	return app.send_static_file('page_replacement.html')
+
+# RTOS
+@app.route('/rtos/execute', methods=['POST', 'GET'])
+def pafe_rtos():
+	inp = request.args['input']
+	out = executer.execute('RTOS/rate_monotonic', inp)
+	return out
+
+@app.route('/rtos')
+def page_rtos():
+	return app.send_static_file('rtos.html')
+
+# Home
 @app.route('/')
 def page_home():
 	shell.init()
 	return app.send_static_file('index.html')
+
+# Team
+@app.route('/team')
+def page_team():
+	return app.send_static_file('team.html')
 
 @app.route('/<path:path>')
 def static_file(path):

@@ -90,11 +90,16 @@
 			color: white;
 		}
 
+		.apps {
+			height: 85%;
+			overflow-y: scroll;
+			overflow-x: hidden;
+		}
+
 		.apps .head {
 			position: absolute;
 			top: 25px;
-			left: 50%;
-			transform: translateX(-50%);
+			left: 26%;
 			font-size: 300%;
 			font-weight: 100 !important;
 		}
@@ -165,6 +170,13 @@
 			-webkit-transition: transform .3s ease-in-out, opacity .3s ease-out;
 			-o-transition: transform .3s ease-in-out, opacity .3s ease-out;
 			transition: transform .3s ease-in-out, opacity .3s ease-out;
+		}
+
+		.apps .title {
+			text-align: left;
+			padding-left: 10%;
+			padding-top: 10px;
+			padding-bottom: 10px
 		}
 
 	</style>
@@ -286,48 +298,134 @@
 		<div class="row" id="dock">
 			<div class="col s1"></div>
 			<div class="col s2">
-				<a href=""><img src="images/disk.svg"/></a>
+				<a href="#!" onclick="open_app(event, 'Disk Scheduling', '/disk_scheduling', 'teal')"><img src="images/disk.svg"/></a>
 			</div>
 			<div class="col s2">
-				<a href=""><img src="images/process.svg"/></a>
+				<a href="#!" onclick="open_app(event, 'Process Scheduling', '/process_scheduling', 'orange')"><img src="images/process.svg"/></a>
 			</div>
 			<div class="col s2">
-				<a href=""><img src="images/terminal.svg"/></a>
+				<a href="#!" onclick="open_app(event, 'Terminal', '/terminal', 'blue-grey')"><img src="images/terminal.svg"/></a>
 			</div>
 			<div class="col s2">
-				<a href=""><img src="images/file.svg"/></a>
+				<a href="#!" onclick="open_app(event, 'Contigous File Allocation', '/contigous_file_allocation', 'teal')"><img src="images/file.svg"/></a>
 			</div>
 			<div class="col s2">
-				<a href=""><img src="images/lock.svg"/></a>
+				<a href="#!" onclick="open_app(event, 'Dead Lock', '/banker', 'purple')"><img src="images/lock.svg"/></a>
 			</div>
 			<div class="col s1"></div>
 		</div>
 		<div class="apps" style="opacity: 0; display: none;">
+			<!-- 
+
+				process
+					+ sched
+					+ deadlock
+					+ dining
+					+ producer
+					+ readerwriter
+
+				memory
+					+ mft
+					+ mvt
+					+ page replacement
+
+				disk
+					+ sched
+					+ file allocation
+
+				rtos
+					+ rate monotonic
+
+				Misc
+					+ terminal
+					+ team
+
+			-->
 			<div class="head blue-grey-text">Apps</div>
 			<div class="row">
+				<div class="col s12 blue-grey-text title">Process Management</div>
+				<div class="col s1"></div>
+				<div class="col s2">
+					<a href="#!" onclick="open_app(event, 'Process Scheduling', '/process_scheduling', 'orange')"><img src="images/process.svg"/></a><br>
+					Process Scheduling
+				</div>
+				<div class="col s2" >
+					<a href="#!" onclick="open_app(event, 'Dead Lock', '/banker', 'purple')"><img src="images/lock.svg"/></a><br>
+					Dead Lock
+				</div>
+				<div class="col s2" >
+					<a href="#!" onclick="open_app(event, 'Dining Philosopher', '/dining', 'pink')"><img src="images/philosopher.svg"/></a><br>
+					Dining Philosopher Problem
+				</div>
+				<div class="col s2" >
+					<a href="#!" onclick="open_app(event, 'Producer Consumer', '/producer', 'pink')"><img src="images/producer.svg"/></a><br>
+					Producer Consumer Problem
+				</div>
+				<div class="col s2" >
+					<a href="#!" onclick="open_app(event, 'Reader Writer', '/reader', 'pink')"><img src="images/reader.svg"/></a><br>
+					Reader Writer Problem
+				</div>
+			</div>
+			<div class="row">
+				<div class="col s12 blue-grey-text title">Memory Management</div>
+				<div class="col s1"></div>
+				<div class="col s2">
+					<a href="#!" onclick="open_app(event, 'MFT', '/mft', 'teal')"><img src="images/mft.svg"/></a><br>
+					MFT
+				</div>
+				<div class="col s2">
+					<a href="#!" onclick="open_app(event, 'MVT', '/mvt', 'teal')"><img src="images/mvt.svg"/></a><br>
+					MVT
+				</div>
+				<div class="col s2">
+					<a href="#!" onclick="open_app(event, 'Page Replacement', '/page_replacement', 'teal')"><img src="images/page.svg"/></a><br>
+					Page Replacement
+				</div>
+				<div class="col s1"></div>
+			</div>
+			<div class="row">
+				<div class="col s12 blue-grey-text title">Disk</div>
 				<div class="col s1"></div>
 				<div class="col s2">
 					<a href="#!" onclick="open_app(event, 'Disk Scheduling', '/disk_scheduling', 'teal')"><img src="images/disk.svg"/></a><br>
 					Disk Scheduling
 				</div>
 				<div class="col s2">
-					<a href="#!" onclick="open_app(event, 'Process Scheduling', '/process_scheduling', 'teal')"><img src="images/process.svg"/></a><br>
-					Process Scheduling
+					<a href="#!" onclick="open_app(event, 'Contigous File Allocation', '/contigous_file_allocation', 'teal')"><img src="images/file.svg"/></a><br>
+					Contigous File Allocation
 				</div>
+				<div class="col s2">
+					<a href="#!" onclick="open_app(event, 'Indexed File Allocation', '/indexed_file_allocation', 'green')"><img src="images/file-b.svg"/></a><br>
+					Indexed File Allocation
+				</div>
+				<div class="col s2">
+					<a href="#!" onclick="open_app(event, 'Linked File Allocation', '/linked_file_allocation', 'green')"><img src="images/file-g.svg"/></a><br>
+					Linked File Allocation
+				</div>
+				<div class="col s1"></div>
+			</div>
+			<div class="row">
+				<div class="col s12 blue-grey-text title">RTOS</div>
+				<div class="col s1"></div>
+				<div class="col s2">
+					<a href="#!" onclick="open_app(event, 'Rate Monotonic', '/rtos', 'orange')"><img src="images/rtos.svg"/></a><br>
+					Rate Monotonic Scheduling
+				</div>
+			</div>
+			<div class="row">
+				<div class="col s12 blue-grey-text title">Miscellaneous</div>
+				<div class="col s1"></div>
 				<div class="col s2">
 					<a href="#!" onclick="open_app(event, 'Terminal', '/terminal', 'blue-grey')"><img src="images/terminal.svg"/></a><br>
 					Terminal
 				</div>
 				<div class="col s2">
-					<a href=""><img src="images/file.svg"/></a><br>
-					File Allocation
-				</div>
-				<div class="col s2" >
-					<a href="#!" onclick="open_app(event, 'Dead Lock', '/banker', 'teal')"><img src="images/lock.svg"/></a><br>
-					Dead Lock
+					<a href="#!" onclick="open_app(event, 'Team', '/team', 'orange')"><img src="images/team.svg"/></a><br>
+					Team
 				</div>
 				<div class="col s1"></div>
 			</div>
+			<br><br><br><br>
 		</div>
 	</div>
 

@@ -1,8 +1,8 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48">
  <defs>
   <linearGradient id="linearGradient3764" x1="1" x2="47" gradientUnits="userSpaceOnUse" gradientTransform="matrix(0,-1,1,0,-1.5e-6,47.999998)">
-   <stop style="stop-color:#5e5e5e;stop-opacity:1"/>
-   <stop offset="1" style="stop-color:#686868;stop-opacity:1"/>
+   <stop style="stop-color:#cc4848;stop-opacity:1"/>
+   <stop offset="1" style="stop-color:#d05858;stop-opacity:1"/>
   </linearGradient>
  </defs>
  <g>
@@ -17,9 +17,9 @@
   <g>
    <g transform="translate(1,1)">
     <g style="opacity:0.1">
-     <!-- color: #686868 -->
+     <!-- color: #d05858 -->
      <g>
-      <path d="m 24 13 c 0 0 6.992 0.137 7 5 l 0 4 c 0 0 2 -0.102 2 1 l 0 10.25 c 0 0.926 -0.918 1.75 -1.93 1.75 l -14.14 0 c -1.01 0 -1.926 -0.824 -1.926 -1.75 l 0 -10.25 c 0 -1.102 2 -1 2 -1 l 0 -4 c 0.051 -4.871 7 -5 7 -5 m -0.004 3 c 0 0 -4 -0.152 -4 3.5 l 0 2.5 l 8 0 l 0 -2.5 c 0 -3.652 -4 -3.5 -4 -3.5 m 0 0" style="fill:#000;fill-opacity:1;stroke:none;fill-rule:nonzero"/>
+      <path d="m 12.996 14 l 0 17 l 9 6 l 0 -17.5 l -9 -5.5 z m 2 0 l 8 5 l 4 0 l 8 -5 c -4 0 -6 0.52 -10 4 c -4 -3.395 -6 -4 -10 -4 z m 22 0 l -9 5.5 l 0 17.5 l 9 -6 l 0 -17 z m -14 6 l 0 18 l 4 0 l 0 -18 l -4 0 z" transform="translate(-1,-1)" style="fill:#000;fill-opacity:1;stroke:none;fill-rule:nonzero"/>
      </g>
     </g>
    </g>
@@ -27,9 +27,9 @@
  </g>
  <g>
   <g>
-   <!-- color: #686868 -->
+   <!-- color: #d05858 -->
    <g>
-    <path d="m 24 13 c 0 0 6.992 0.137 7 5 l 0 4 c 0 0 2 -0.102 2 1 l 0 10.25 c 0 0.926 -0.918 1.75 -1.93 1.75 l -14.14 0 c -1.01 0 -1.926 -0.824 -1.926 -1.75 l 0 -10.25 c 0 -1.102 2 -1 2 -1 l 0 -4 c 0.051 -4.871 7 -5 7 -5 m -0.004 3 c 0 0 -4 -0.152 -4 3.5 l 0 2.5 l 8 0 l 0 -2.5 c 0 -3.652 -4 -3.5 -4 -3.5 m 0 0" style="fill:#f4b000;fill-opacity:1;stroke:none;fill-rule:nonzero"/>
+    <path d="m 11.996 13 l 0 17 l 9 6 l 0 -17.5 l -9 -5.5 z m 2 0 l 8 5 l 4 0 l 8 -5 c -4 0 -6 0.52 -10 4 c -4 -3.395 -6 -4 -10 -4 z m 22 0 l -9 5.5 l 0 17.5 l 9 -6 l 0 -17 z m -14 6 l 0 18 l 4 0 l 0 -18 l -4 0 z" style="fill:#f9f9f9;fill-opacity:1;stroke:none;fill-rule:nonzero"/>
    </g>
   </g>
  </g>

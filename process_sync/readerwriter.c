@@ -8,7 +8,7 @@ pthread_t tidC[20],tidP[20];
 int readcount;
 
 void intialize()
-{	printf("\nhello\n");
+{//	printf("\nhello\n");
     pthread_mutex_init(&x,NULL);
     pthread_mutex_init(&wsem,NULL);
     readcount=0;
@@ -19,12 +19,12 @@ void  *reader (void *param)
     int waittime;
     int *ind = (int *)param;
    // waittime = rand() % 5;
-    printf("\nReader  %d is trying to enter",*ind);
+    printf("Reader %d is trying to enter\n",*ind);
     pthread_mutex_lock(&x);
     readcount++;
     if(readcount==1)
         pthread_mutex_lock(&wsem);
-    printf("\n Reader %d is inside ",*ind);
+    printf("Reader %d is inside\n",*ind);
     pthread_mutex_unlock(&x);
     //sleep(waittime);
     pthread_mutex_lock(&x);
@@ -32,7 +32,7 @@ void  *reader (void *param)
     if(readcount==0)
         pthread_mutex_unlock(&wsem);
     pthread_mutex_unlock(&x);
-    printf("\nReader %d is Leaving",*ind);
+    printf("Reader %d is leaving\n",*ind);
 }   
 
 void  *writer (void *param)
@@ -40,12 +40,12 @@ void  *writer (void *param)
     int waittime;
     int *ind = (int *)param;
     waittime=rand() % 3;
-    printf("\nWriter %d is trying to enter",*ind);
+    printf("Writer %d is trying to enter\n",*ind);
     pthread_mutex_lock(&wsem);
-    printf("\nWriter %d has entered",*ind);
+    printf("Writer %d is inside\n",*ind);
    // sleep(waittime);
     pthread_mutex_unlock(&wsem);    
-    printf("\nWriter %d is leaving",*ind);
+    printf("Writer %d is leaving\n",*ind);
     //sleep(30);
 
 }
@@ -54,24 +54,25 @@ int main()
 {
 	
     int n1,n2,i;    
-    printf("\nEnter the no of readers: ");
+    //printf("\nEnter the no of readers: ");
     scanf("%d",&n1);
-    printf("\nEnter the no of writers: ");
+    //printf("\nEnter the no of writers: ");
     scanf("%d",&n2);
     for(i=0;i<n1;i++)
     {        int *p = (int*) malloc(sizeof(int));
                 *p = i+1;
                 pthread_create(&tidP[i],NULL,reader,p);  
-                pthread_join(tidP[i],NULL);
 
 	}
     for(i=0;i<n2;i++)
       { int *p = (int*) malloc(sizeof(int));
                 *p = i+1;
                 pthread_create(&tidC[i],NULL,writer,p);
-                pthread_join(tidC[i],NULL);
 		}  
-		
+    for(i=0;i<n1;i++)
+	    pthread_join(tidP[i], NULL);
+    for(i=0;i<n2;i++)
+	    pthread_join(tidC[i], NULL);
 		 
                 
         
