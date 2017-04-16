@@ -31,6 +31,7 @@
 
 		.dining-table {
 			text-align: center;
+			width: 100%;
 		}
 		p{
 		text-align: left;
@@ -104,31 +105,36 @@
 
 	<div class="head pink white-text" ><h1>Dining philosopher problem</h1></div>
 	
-	<div class="container" style="margin-top : -8%;">
+	<div class="container" style="margin-top : -8%;">	
 		<div class="card" >
 			<div class="card-content">
 				<div class="row">
 					<h3>Dining philosopher problem</h3>
 					<br>
-					<p>Here we are considering five philosophers who spend their lives thinking and eating.
-					The philosophers share a circular table surrounded by five chairs, each belonging to one philosopher.
-					In the center of the table is a bowl of food, and the table is laid with five single chopsticks.
-					When a philosopher thinks, he/she does not interact with his/her colleagues.
-					From time to time ,a philosopher gets hungry and tries to pick up the two chopsticks
-					that are nearest to him/her (the chopsticks that are between he/her and his/her left and right neighbours).
-					A philosopher may pick up only one chopstick at a time.Obviously he/she cannot pick chopstick that is already in his/her neighbour's hand.
-					When a hungry philosopher has both his/her chopsticks at the same time, he/she eats without releasing his/her chopsticks.
-					When he/she is finished eating, he/she puts down both of her chopsticks and starts thinking again.
-					</p>
-					<hr>
+						<p style="font-size: 17px">Here we are considering five philosophers who spend their lives thinking and eating.
+						The philosophers share a circular table surrounded by five chairs, each belonging to one philosopher.
+						In the center of the table is a bowl of food, and the table is laid with five single chopsticks.
+						When a philosopher thinks, he/she does not interact with his/her colleagues.
+						From time to time ,a philosopher gets hungry and tries to pick up the two chopsticks
+						that are nearest to him/her (the chopsticks that are between he/her and his/her left and right neighbours).
+						A philosopher may pick up only one chopstick at a time.Obviously he/she cannot pick chopstick that is already in his/her neighbour's hand.
+						When a hungry philosopher has both his/her chopsticks at the same time, he/she eats without releasing his/her chopsticks.
+						When he/she is finished eating, he/she puts down both of her chopsticks and starts thinking again.
+						</p>
+				</div>
+			</div>
+		</div>
+		<div class="card" >
+			<div class="card-content">
+				<div class="row">
 					<a class="pink btn waves-effect waves-light disabled simulate right" href="javascript: start_simulation()">
 						<i class="material-icons right">play_arrow</i>Simulate
 					</a>
 				</div>
-				<div class="dining-table">
+				<div class="dining-table"  >
 					<div class="row">
 						<div class="col s4"></div>
-						<div class="col s4" id="philosopher-1">
+						<div class="col s5" id="philosopher-1">
 							<img src="images/thinking.png">
 						</div>
 						<div class="col s4"></div>
@@ -139,9 +145,11 @@
 							<img src="images/thinking.png">
 						</div>
 						<div class="col s1"></div>
-						<div class="col s2 card pink">
+						<div class="col s3 card pink">
 							<div class="card-content" style="padding: 0;">
-								<img src="images/food.png">
+								<br><br><br><br>
+								<img src="images/index.png"  style="height:100px;width:100px;">
+								<br><br><br><br>
 							</div>
 						</div>
 						<div class="col s1"></div>
@@ -152,7 +160,7 @@
 					</div>
 					<div class="row">
 						<div class="col s2"></div>
-						<div class="col s3" id="philosopher-4">
+						<div class="col s4" id="philosopher-4">
 							<img src="images/thinking.png">
 						</div>
 						<div class="col s2"></div>
