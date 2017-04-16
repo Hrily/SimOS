@@ -139,6 +139,17 @@ def producer():
 def page_producer():
 	return app.send_static_file('producer_consumer.html')
 
+# Reader Writer
+@app.route('/reader/execute', methods=['POST', 'GET'])
+def reader():
+	inp = request.args['input']
+	out = executer.execute('process_sync/readerwriter', inp)
+	return out
+
+@app.route('/reader')
+def page_reader():
+	return app.send_static_file('reader_writer.html')
+
 # MVT
 @app.route('/mvt/execute', methods=['POST', 'GET'])
 def mvt():
