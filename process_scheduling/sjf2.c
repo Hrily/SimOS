@@ -1,3 +1,6 @@
+//RAJESWARI DHIR
+//15CO255
+
 #include<stdio.h>
 #include<stdlib.h>
 
