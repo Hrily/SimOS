@@ -212,7 +212,8 @@
 		var color = ['pink', 'blue', 'blue-grey', 'green darken-3', 'red', 'purple'];
 		var algos = ['FCFS', 'Shortest Seek Time First', 'SCAN', 'Circular SCAN', 'LOOK', 'Circular LOOK'];
 		function show_bars(output){
-			output = to_int(output);
+			console.log('hi')
+			console.log(output);
 			var max = get_max(output);	
 			S('output').innerHTML = '<h5>Output</h5><br><div class="row"> <div class="col s2 right-align"><b>Algorithm</b></div>&nbsp;&nbsp<b>Seek Time</b></div>';
 			for(var i=0;i<output.length;i++)
@@ -227,11 +228,11 @@
 			for(var i=0;i<output.length;i++){
 				o = output[i].split(' ');
 				if(o[0]=='Seek')
-					sts.push(o[2]);
+					sts.push(parseInt(o[2]));
 				else if(o.length>1)
 					order.push(to_int(o));
 			}
-			console.log(order)
+			console.log(order);
 			show_bars(sts);
 			draw_graphs(algos, order);		//draw line charts 
 		}

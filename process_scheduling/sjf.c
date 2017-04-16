@@ -1,129 +1,103 @@
-//Prerana Mahalanobis
-//15CO135
+//RAJESWARI DHIR
+//15CO255
 
-#include <stdio.h>
-#include <stdlib.h>
+#include<stdio.h>
+#include<stdlib.h>
 
-struct process                                                  //Structure of a process
-{
-        int pt;                         //Process Number       
-        int at;                         //Arrival Time
-        int bt;                         //Burst Time
-        int wt;                         //Waiting Time
-        int tat;                        //TurnAround Time
-        int ct;                         //Completion Time
-        int prior;                          //Priority
-        int inq;                        //Is in queue or not
-}pro;
-
-int main()
-{
-        int n,tq;
-        scanf("%d%d",&n,&tq);
-        
-        struct process *p;
-        p = malloc(n*sizeof(pro)); 
-        
-        int i,j,count = 0;
-        int min = 0;
-        
-        for(i=0;i<n;i++)
+struct process
+  {
+    int at,bt,pt,rt,ct,inq,p,st,tat,wt;
+    };
+void sorta(struct process *m,int n)
+  {
+    int i,j,k,min;
+    struct process temp;
+    for(i=0;i<n-1;i++)
+      {
+        min=m[i].at;
+	k=i;
+	for(j=i+1;j<n;j++)
+	  {
+	    if(m[j].at<min)
+	      {
+	        min=m[j].at;
+		k=j;
+	      }
+	   }
+	if(k!=i)
+	{
+	  temp=m[k];
+	  m[k]=m[i];
+	  m[i]=temp;
+	  }
+  }
+  }
+	 
+  int main()
+    {
+	    int n,time=0,tot=0,i,tq,t,pr=-1,Q,a=0,b=0,min=999,k=-1;
+	    float awt=0,atat=0;
+      struct process *m,*ba;
+      // printf("enter no of processes\n");
+      scanf("%d",&n);
+      m=(struct process *)malloc(n*sizeof(struct process));
+     // q=(int *)malloc(n*sizeof(int));
+      // printf("enter time quantum\n");
+      scanf("%d",&Q); 
+      for(i=0;i<n;i++)                                 // To enter the process details
         {
-                scanf("%d%d%d%d",&p[i].pt,&p[i].at,&p[i].bt,&p[i].prior);
-              
-                if(min > p[i].at)                                                             //To find process with shortest arrival time
-                        min = p[i].at;
-         }
-         
-         for(i=0;i<n;i++)                                                                     //Number of processes with same shortest arrival time
-         {
-                 if(p[i].at == min)
-                        count++;
-         }
-         
-        int b[count];
+//	  printf("enter process no \n");
+	  scanf("%d",&m[i].pt);
+//	  printf("enter arrival time\n");
+           scanf("%d",&m[i].at);
+//	  printf("enter burst time\n");
+	  scanf("%d",&m[i].bt);
+//	  printf("enter priority\n");
+	  scanf("%d",&m[i].p);
+	  m[i].pt=i;
+	  m[i].rt=m[i].bt;
+          tot+=m[i].bt;
+	  m[i].inq=0;
+	  m[i].st=0;
+	  }
+        sorta(m,n);
+        tot+=m[0].at;
+        time=m[0].at;
         
-        for(i=0;i<count;i++)                                                                
-        {
-                if(p[i].at == min)
-                {
-                        b[i] = i;
-                }
-        }
-        
-        int temp;
-        
-        for(i=0;i<count;i++)                                                         //Sorting according to shortest arrival as well as shortest burst time
-        {
-                for(j=0;j<count;j++)
-                {
-                        if(p[b[i]].bt < p[b[j]].bt)
-                        {
-                                temp=p[j].pt;
-                                p[j].pt=p[i].pt;
-                                p[i].pt=temp;
-
-                                temp=p[j].at;
-                                p[j].at=p[i].at;
-                                p[i].at=temp;
-
-                                temp=p[j].bt;
-                                p[j].bt=p[i].bt;
-                                p[i].bt=temp;
-                        }         
-                }
-                
-        }
-        
-        p[0].ct = p[0].at+p[0].bt;                      //To calculate completion, turn around and waiting time of process with shortest arrival and shortest burst time                
-        p[0].tat = p[0].ct - p[0].at;
-        p[0].wt = p[0].tat-p[0].bt;
-        
-        for(i=1;i<n;i++)                                    //Sorting rest of processes according to burst time
-        {
-                for(j=1;j<n;j++)
-                {
-                        if(p[i].bt<p[j].bt)
-                        {
-                                temp=p[j].pt;
-                                p[j].pt=p[i].pt;
-                                p[i].pt=temp;
-
-                                temp=p[j].at;
-                                p[j].at=p[i].at;
-                                p[i].at=temp;
-
-                                temp=p[j].bt;
-                                p[j].bt=p[i].bt;
-                                p[i].bt=temp;
-                        }
-                }
-        }
-
-        for(i = 1;i<n;i++)                              //Calculating completion, waiting and turn around time of processes
-        {
-                p[i].ct = p[i-1].ct+p[i].bt;
-                p[i].tat = p[i].ct-p[i].at;
-                p[i].wt = p[i].tat - p[i].bt;
-               
-         }
-
-                        
-       
-        for(i=0;i<n;i++)
-        {
-                printf("%d %d %d %d\n",p[i].pt,p[i].ct,p[i].tat,p[i].wt);
-        }
-        float atat=0,awt=0;
-        for(i=0;i<n;i++)
-        {
-                atat+=p[i].tat;
-                awt+=p[i].wt;
-        }
-
-        printf("Average TT: %f\n",atat/n);
-        printf("Average WT: %f\n",awt/n);
-
-
-return 0;
-}
+        while(time<tot)
+           {
+                for(i=0;i<n;i++)
+                     {
+                       if(m[i].at<=time && m[i].bt<min && m[i].st==0)
+                          {
+                            min=m[i].bt;
+                            k=i;
+                          }
+                      }
+                            
+        if(min!=999)
+           {
+              m[k].rt=0;
+                  // printf("time %d ",time);
+                   time+=m[k].bt;
+                   m[k].ct=time;
+                      m[k].tat=m[k].ct-m[k].at;
+                      m[k].wt=m[k].tat-m[k].bt;
+                       atat+=m[k].ct-m[k].at;
+                       awt+=m[k].ct-m[k].at-m[k].bt;
+                       min=999;
+                       m[k].st=1;
+                       k=-1;
+             }
+            else
+               {
+                 time++;
+                 tot++;
+                 }
+               }
+            for(i=0;i<n;i++)
+           {
+              printf("%d %d %d %d\n",m[i].pt+1,m[i].ct,m[i].tat,m[i].wt);              // To print the completion time
+              }
+           printf("Average TT: %f\nAverage WT: %f\n",atat/n,awt/n);   
+           }                 

@@ -1,246 +1,116 @@
 #include<stdio.h>
 #include<stdlib.h>
+
 struct block{
-		int allocate;
-		int size;
-		int id;
-		int pid;
+	int used, size;
+	int isFree(){
+		return used == 0;
+	}
 };
-void main()
-{
-	
-	int mem,os,i,n,nb,frag,j,k,ch,ch1,flag,index,flag1=0;	//b-blocks,s-size
-	scanf("%d",&nb);//cin N-total no of partitions
-	struct block b[nb];
-	struct block temp;
-	scanf("%d",&mem);//cin S	//available memory for process allocation
-	int p[100];
-	for(i=0;i<nb;++i)
-	{
-		printf("\nEnter size of block %d :",i+1);
-		scanf("%d",&b[i].size);
-		b[i].allocate=0;
-		b[i].id=i+1;
-		b[i].pid=-1;
+
+void mft(struct block blocks[], int sizes[],  int n){
+	for(int i=0;i<n;i++){
+		blocks[i].used = 0;
+		blocks[i].size = sizes[i];
 	}
-	struct block bc[nb];
-	for(i=0;i<nb;++i)
-	{
-		bc[i].size=b[i].size;
-		bc[i].allocate=b[i].allocate;
-		bc[i].id=b[i].id;
-		bc[i].pid=b[i].pid;
+}
+
+void display(struct block blocks[], int n){
+	int ifrag = 0, efrag = 0;
+	//printf("#\tBlock Size\tUsed\tFree\n");
+	for(int i=0;i<n;i++){
+		int free = blocks[i].size - blocks[i].used;
+		if(blocks[i].isFree())
+			efrag += blocks[i].size;
+		else
+			ifrag += free;
+		printf("%d %d %d<br>", i+1, blocks[i].size, blocks[i].used);
 	}
-	i=0;
-	while(1)
-	{
+	//printf("\nTotal Internal Fragmentation : %d\n", ifrag);
+	//printf("Total External Fragmentation : %d\n", efrag);
+	printf("\n");
+	fflush(stdout);
+}
 
-		scanf("%d",&ch);
-		switch(ch)
-		{
-			case 1: //fixed
-					
-					while(1)
-					{
-						scanf("%d",&ch1);
-						switch(ch1)
-					{
-
-						case 1: 
-								if(i==nb)
-									{
-										printf("\n0\n");
-										break;
-									}
-								scanf("%d",&p[i]);
-								flag=0;
-										for(j=0;j<nb;++j)//arranges based on id
-										{
-											for(k=0;k<nb-1;++k)
-											{
-												if(bc[k].id>bc[k+1].id)
-												{
-													temp=bc[k];
-													bc[k]=bc[k+1];
-													bc[k+1]=temp;
-												}
-											}
-										}
-										for(j=0;j<nb;++j)
-										{
-											if(bc[j].allocate!=1&&bc[j].size>=p[i])
-											{
-												bc[j].allocate=1;
-												bc[j].pid=i;
-												flag=1;
-												
-												break;
-											}
-
-										}
-										if(flag==0)
-											printf("\n0");
-										else
-											printf("\n1");
-										
-
-						break;
-						case 2: scanf("%d",&index);
-								index--;
-								for(k=0;k<nb;++k)
-								{
-									if(bc[k].pid==index)
-										bc[k].allocate=0;
-								}
-
-						break;
-						case 3:for(k=0;k<nb;++k)
-								{
-									printf("%d\t%d\t%d",bc[k].id,bc[k].size,bc[k].allocate);
-									printf("\n");
-								}
-						break;
-						case 0: flag1=1;break;
-						
-					}
-					++i;
-					if(flag1==1)
-						break;
-				}
-			break;
-			case 2:	//best
-			while(1)
-			{
-				scanf("%d",&ch1);
-			switch(ch1)
-					{
-						case 1: scanf("%d",&ch1);
-								if(i==nb){
-										printf("\n0\n");
-										break;
-									}
-
-								scanf("%d",&p[i]);
-								flag=0;
-										for(j=0;j<nb;++j)
-										{
-											for(k=0;k<nb-1;++k)
-											{
-												if(bc[k].size>bc[k+1].size)
-												{
-													temp=bc[k];
-													bc[k]=bc[k+1];
-													bc[k+1]=temp;
-												}
-											}
-										}
-										for(j=0;j<nb;++j)
-										{
-											if(bc[j].allocate!=1&&bc[j].size>=p[i])
-											{
-												bc[j].allocate=1;
-												bc[j].pid=i;
-												flag=1;
-												
-												break;
-											}
-
-										}
-										if(flag==0)
-											printf("\n0");
-										else
-											printf("\n1");
-										
-
-						break;
-						case 2: scanf("%d",&index);
-								index--;
-								for(k=0;k<nb;++k)
-								{
-									if(bc[k].pid==index)
-										bc[k].allocate=0;
-								}
-
-						break;
-						case 3:for(k=0;k<nb;++k)
-								{
-									printf("%d\t%d\t%d",bc[k].id,bc[k].size,bc[k].allocate);
-									printf("\n");
-								}
-						break;
-						case 0: flag1=1; break;
-
-					}
-					if(flag1==1)
-						break;
-					++i;
-				}
-			break;
-			case 3: //worst
-			while(1)
-			{scanf("%d",&ch1);
-			switch(ch1)
-					{
-						case 1: scanf("%d",&ch1);
-								if(i==nb){
-										printf("\n0\n");
-										break;
-									}
-								scanf("%d",&p[i]);
-								flag=0;
-										for(j=0;j<nb;++j)
-										{
-											for(k=0;k<nb-1;++k)
-											{
-												if(bc[k].size<bc[k+1].size)
-												{
-													temp=bc[k];
-													bc[k]=bc[k+1];
-													bc[k+1]=temp;
-												}
-											}
-										}
-										for(j=0;j<nb;++j)
-										{
-											if(bc[j].allocate!=1&&bc[j].size>=p[i])
-											{
-												bc[j].allocate=1;
-												bc[j].pid=i;
-												flag=1;
-												
-												break;
-											}
-
-										}
-										if(flag==0)
-											printf("\n0");
-										else
-											printf("\n1");
-										
-
-						break;
-						case 2: scanf("%d",&index);
-								index--;
-								for(k=0;k<nb;++k)
-								{
-									if(bc[k].pid==index)
-										bc[k].allocate=0;
-								}
-
-						break;
-						case 3:for(k=0;k<nb;++k)
-								{
-									printf("%d\t%d\t%d",bc[k].id,bc[k].size,bc[k].allocate);
-									printf("\n");
-								}
-						break;
-						case 0: flag1=1; break;
-					}
-					if(flag1==1)
-						break;
-					++i;
-			}		
-			break;
+int allocate(int size, struct block blocks[], int n, int fit){
+	if(fit == 1){
+		int i = 0;
+		while(i<n){
+			if(blocks[i].isFree() && blocks[i].size>=size)
+				break;
+			i++;
 		}
+		if(i<n){
+			blocks[i].used = size;
+			return 1;
+		}
+		return 0;
 	}
+	if(fit == 2){
+		int mi = 0;
+		for(int i=0;i<n;i++)
+			if(blocks[i].isFree() && blocks[i].size>=size && blocks[i].size<blocks[mi].size)
+				mi = i;
+		if(mi<n){
+			blocks[mi].used = size;
+			return 1;
+		}
+		return 0;
+	}
+	if(fit == 3){
+		int mi=0, i;
+		for(int i=0;i<n;i++)
+			if(blocks[i].isFree() && blocks[i].size>=size && blocks[i].size>blocks[mi].size)
+				mi = i;
+		if(mi<n){
+			blocks[mi].used = size;
+			return 1;
+		}
+		return 0;
+	}
+	return 0;
+}
+
+int main(){
+	int n;
+	//printf("Enter number of blocks : ");
+	scanf("%d", &n);
+	struct block blocks[n];
+	int sizes[n];
+	//printf("Enter sizes of %d blocks: \n", n);
+	for(int i=0;i<n;i++)
+		scanf("%d", &sizes[i]);
+	mft(blocks, sizes, n);
+	int allocation;
+	//printf("Choose:\n\t1. First fit\n\t2. Best fit\n\t3. Worst fit\n");
+	scanf("%d", &allocation);
+	fflush(stdin);
+	display(blocks, n);
+	int c = 10;
+	while(c!=0){
+		//printf("Choose : \n\t1. Add Process\n\t2. Free\n\t3. Display\n\t0. Exit\n");
+		scanf("%d", &c);
+		if(c==1){
+			int s;
+			//printf("Enter process size : ");
+			scanf("%d", &s);
+			if(allocate(s, blocks, n, allocation))
+				display(blocks, n);
+			else
+				printf("~Process allocation failed\n");
+			fflush(stdout);
+		}else if(c==2){
+			int i;
+			//printf("Enter block number : ");
+			scanf("%d", &i);
+			i--;
+			blocks[i].used = 0;
+			display(blocks, n);
+		}
+		else if(c==3)
+			display(blocks, n);
+		else if(c!=0)
+			printf("Invalid input\n");
+	}
+	return 0;
 }

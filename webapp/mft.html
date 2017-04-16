@@ -1,0 +1,196 @@
+<!-- Hrishikesh Hiraskar -->
+<!-- 15CO121             -->
+<!-- 15/4/17             -->
+<!DOCTYPE html>
+<html>
+<head>
+	<title>SimOS - Memory Management</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width; initial-scale=1; maximum-scale=1">
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<script
+	src="https://code.jquery.com/jquery-3.1.1.min.js"
+	integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
+	crossorigin="anonymous"></script>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/css/materialize.min.css">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto Mono">
+	<style>
+
+		body {
+			margin: 0;
+			padding: 0;
+			background: rgb(233, 234, 237);
+		}
+
+		.head {
+			width: 100%;
+			padding: 2%;
+			padding-bottom: 10%;
+		}
+
+		.blocks {
+			height: 50px;
+		}
+
+		.blocks .card {
+			display: inline-block;
+			margin: 0;
+			text-align: center;
+		}
+
+	</style>
+
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/js/materialize.min.js"></script>
+	<script type="text/javascript">
+
+		var n_blocks    = 1;
+		var fit         = 1;
+		var block_sizes = [];
+		var total_size  = 0;
+		var color       = ['red', 'deep-purple', 'light-blue', 'green', 'yellow', 'deep-orange', 'blue-grey', 'pink', 'indigo', 'cyan', 'light-green', 'amber', 'brown', 'purple', 'blue', 'lime', 'orange'];
+
+		function S(id){
+			return document.getElementById(id)
+		}
+
+		function put_block_inputs(){
+			$('.block-input').html('');
+			for(var i=0;i<n_blocks;i++)
+				$('.block-input').append('<div class="col s2 input-field"><input class="validate" type="text" id="block-ip-'+i+'"/></div>');
+		}
+
+		function add_block_input(){
+			n_blocks++;
+			$('#n_blocks').html(n_blocks);
+			put_block_inputs();
+		}
+
+		function remove_block_input(){
+			if(n_blocks>1) {
+				n_blocks--;
+				$('#n_blocks').html(n_blocks);
+				put_block_inputs();
+			}
+		}
+
+		function cfit(i){
+			fit = i;
+		}
+
+		function submit(){
+			var input   = '';
+			block_sizes = [];
+			total_size  = 0;
+			for(var i=0;i<n_blocks;i++){
+				block_sizes.push(parseInt(S('block-ip-'+i).value));
+				total_size += block_sizes[i];
+				input += ' ' + block_sizes[i];
+			}
+			input = n_blocks + input + ' ' + fit;
+			send_request(input, 0);
+			$('.process-input').attr('style', '');
+		}
+
+		function put_blocks(used){
+			$('.blocks').html('');
+			var oc = 0;
+			for(var i=0; i<n_blocks; i++){
+				$('.blocks').append('<div class="card block-'+i+'" onclick="delete_block('+i+')"><div class="card-content">' + used[i] + '/' + block_sizes[i] + '</div></div>');
+				$('.block-'+i).addClass( (used[i]>0)? color[oc++] : 'grey' ).css('width',  (100.0*block_sizes[i]/total_size) + '%');
+			}
+		}
+
+		function handle_output(output){
+			used = [];
+			for(var i=0; i<output.length; i++){
+				o = output[i].split(' ');
+				used.push(parseInt(o[2]));
+			}
+			put_blocks(used);
+		}
+
+		function add_block(){
+			var size = S('process_add').value;
+			var input = '1 ' + size;
+			send_request(input, 1);
+		}
+
+		function delete_block(i){
+			var input = '2 ' + (i+1);
+			send_request(input, 1);
+		}
+
+		function send_request(input, i){
+			console.log(input);
+			var xhr = new XMLHttpRequest();
+			xhr.onreadystatechange = function() {
+			    if (xhr.readyState == XMLHttpRequest.DONE) {
+			    	output = xhr.responseText;
+			    	console.log(output);
+			    	if(output[0]=='~'){
+			    		Materialize.toast(output.slice(1), 1500);
+						return;
+			    	}
+			    	output = output.split('\n');
+			    	console.log(output)
+			    	handle_output(output.slice(0, output.length-1));
+					window.scrollTo(0,document.body.scrollHeight);
+			    }
+			}
+			if(i==1) xhr.open('GET', '/mft/execute?input='+input, true);
+			else     xhr.open('GET', '/mft/init?input='+input, true);
+			xhr.send();
+		}
+
+	</script>
+
+</head>
+<body onload="">
+
+	<div class="head teal white-text" ><h1> Memory Management </h1></div>
+	<div class="container" style="margin-top : -8%;">
+		<div class="card" >
+			<div class="card-content">
+				<div class="row">
+					<div class="col s12"><h4>Multiprogramming with a Fixed number of Tasks</h4></div>
+				</div>
+				<div class="row">
+					<div class="col"><b>Blocks</b></div>
+					<a class="col btn btn-small" href="javascript:remove_block_input()">-</a></a>
+					<div class="col" id="n_blocks">1</div>
+					<a class="col btn btn-small" href="javascript:add_block_input()">+</a></a>
+				</div>
+				<div class="row block-input">
+					<div class="col s2 input-field"><input class="validate" type="text" id="block-ip-0"/></div>
+				</div>
+				<div class="row">
+					<p onclick="cfit(1)">
+						<input name="fit" class="with-gap" type="radio" id="first" checked="checked"/>
+						<label for="first">First Fit</label>
+					</p>
+					<p onclick="cfit(2)">
+						<input name="fit" class="with-gap" type="radio" id="best" />
+						<label for="best">Best Fit</label>
+					</p>
+					<p onclick="cfit(3)">
+						<input name="fit" class="with-gap" type="radio" id="worst" />
+						<label for="worst">Worst Fit</label>
+					</p>
+					<a class="btn waves-effect waves-effect-light teal right" onclick="submit()"><i class="material-icons right">send</i>Submit</a>
+				</div>
+				<div class="row blocks">
+				</div>
+				<div class="row process-input" style="display: none;">
+					<div class="input-field col s4">
+						<input class="validate" type="text" id="process_add"/>
+						<label for="process_add">Process Size</label>
+					<a class="col s12 btn waves-effect waves-effect-light teal" onclick="add_block()"><i class="material-icons right">add</i>Add</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+</body>
+</html>

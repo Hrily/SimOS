@@ -57,7 +57,7 @@ int main()
         
         for(i=0;i<n;i++)
         {
-        	printf("%d\t\t",fRatios[i]);
+        	printf("%f\t\t",fRatios[i]);
 		}
 		printf("\n\n");
         return 0;

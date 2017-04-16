@@ -1,8 +1,8 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48">
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 48 48">
  <defs>
   <linearGradient id="linearGradient3764" x1="1" x2="47" gradientUnits="userSpaceOnUse" gradientTransform="matrix(0,-1,1,0,-1.5e-6,47.999998)">
-   <stop style="stop-color:#5e5e5e;stop-opacity:1"/>
-   <stop offset="1" style="stop-color:#686868;stop-opacity:1"/>
+   <stop style="stop-color:#a467af;stop-opacity:1"/>
+   <stop offset="1" style="stop-color:#ac74b6;stop-opacity:1"/>
   </linearGradient>
  </defs>
  <g>
@@ -13,23 +13,31 @@
  <g>
   <path d="m 24 1 c 12.703 0 23 10.297 23 23 c 0 12.703 -10.297 23 -23 23 -12.703 0 -23 -10.297 -23 -23 0 -12.703 10.297 -23 23 -23 z" style="fill:url(#linearGradient3764);fill-opacity:1"/>
  </g>
- <g>
+ <g transform="translate(-1,0)">
   <g>
    <g transform="translate(1,1)">
     <g style="opacity:0.1">
-     <!-- color: #686868 -->
+     <!-- color: #ac74b6 -->
      <g>
-      <path d="m 24 13 c 0 0 6.992 0.137 7 5 l 0 4 c 0 0 2 -0.102 2 1 l 0 10.25 c 0 0.926 -0.918 1.75 -1.93 1.75 l -14.14 0 c -1.01 0 -1.926 -0.824 -1.926 -1.75 l 0 -10.25 c 0 -1.102 2 -1 2 -1 l 0 -4 c 0.051 -4.871 7 -5 7 -5 m -0.004 3 c 0 0 -4 -0.152 -4 3.5 l 0 2.5 l 8 0 l 0 -2.5 c 0 -3.652 -4 -3.5 -4 -3.5 m 0 0" style="fill:#000;fill-opacity:1;stroke:none;fill-rule:nonzero"/>
+      <path d="M 15.875,11 C 15.383,11 15,11.383 15,11.875 l 0,24.25 C 15,36.617 15.383,37 15.875,37 l 18.25,0 C 34.617,37 35,36.617 35,36.125 l 0,-20.12 -5,-5 m -14.12,0" style="fill:#000;fill-opacity:1;stroke:none;fill-rule:nonzero"/>
+      <use xlink:href="#SVGCleanerId_0" width="48" height="48"/>
      </g>
     </g>
    </g>
   </g>
  </g>
- <g>
+ <g transform="translate(-1,0)">
   <g>
-   <!-- color: #686868 -->
+   <!-- color: #ac74b6 -->
    <g>
-    <path d="m 24 13 c 0 0 6.992 0.137 7 5 l 0 4 c 0 0 2 -0.102 2 1 l 0 10.25 c 0 0.926 -0.918 1.75 -1.93 1.75 l -14.14 0 c -1.01 0 -1.926 -0.824 -1.926 -1.75 l 0 -10.25 c 0 -1.102 2 -1 2 -1 l 0 -4 c 0.051 -4.871 7 -5 7 -5 m -0.004 3 c 0 0 -4 -0.152 -4 3.5 l 0 2.5 l 8 0 l 0 -2.5 c 0 -3.652 -4 -3.5 -4 -3.5 m 0 0" style="fill:#f4b000;fill-opacity:1;stroke:none;fill-rule:nonzero"/>
+    <path d="M 15.875,11 C 15.383,11 15,11.383 15,11.875 l 0,24.25 C 15,36.617 15.383,37 15.875,37 l 18.25,0 C 34.617,37 35,36.617 35,36.125 l 0,-20.12 -5,-5 m -14.12,0" style="fill:#ececde;fill-opacity:1;stroke:none;fill-rule:nonzero"/>
+    <path d="m 17 29 10 0 0 -2 -10 0 m 0 2" style="fill:#8d758e;fill-opacity:1;stroke:none;fill-rule:nonzero"/>
+    <path d="m 17 25 13 0 0 -2 -13 0 m 0 2" style="fill:#8d758e;fill-opacity:1;stroke:none;fill-rule:nonzero"/>
+    <path d="m 17 21 8 0 0 -2 -8 0 m 0 2" style="fill:#8d758e;fill-opacity:1;stroke:none;fill-rule:nonzero"/>
+    <path d="m 17 17 11 0 0 -2 -11 0 m 0 2" style="fill:#8d758e;fill-opacity:1;stroke:none;fill-rule:nonzero"/>
+    <path d="m 17 34 16 0 0 -2 -16 0 m 0 2" style="fill:#8d758e;fill-opacity:1;stroke:none;fill-rule:nonzero"/>
+    <path d="m 30 11 0 5 5 0 m -5 -5" style="fill:#fff;fill-opacity:1;stroke:none;fill-rule:nonzero"/>
+    <path d="m 35 21 0 -5 -5 0 m 5 5" id="SVGCleanerId_0" style="fill:#000;fill-opacity:0.2;stroke:none;fill-rule:nonzero"/>
    </g>
   </g>
  </g>
