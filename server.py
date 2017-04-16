@@ -192,6 +192,20 @@ def mft_init():
 def page_mft():
 	return app.send_static_file('mft.html')
 
+# Page Replacement
+@app.route('/page_replacement/execute', methods=['POST', 'GET'])
+def pafe_replacement():
+	scheduling = ['fifo', 'lru', 'opt']
+	inp = request.args['input']
+	out = ""
+	for algo in scheduling:
+		out += executer.execute('page_replacement/'+algo, inp)
+	return out
+
+@app.route('/page_replacement')
+def page_page_replacement():
+	return app.send_static_file('page_replacement.html')
+
 # Home
 @app.route('/')
 def page_home():
