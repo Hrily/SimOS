@@ -1,13 +1,14 @@
-#Real time process scheduling
+## Page Replacement Algorithms
 
-#Input output format
-----------------------------------------------------------------------------
+### Input format
 
+```
 N
 Ei Pi
+```
 
-----------------------------------------------------------------------------
+N  - Number of Processes
+Ei - Execution time for process i
+Pi - Period of process i
 
-N= NUMBER OF PROCESSES
-Ei= EXECUTION TIME OF PROCESS i
-Pi= PERIOD OF PROCESS i
+```
