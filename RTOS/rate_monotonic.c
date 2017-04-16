@@ -75,15 +75,15 @@ void main()
   
   
   int time;
-  printf("\n Enter Number of Processes :: ");
+  //printf("\n Enter Number of Processes :: ");
   scanf("%d",&n);
 
   for(i=0;i<n;i++)
   {
    pr[i].pno=i+1;
-   printf("\n Enter Execution Time for P%d ::",(i+1));
+   //printf("\n Enter Execution Time for P%d ::",(i+1));
    scanf("%f",&pr[i].t);
-   printf("Enter Period for P%d ::",(i+1));
+   //printf("Enter Period for P%d ::",(i+1));
    scanf("%f",&pr[i].p);
    pr[i].done=0;
    pr[i].d=pr[i].p;
@@ -103,27 +103,46 @@ void main()
   u=y;
    
   int maxd=findmaxdeadline();
-  printf("\nThe threshold is %f\nThe utilization is %f\n",u,ut);
+  printf("\nThreshold: %f\nUtilization: %f\n\n",u,ut);
   if(ut<u)
   {
- printf("\n As %f < %f ,",ut,u);
- printf("\n The System is surely Schedulable by rate monotonic scheduling\n\n");
+ //printf("\n As %f < %f ,",ut,u);
+ //printf("\n The System is surely Schedulable by rate monotonic scheduling\n\n");
   sortbyexecutiontime();
+  int check;
   int prev=0;
  int ongoing=0;
   time=0;
   int flag=0;
-  while(!allaredone())
+  for(i=0;i<maxd;i++)
   { 
+    if(isanydeadline(time))
+    {
+	ongoing=findwhosedeadline(time);
+		//printf("\nPreempted by P%d\n\n",pr[ongoing].pno);
+		printf("%d %d\n",time,pr[ongoing].pno);
+		pr[ongoing].done=0;
+     		pr[ongoing].rem--;
+     		time++;
+     		if(pr[ongoing].rem==0)
+     		{
+		 pr[ongoing].done=1;
+		 //printf("\nP%d done\n",pr[ongoing].pno);
+		 pr[ongoing].rem=pr[ongoing].t;
+		 pr[ongoing].d=pr[ongoing].multiple*pr[ongoing].p;
+		pr[ongoing].multiple++;
+     		}
+	}
+else
     if(pr[ongoing].done==0&&!isanydeadline(time))
     {
-     printf("%d->P%d\n",time,pr[ongoing].pno);
+     printf("%d %d\n",time,pr[ongoing].pno);
      pr[ongoing].rem--;
      time++;
      if(pr[ongoing].rem==0)
      {
 	pr[ongoing].done=1;
-	printf("\nP%d done\n",pr[ongoing].pno);
+	//printf("\nP%d done\n",pr[ongoing].pno);
 	pr[ongoing].rem=pr[ongoing].t;
 	pr[ongoing].d=pr[ongoing].multiple*pr[ongoing].p;
 		pr[ongoing].multiple++;
@@ -132,15 +151,31 @@ void main()
     else if(pr[ongoing].done==1)
 	 {
 	  if(flag==1)
+	  {
 	   ongoing=prev;
-	  else ongoing=(ongoing+1)%n;
-	  printf("%d->P%d\n",time,pr[ongoing].pno);
+	   if(pr[ongoing].done==1)
+	   {
+	    printf("%d -\n",time);
+	    time++;
+	    continue;
+	   }
+	  }
+	  else {
+		ongoing=(ongoing+1)%n;
+		if(pr[ongoing].done==1)
+	   {
+	    printf("%d -\n",time);
+	    time++;
+	    continue;
+	   }
+	}
+	  printf("%d %d\n",time,pr[ongoing].pno);
 	  pr[ongoing].rem--;
      	  time++;
      	  if(pr[ongoing].rem==0)
      	  {
 		pr[ongoing].done=1;
-		printf("\nP%d done\n",pr[ongoing].pno);
+		//printf("\nP%d done\n",pr[ongoing].pno);
 		pr[ongoing].rem=pr[ongoing].t;
 		pr[ongoing].d=pr[ongoing].multiple*pr[ongoing].p;
 		pr[ongoing].multiple++;
@@ -150,15 +185,15 @@ void main()
 	      { flag=1;
 		prev=ongoing;
 		ongoing=findwhosedeadline(time);
-		printf("\nPreempted by P%d\n\n",pr[ongoing].pno);
-		printf("%d->P%d\n",time,pr[ongoing].pno);
+		//printf("\nPreempted by P%d\n\n",pr[ongoing].pno);
+		printf("%d %d\n",time,pr[ongoing].pno);
 		pr[ongoing].done=0;
      		pr[ongoing].rem--;
      		time++;
      		if(pr[ongoing].rem==0)
      		{
 		 pr[ongoing].done=1;
-		 printf("\nP%d done\n",pr[ongoing].pno);
+		 //printf("\nP%d done\n",pr[ongoing].pno);
 		 pr[ongoing].rem=pr[ongoing].t;
 		 pr[ongoing].d=pr[ongoing].multiple*pr[ongoing].p;
 		pr[ongoing].multiple++;
@@ -167,7 +202,7 @@ void main()
  }
 }
  else
- printf("\n Not Sure.....");
+ printf("\nNot Possible\n");
  
 }
 
