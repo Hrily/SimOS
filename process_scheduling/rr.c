@@ -35,7 +35,7 @@ int dequeue()								//Function to dequeue process from queue
 	//printf("underflow");
 	int temp=q[front];
 	if(front==rear)
-		front=rear=-1;
+		{front=-1;rear=-1;}
 	else
 		front++;
 	return temp;
@@ -94,8 +94,9 @@ int main()
 	sortByArrival(p);
 	enqueue(0);        
 							
-	for(time=p[0].at;time<sum_bt;)      
-	{  
+	for(time=p[0].at; count>0;)      
+	{
+//         printf("count value %d front value %d\n",count,front);  
 	if(count>0 && front==-1)
 	   {
 	     time++;
@@ -107,14 +108,17 @@ int main()
 		      enqueue(j);
 		      }
 		}
-            }		
+             
+            }
+     else
+   {		
 	i=dequeue();
 		if(p[i].rt<=tq)
 		{                         
               time+=p[i].rt;          
 			p[i].rt=0;
 			p[i].completed=1;          
-			
+			count--;
 			time+=p[i].rt;
 			p[i].wt=time-p[i].at-p[i].bt;
 			p[i].tt=time-p[i].at;  
@@ -143,6 +147,7 @@ int main()
            		enqueue(i);   
            
     		}
+}
 
     
     
