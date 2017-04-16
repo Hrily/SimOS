@@ -103,7 +103,7 @@ void main()
   u=y;
    
   int maxd=findmaxdeadline();
-  printf("\nThreshold: %f\nUtilization: %f\n\n",u,ut);
+  printf("Threshold: %f\nUtilization: %f\n",u,ut);
   if(ut<u)
   {
  //printf("\n As %f < %f ,",ut,u);
@@ -202,7 +202,7 @@ else
  }
 }
  else
- printf("\nNot Possible\n");
+ printf("Not Possible\n");
  
 }
 

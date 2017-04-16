@@ -206,6 +206,17 @@ def pafe_replacement():
 def page_page_replacement():
 	return app.send_static_file('page_replacement.html')
 
+# RTOS
+@app.route('/rtos/execute', methods=['POST', 'GET'])
+def pafe_rtos():
+	inp = request.args['input']
+	out = executer.execute('RTOS/rate_monotonic', inp)
+	return out
+
+@app.route('/rtos')
+def page_rtos():
+	return app.send_static_file('rtos.html')
+
 # Home
 @app.route('/')
 def page_home():

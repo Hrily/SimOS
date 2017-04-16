@@ -298,19 +298,19 @@
 		<div class="row" id="dock">
 			<div class="col s1"></div>
 			<div class="col s2">
-				<a href=""><img src="images/disk.svg"/></a>
+				<a href="#!" onclick="open_app(event, 'Disk Scheduling', '/disk_scheduling', 'teal')"><img src="images/disk.svg"/></a>
 			</div>
 			<div class="col s2">
-				<a href=""><img src="images/process.svg"/></a>
+				<a href="#!" onclick="open_app(event, 'Process Scheduling', '/process_scheduling', 'orange')"><img src="images/process.svg"/></a>
 			</div>
 			<div class="col s2">
-				<a href=""><img src="images/terminal.svg"/></a>
+				<a href="#!" onclick="open_app(event, 'Terminal', '/terminal', 'blue-grey')"><img src="images/terminal.svg"/></a>
 			</div>
 			<div class="col s2">
-				<a href=""><img src="images/file.svg"/></a>
+				<a href="#!" onclick="open_app(event, 'Contigous File Allocation', '/contigous_file_allocation', 'teal')"><img src="images/file.svg"/></a>
 			</div>
 			<div class="col s2">
-				<a href=""><img src="images/lock.svg"/></a>
+				<a href="#!" onclick="open_app(event, 'Dead Lock', '/banker', 'purple')"><img src="images/lock.svg"/></a>
 			</div>
 			<div class="col s1"></div>
 		</div>
@@ -332,6 +332,9 @@
 				disk
 					+ sched
 					+ file allocation
+
+				rtos
+					+ rate monotonic
 
 				Misc
 					+ terminal
@@ -400,6 +403,14 @@
 					Linked File Allocation
 				</div>
 				<div class="col s1"></div>
+			</div>
+			<div class="row">
+				<div class="col s12 blue-grey-text title">RTOS</div>
+				<div class="col s1"></div>
+				<div class="col s2">
+					<a href="#!" onclick="open_app(event, 'Rate Monotonic', '/rtos', 'orange')"><img src="images/rtos.svg"/></a><br>
+					Rate Monotonic Scheduling
+				</div>
 			</div>
 			<div class="row">
 				<div class="col s12 blue-grey-text title">Miscellaneous</div>
