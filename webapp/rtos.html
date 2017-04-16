@@ -109,6 +109,10 @@
 			$('.output').append('<div class="gant"></div>');
 			var period = output.length-2;
 			var width  = 100.0*1.0/period;
+			if(output[2].includes('Not')){
+				Materialize.toast(output[2], 1500);
+				return;
+			}
 			for(var i=2; i<output.length; i++){
 				o = output[i].split(' ');
 				p = o[1];
