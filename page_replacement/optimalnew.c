@@ -4,11 +4,11 @@ int main()
 {
     int fr, p, frames[10], pages[30], temp[10], f1, f2, f3, i, j, k, pos,max, faults=0;
     float hr,fra;
-//    printf("Enter number of frames: ");
+    printf("Enter number of frames: ");
     scanf("%d", &fr);
-//    printf("Enter number of pages: ");
+    printf("Enter number of pages: ");
     scanf("%d", &p);
-//    printf("Enter page reference string: ");
+    printf("Enter page reference string: ");
     for(i=0;i<p;++i)
     {
         scanf("%d", &pages[i]);
@@ -80,16 +80,17 @@ int main()
             faults++;
         }
         printf("\n");
-        /*for(j = 0; j<fr;++j)
+        for(j = 0; j<fr;++j)
         {
             printf("%d\t", frames[j]);
-        	}*/
+        	}
+        	printf("\n\n\t\t%f\t\n\n",(faults*1.0)/((i+1)*1.0));
     	}
 	fra=(float)faults/p;
         hr=1-fra;
-        //printf("\nPage fault is %d\n",faults);
+        printf("\nPage fault is %d\n",faults);
         printf("%f\n",hr);
-        //printf("Fault ratio is %f\n",fra);
+        printf("Fault ratio is %f\n",fra);
 	return 0;
 }
 
