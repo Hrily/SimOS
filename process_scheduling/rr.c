@@ -73,14 +73,15 @@ int main()
 {
 	int i,j,time=0;
 	int sum_bt=0;				//Total burst time
-	int tq;						//Time Quantun
+	int tq,count;						//Time Quantun
 	struct process *p;
 	
     float avgwt=0;				//Average Waiting Time
     float atat = 0;				//Average TurnAround Time
 	
 	scanf("%d%d",&n,&tq);		//Enter total Number of processes
-	p = malloc(n*sizeof(pro));
+       count=n;
+       p = malloc(n*sizeof(pro));
 	for(i=0;i<n;i++)			//Enter the details of project
 	{
 		scanf("%d%d%d%d",&p[i].pt,&p[i].at,&p[i].bt,&p[i].prior);
@@ -94,7 +95,20 @@ int main()
 	enqueue(0);        
 							
 	for(time=p[0].at;time<sum_bt;)      
-	{   i=dequeue();
+	{  
+	if(count>0 && front==-1)
+	   {
+	     time++;
+	     sum_bt++;
+	     for(j=0;j<n;j++)
+	       {
+	         if(p[j].at<=time && p[j].completed!=1 && isInQueue(j)!=1)
+		    {
+		      enqueue(j);
+		      }
+		}
+            }		
+	i=dequeue();
 		if(p[i].rt<=tq)
 		{                         
               time+=p[i].rt;          
