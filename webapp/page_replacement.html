@@ -193,6 +193,18 @@
 			<div class="card-content">
 				<div class="row">
 					<h3>Page Replacement Algorithms</h3>
+					<p style="font-size: 19px;">In a computer operating system that uses paging for virtual memory management, page replacement algorithms decide which memory pages to page out (swap out, write to disk) when a page of memory needs to be allocated. Paging happens when a page fault occurs and a free page cannot be used to satisfy the allocation, either because there are none, or because the number of free pages is lower than some threshold.
+
+					When the page that was selected for replacement and paged out is referenced again it has to be paged in (read in from disk), and this involves waiting for I/O completion. This determines the quality of the page replacement algorithm: the less time waiting for page-ins, the better the algorithm. A page replacement algorithm looks at the limited information about accesses to the pages provided by hardware, and tries to guess which pages should be replaced to minimize the total number of page misses, while balancing this with the costs (primary storage and processor time) of the algorithm itself.
+					</p>
+				</div>
+			</div>
+		</div>			
+
+		<div class="card" >
+			<div class="card-content">
+				<div class="row">
+					<h3>Page Replacement Algorithms</h3>
 				</div>
 				<div class="row">
 					<div class="col s4">
